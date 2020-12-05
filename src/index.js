@@ -4,9 +4,22 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import {Provider} from 'react-redux';
+import {createStore, combineReducers} from 'redux';
+
+import {setAdmin} from './reducers/admin.reducers';
+import {setDriver} from './reducers/driver.reducers';
+
+const store = createStore(combineReducers({
+  setDriver,
+  setAdmin
+}));
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
