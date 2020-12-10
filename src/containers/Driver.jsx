@@ -1,7 +1,13 @@
-import { Typography } from '@material-ui/core';
-import React, { Component } from 'react';
+import React, { Suspense,  Component, lazy} from 'react';
 import { connect } from 'react-redux';
-import LoginDriver from '../components/DriverLogin';
+import { Switch, Route } from "react-router-dom";
+
+import Loading from '../components/Loading';
+import DriverNavbar from "../components/DriverNavbar";
+import DriverLogin from '../components/DriverLogin';
+
+const ChooseOrder = lazy(() => import('../components/ChooseOrder'));
+const OrderDeliveryForm = lazy(() => import('../components/OrderDeliveryForm'));
 
 function mapStateToProps(state) {
   let {setDriver} = state;
@@ -10,21 +16,28 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-
-  };
-}
-
 class Driver extends Component {
-  
   render() {
     const {driver} = this.props;
     return (
       <div>
         {driver ?
-          <Typography variant="h3">{driver.name}</Typography> :
-          <LoginDriver />
+          <div>
+            <DriverNavbar />
+            <Suspense fallback={<Loading />}>
+              <Switch>
+                <Route 
+                  path="/:orderId/deliver"
+                  component={OrderDeliveryForm}
+                />
+                <Route 
+                  path="/"
+                  component={ChooseOrder} 
+                />
+              </Switch>
+            </Suspense>
+          </div> :
+          <DriverLogin />
         }
       </div>
     );
@@ -32,6 +45,5 @@ class Driver extends Component {
 }
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Driver);

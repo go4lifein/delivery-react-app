@@ -4,6 +4,7 @@ import {
   withScriptjs,
   GoogleMap,
   Marker,
+  Polyline,
   InfoWindow
 } from "react-google-maps";
 import Avatar from '@material-ui/core/Avatar';
@@ -13,6 +14,11 @@ function Map(props) {
   const {positions} = props;
 
   const [selectedRider, setSelectedRider] = useState(null);
+  
+  const pathCoordinates = [
+    { lat: 28, lng: 76 },
+    { lat: 28, lng: 77 }
+  ];
 
   useEffect(() => {
     const listener = e => {
@@ -65,6 +71,23 @@ function Map(props) {
           </div>
         </InfoWindow>
       )}
+
+      {/* <Polyline
+        path={pathCoordinates}
+        geodesic={true}
+        options={{
+          strokeColor: "yellow",
+          strokeOpacity: 0.75,
+          strokeWeight: 2,
+          icons: [
+            {
+              // icon: lineSymbol,
+              offset: "0",
+              repeat: "20px"
+            }
+          ]
+        }}
+      /> */}
     </GoogleMap>
   );
 }
@@ -83,8 +106,9 @@ class Driver extends Component {
       let {coords} = position;
       let {latitude, longitude} = coords;
       this.setState({
-        latitude: 28 + Math.random() * 10,
-        longitude: 76 + Math.random() * 10
+        latitude, longitude
+        // latitude: 28 + Math.random() * 10,
+        // longitude: 76 + Math.random() * 10
       });
     });
     

@@ -6,18 +6,26 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline} from '@material-ui/core';
 
 import './css/style.css';
+import Loading from './components/Loading';
 const Admin = lazy(() => import('./containers/Admin.jsx'));
 const Driver = lazy(() => import('./containers/Driver.jsx'));
 
 function App() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  let [themeType, setTheme] = useState(prefersDarkMode ? 'dark' : 'dark');
+  let [themeType = 'light', setTheme] = useState(prefersDarkMode ? 'light' : 'light');
 
   const theme = createMuiTheme({
     palette: {
       type: themeType,
+      // primary: colors.green[400],
+      secondary: {
+        light: '#ff4081',
+        main: '#f50057',
+        dark: '#c51162',
+        contrastText: '#fff'
+      },
       background: {
-        default: themeType === 'dark' ? '#232323': '#eee',
+        default: themeType === 'dark' ? '#232323': '#fff',
         paper: themeType === 'dark' ? '#161616': '#fff'
       },
     },
@@ -29,16 +37,14 @@ function App() {
         <CssBaseline /> 
         <Router>
           <main>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Loading />}>
               <Switch>
                 <Route 
                   path="/admin"
-                  exact
                   component={Admin} 
                 />
                 <Route 
                   path="/"
-                  exact
                   component={Driver} 
                 />
               </Switch>

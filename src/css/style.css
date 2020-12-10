@@ -1,0 +1,35 @@
+.flex {
+  display: flex;
+}
+
+.center {
+  justify-content: center;
+}
+
+.right {
+  justify-content: flex-end;
+}
+
+.space-bw {
+  justify-content: space-between;
+}
+
+.middle {
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+td.fixed-width-column {
+  width: 100px;
+}
+
+.p-10 {
+  padding: 10px;
+}
+
+.nav-link {
+  margin-left: 10px;
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Card, CardContent, CardHeader, TextField } from '@material-ui/core';
+import {Link} from 'react-router-dom';
+import { Button, Card, CardContent, CardHeader, Divider, TextField } from '@material-ui/core';
 
 import {updateAdmin} from '../actions/admin.actions';
 
@@ -39,13 +40,16 @@ class LoginAdmin extends Component {
           height: '100vh'
         }}
       >
-        <Card style={{minWidth: 400}}>
+        <Card style={{minWidth: 300}}>
           <CardHeader title="Admin Login" />
+          <Divider />
           <CardContent>
             <div style={{marginBottom: 10}}>
               <TextField
+                autoFocus
                 fullWidth
-                placeholder="Phone"
+                variant="outlined"
+                label="Phone"
                 value={phone}
                 onChange={(e) => this.setState({phone: e.target.value})}
               />
@@ -53,15 +57,17 @@ class LoginAdmin extends Component {
             <div style={{marginBottom: 10}}>
               <TextField
                 fullWidth
+                variant="outlined"
                 type="password"
-                placeholder="Password"
+                label="Password"
                 value={password}
                 onChange={(e) => this.setState({password: e.target.value})}
               />
             </div>
-            <div style={{marginBottom: 10}}>
+            <div >
               <Button 
                 variant="contained" 
+                color="primary"
                 fullWidth
                 onClick={this.handleSubmit}
               >
@@ -69,6 +75,14 @@ class LoginAdmin extends Component {
               </Button>
             </div>
             
+          </CardContent>
+          <Divider />
+          <CardContent>
+          <div>
+            <Link to="/">
+              Login as Driver
+            </Link>
+          </div>
           </CardContent>
         </Card>
       </div>
