@@ -9,9 +9,15 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
-import { AppBar, Toolbar } from '@material-ui/core';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Toolbar from '@material-ui/core/Toolbar';
+import AppBar from '@material-ui/core/AppBar';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import { Divider, TextField } from '@material-ui/core';
 
 function mapStateToProps(state) {
   let {setDriver} = state;
@@ -21,34 +27,67 @@ function mapStateToProps(state) {
 }
 const tutorialSteps = [
   {
-    label: 'Select Delivery Type',
-    imgPath:
-      'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
+    label: 'Select Delivery Type - डिलीवरी कहाँ करी',
+    render: (onChange) => {
+      return (
+        <FormControl component="fieldset">
+          <RadioGroup aria-label="delivery type" name="delivery_type">
+            <FormControlLabel value="in_hand" control={<Radio />} label="In Hand Delivery - कस्टमर के हाथ में डिलीवरी की" />
+            <FormControlLabel value="doorstep" control={<Radio />} label="Doorstep Delivery - घर के गेट के बहार आर्डर रखा" />
+            <FormControlLabel value="society_guard" control={<Radio />} label="Handed over to society guard - सोसाइटी गार्ड के पास आर्डर छोड़ा" />
+            <FormControlLabel value="tower_guard" control={<Radio />} label="Handed over to tower guard - टावर गार्ड के पास आर्डर छोड़ा" />
+            <FormControlLabel value="order_cancelled" control={<Radio />} label="Order Cancelled - आर्डर कैंसिल" />
+          </RadioGroup>
+        </FormControl>
+      )
+    }
   },
   {
-    label: 'Take Photo',
-    imgPath:
-      'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
+    label: 'Take Photo - आर्डर की फोटो लीजिये',
+    render: () => (<div>
+    </div>)
   },
   {
-    label: 'Complete Order Delivered?',
-    imgPath:
-      'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80',
+    label: 'Complete Order Delivered? - क्या आपने पूरा आर्डर डिलीवर किया?',
+    render: () => (<div className="pv-10">
+      <FormControl component="fieldset">
+        <RadioGroup aria-label="complete delivery" name="complete_delivery">
+          <FormControlLabel value="yes" control={<Radio />} label="Yes - हाँ, मैंने पूरा आर्डर डिलीवर किया" />
+          <FormControlLabel value="no" control={<Radio />} label="No - नहीं,  पूरा आर्डर डिलीवर नहीं हुआ है" />
+        </RadioGroup>
+      </FormControl>
+
+    </div>)
   },
   {
-    label: 'Boxes',
-    imgPath:
-      'https://images.unsplash.com/photo-1518732714860-b62714ce0c59?auto=format&fit=crop&w=400&h=250&q=60',
+    label: 'Boxes - कितने डब्बे डिलीवर करे',
+    render: () => (<div className="pv-10">
+      <TextField 
+        fullWidth
+        autoFocus
+        placeholder="कितने डब्बे डिलीवर करे"
+        type="number" 
+        variant="outlined"
+      />
+    </div>)
   },
   {
-    label: 'Milk Packets',
-    imgPath:
-      'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
+    label: 'Milk Packets - कितने दूध के पैकेट डिलीवर करे',
+    render: () => (<div className="pv-10">
+      <TextField 
+        fullWidth
+        autoFocus
+        placeholder="कितने दूध के पैकेट डिलीवर करे"
+        type="number"
+        variant="outlined"
+      />
+    </div>)
   },
   {
-    label: 'Review',
-    imgPath:
-      'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
+    label: 'Review - कृपया जांचें',
+    render: (data) => (<div className="pv-10">
+
+    </div>)
   },
 ];
 
@@ -137,6 +176,10 @@ function OrderDeliveryForm(props) {
         <Typography variant="h4" className={classes.title}>
           {tutorialSteps[activeStep].label}
         </Typography>
+        <Divider />
+        <div>
+          {tutorialSteps[activeStep].render()}
+        </div>
       </div>
       <MobileStepper
         steps={maxSteps}

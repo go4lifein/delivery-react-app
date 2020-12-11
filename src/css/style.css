@@ -29,6 +29,26 @@ td.fixed-width-column {
 .p-10 {
   padding: 10px;
 }
+.pv-10 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.ph-10 {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.m-10 {
+  margin: 10px;
+}
+.mv-10 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.mh-10 {
+  margin-left: 10px;
+  margin-right: 10px;
+}
 
 .nav-link {
   margin-left: 10px;

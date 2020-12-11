@@ -112,6 +112,7 @@ class CustomerSheet extends Component {
       loading = false;
       data = Array.from(customers.values());
       data = data.filter(customer => (customer.onlyDairy === false))
+      console.log(data);
     }
 
     return (

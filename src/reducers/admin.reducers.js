@@ -175,7 +175,7 @@ export const setAdmin = (state = initialState, action = {}) => {
         if(hasNoDairy(products)) {
           customer[1].hasNoDairy = true;
         } else {
-          customer[1].onlyDairy = false;
+          customer[1].hasNoDairy = false;
         }
       }
 
