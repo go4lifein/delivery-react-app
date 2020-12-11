@@ -1,5 +1,5 @@
 import React, {useState, Suspense, lazy} from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
@@ -35,7 +35,7 @@ function App() {
     <div id="app">
       <ThemeProvider theme={theme}>
         <CssBaseline /> 
-        <Router>
+        <Router base={'delivery-react-app'}>
           <main>
             <Suspense fallback={<Loading />}>
               <Switch>

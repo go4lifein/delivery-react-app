@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_URL = 'http://ec2-52-66-136-186.ap-south-1.compute.amazonaws.com:5000/api';
+export const API_URL = 'http://52.66.136.186:5000/api';
 // export const API_URL = 'http://192.168.40.14:5000/api';
 // export const API_URL = 'http://192.168.0.103:5000/api';
 
