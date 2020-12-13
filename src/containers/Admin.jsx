@@ -28,11 +28,7 @@ function mapDispatchToProps(dispatch) {
 
 class AdminRouter extends Component {
   componentDidMount() {
-    let metaTag = document.createElement('meta');
-    metaTag.setAttribute('name', "description");
-    metaTag.setAttribute('content', "This is test");
-    document.head.appendChild(metaTag);
-    
+
     let {onUpdateOrdersData, onUpdateAdminData} = this.props;
 
     getDeliveryBoysData()
