@@ -1,7 +1,6 @@
 import axios from "axios";
 
-// export const API_URL = 'http://go4life-deliver.herokuapp.com/api';
-export const API_URL = 'http://go4life-deliver.herokuapp.com/api';
+export const API_URL = 'http://api.deliver.go4life.in/api';
 // export const API_URL = 'http://192.168.40.14:5000/api';
 // export const API_URL = 'http://192.168.0.103:5000/api';
 
