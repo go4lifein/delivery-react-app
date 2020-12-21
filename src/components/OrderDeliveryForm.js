@@ -18,6 +18,7 @@ import AppBar from '@material-ui/core/AppBar';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { Divider, TextField } from '@material-ui/core';
+import WebCam from "./WebCam";
 
 function mapStateToProps(state) {
   let {setDriver} = state;
@@ -44,8 +45,13 @@ const tutorialSteps = [
   },
   {
     label: 'Take Photo - आर्डर की फोटो लीजिये',
-    render: () => (<div>
-    </div>)
+    render: () => {
+      return (
+        <div className="flex center">
+          <WebCam />
+        </div>
+      )
+    }
   },
   {
     label: 'Complete Order Delivered? - क्या आपने पूरा आर्डर डिलीवर किया?',
@@ -136,7 +142,9 @@ function OrderDeliveryForm(props) {
   const {history, match, orders, customers} = props;
   const {params} = match;
   let order_id = parseInt(params.orderId);
-
+  if(!orders) {
+    window.location = '/';
+  }
   let order = orders.find((item) => item.order_id === order_id);
   let customer = customers.get(order.customer_id);
 
