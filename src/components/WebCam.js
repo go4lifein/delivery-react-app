@@ -10,22 +10,21 @@ const videoConstraints = {
   facingMode: "user"
 };
  
-const WebcamCapture = () => {
-  const [takingPhoto, setTakingPhoto] = React.useState(true);
-  const [imgSrc, setImgSrc] = React.useState(null);
+const WebcamCapture = ({onCapture, image}) => {
+  const [takingPhoto, setTakingPhoto] = React.useState(image ? false : true);
   const webcamRef = React.useRef(null);
  
   const capture = React.useCallback(
     () => {
       const imageSrc = webcamRef.current.getScreenshot();
-      setImgSrc(imageSrc);
+      onCapture(imageSrc);
       setTakingPhoto(false);
     },
-    [webcamRef]
+    [webcamRef, onCapture]
   );
  
   return (
-    <>
+    <div style={{background: '#000'}}>
       {takingPhoto ?
         <div style={{position: 'relative'}}>
           <Webcam
@@ -44,7 +43,7 @@ const WebcamCapture = () => {
             width: '100%'
           }}>
             <IconButton onClick={capture}>
-              <CameraIcon />
+              <CameraIcon style={{color: 'white'}} />
             </IconButton>
           </div>
         </div>:
@@ -52,10 +51,9 @@ const WebcamCapture = () => {
           position: 'relative'
         }}>
           <img 
-            src={imgSrc} 
+            src={image} 
             alt="order_photo"
             width={282}
-            height={500}
           />
           <div style={{
             position: 'absolute', 
@@ -65,12 +63,12 @@ const WebcamCapture = () => {
             width: '100%'
           }}>
             <IconButton onClick={() => setTakingPhoto(true)}>
-              <ReplayIcon /> 
+              <ReplayIcon style={{color: 'white'}} /> 
             </IconButton>
           </div>
         </div>
       }
-    </>
+    </div>
   );
 };
 

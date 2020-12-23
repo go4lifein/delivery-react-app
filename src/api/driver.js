@@ -1,4 +1,5 @@
 import {API_URL , request} from '../helpers/utils';
+import axios, { post } from 'axios';
 
 export function login(data) {
   let url = `${API_URL}/driver/login`;
@@ -33,4 +34,14 @@ export function confirmDelivery(data) {
       'Content-Type': 'application/json',
     }
   });
+}
+
+export function submitOrderDelivery(formData) {
+  let url = `${API_URL}/driver/submitOrderDelivery`;
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data'
+    }
+  }
+  return post(url, formData, config);
 }
