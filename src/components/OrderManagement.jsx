@@ -123,7 +123,7 @@ class OrderManagement extends Component {
               style={{padding: 10}}
             >
 
-              <div style={{marginRight: 20}}>
+              <div style={{marginRight: 20, width: 120}}>
                 <TextField
                   value={phone}
                   label="Phone"
@@ -131,7 +131,7 @@ class OrderManagement extends Component {
                 />
               </div>
 
-              <div style={{marginRight: 20}}>
+              <div style={{marginRight: 20, width: 120}}>
                 <FormControl>
                   <InputLabel id="hub-filter">Hub</InputLabel>
                   <Select
@@ -194,10 +194,11 @@ class OrderManagement extends Component {
 
               <div style={{marginRight: 20}}>
                 <FormControl>
-                  <InputLabel id="driver-filter">Driver</InputLabel>
+                  <InputLabel id="driver-filter">Assigned Driver</InputLabel>
                   <Select
                     labelId="driver-filter"
                     style={{width: 200}}
+                    value={selectedDriver || 'all'}
                     onChange={(e, b) => {
                       let selectedDriver = e.target.value;
                       this.setState({selectedDriver});
@@ -210,6 +211,26 @@ class OrderManagement extends Component {
                   </Select>
                 </FormControl>
               </div>
+
+              {/* <div style={{marginRight: 20}}>
+                <FormControl>
+                  <InputLabel id="driver-filter">Delivered by</InputLabel>
+                  <Select
+                    labelId="driver-filter"
+                    style={{width: 200}}
+                    value={selectedDriver}
+                    onChange={(e, b) => {
+                      let selectedDriver = e.target.value;
+                      this.setState({selectedDriver});
+                    }}
+                  >
+                    <MenuItem value="all">All</MenuItem>
+                    {deliveryBoysData.map(item => (
+                      <MenuItem value={item.id} key={`driver-${item.id}`}>{item.name}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div> */}
               
               <div style={{marginRight: 20}}>
                 <FormControlLabel
