@@ -1,4 +1,4 @@
-import React, { Component, useMemo, useCallback, useState } from 'react';
+import React, { Component, useCallback, useState } from 'react';
 import { connect } from 'react-redux';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -7,6 +7,8 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import { Button, Divider, TextField } from '@material-ui/core';
+
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import Loading from './Loading';
 import OrderDataTable from './OrderDataTable';
@@ -46,9 +48,10 @@ class OrderManagement extends Component {
   
   render() {
     let loading = true;
-    let {selectedArea, selectedHub, selectedSubarea, selectedDriver, showWithoutDairy, phone } = this.state;
+    let {selectedArea, selectedHub, selectedSubarea, selectedDriver, showWithoutDairy, phone, showDelivered } = this.state;
     let {customers, locations, areas, subareas, hubs, deliveryBoys} = this.props;
     let deliveryBoysData = deliveryBoys ? Array.from(deliveryBoys.values()) : [];
+    deliveryBoysData = deliveryBoysData.sort((a, b) => (a.name.localeCompare(b.name)));
 
     if(selectedHub !== 'all') {
       let filteredAreas = locations.get(selectedHub);
@@ -98,6 +101,10 @@ class OrderManagement extends Component {
         }
         if(selectedDriver !== 'all') {
           if(item.delivery_person_id !== selectedDriver) return false;
+        }
+        if(showDelivered) {
+          if(item.delivery.deliver_date) return true;
+          return false;
         }
         if(showWithoutDairy) {
           if(item.hasNoDairy) return true;
@@ -151,11 +158,19 @@ class OrderManagement extends Component {
                   </FormControl>
               </div>
               
-              <div style={{marginRight: 20}}>
-                <FormControl>
-                  <InputLabel id="area-filter">Area</InputLabel>
-                  <Select
+              <div style={{marginRight: 20, width: 180}}>
+                <FormControl style={{width: '100%'}}>
+                  <Autocomplete
                     labelId="area-filter"
+                    options={areas}
+                    // getOptionLabel={partner => partner.name}
+                    renderInput={(params) => <TextField {...params} label="Area" />}
+                    onChange={(e, selectedArea) => {
+                      console.log(selectedArea);
+                      this.setState({selectedArea : selectedArea || 'all', selectedSubarea: 'all'})
+                    }}
+                  />
+                  {/* <Select
                     style={{width: 180}}
                     value={selectedArea}
                     onChange={(e) => {
@@ -167,15 +182,23 @@ class OrderManagement extends Component {
                     {areas.map(item => (
                       <MenuItem value={item} key={item}>{item}</MenuItem>
                     ))}
-                  </Select>
+                  </Select> */}
                 </FormControl>
               </div>
 
               
-              <div style={{marginRight: 20}}>
-                <FormControl>
-                  <InputLabel id="subarea-filter">Subareas</InputLabel>
-                  <Select
+              <div style={{marginRight: 20, width: 180}}>
+                <FormControl style={{width: '100%'}}>
+                  <Autocomplete
+                    labelId="area-filter"
+                    options={subareas}
+                    // getOptionLabel={partner => partner.name}
+                    renderInput={(params) => <TextField {...params} label="Sub-Areas" />}
+                    onChange={(e, selectedSubarea) => {
+                      this.setState({ selectedSubarea: selectedSubarea || 'all'})
+                    }}
+                  />
+                  {/* <Select
                     labelId="subarea-filter"
                     style={{width: 180}}
                     value={selectedSubarea}
@@ -188,7 +211,7 @@ class OrderManagement extends Component {
                     {subareas.map(item => (
                       <MenuItem value={item} key={item}>{item}</MenuItem>
                     ))}
-                  </Select>
+                  </Select> */}
                   </FormControl>
               </div>
 
@@ -231,7 +254,20 @@ class OrderManagement extends Component {
                   </Select>
                 </FormControl>
               </div> */}
-              
+
+              <div style={{marginRight: 20}}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={showDelivered}
+                      onChange={(e, showDelivered) => this.setState({showDelivered})}
+                      color="primary"
+                    />
+                  }
+                  label="Only Delivered"
+                />
+              </div>
+
               <div style={{marginRight: 20}}>
                 <FormControlLabel
                   control={
@@ -285,6 +321,8 @@ const AssignOrders = connect(
   const {data, deliveryBoys, onUpdateOrdersData} = props;
 
   let deliveryBoysData = Array.from(deliveryBoys.values());
+  deliveryBoysData = deliveryBoysData.sort((a, b) => (a.name.localeCompare(b.name)));
+  
   let [selectedRows, setSelectedRows] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(false);
 

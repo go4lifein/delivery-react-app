@@ -128,6 +128,7 @@ export const setDriver = (state = initialState, action = {}) => {
 
           customer.products = products;
           customer.delivery = deliveryData;
+          customer.delivered = deliveryData.deliver_date;
         } else {
           
           if(areas.includes(area) === false) {
@@ -154,7 +155,8 @@ export const setDriver = (state = initialState, action = {}) => {
               [category]: [productData]
             },
             delivery_person_id,
-            delivery: deliveryData
+            delivery: deliveryData,
+            delivered: deliveryData.deliver_date
           }
           customers.set(customer_id, customer);
         }

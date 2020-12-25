@@ -89,6 +89,10 @@ function DriverOrderTable(props) {
       data={data}
       columns={columns}
       onRowClicked={(row, e) => {
+        if(row.delivered) {
+          alert('Already delivered');
+          return;
+        }
         history.push(`/${row.order_id}/deliver`)
       }}
     />

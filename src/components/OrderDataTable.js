@@ -137,6 +137,8 @@ function OrderDataTable(props) {
         dense={true}
         data={data}
         columns={columns}
+        highlightOnHover={true}
+        pointerOnHover={true}
         onRowClicked={(row, e) => {
           onRowSelect(row);
         }}

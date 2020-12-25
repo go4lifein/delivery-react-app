@@ -1,10 +1,11 @@
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import { Button, TextField } from '@material-ui/core';
 
 import Loading from '../components/Loading';
@@ -31,6 +32,7 @@ class ChooseOrder extends Component {
     selectedArea: 'all',
     selectedSubarea: 'all',
     selectedHub: 'all',
+    showDelivered: false
   }
   componentDidMount() {
     let {onUpdateOrdersData, driver} = this.props;
@@ -41,7 +43,7 @@ class ChooseOrder extends Component {
   }
   render() {
     let loading = true, data = [];
-    let {selectedArea, selectedHub, selectedSubarea, phone } = this.state;
+    let {selectedArea, selectedHub, selectedSubarea, phone, showDelivered } = this.state;
     let {customers, locations, areas, subareas, hubs} = this.props;
 
     
@@ -95,7 +97,13 @@ class ChooseOrder extends Component {
           if(item.phone.indexOf(phone) !== -1) return true;
           return false;
         }
-        return true;
+        if(showDelivered) {
+          if(item.delivery.deliver_date) return true;
+          return false;
+        } else {
+          if(item.delivery.deliver_date) return false;
+          return true;
+        }
       })
     }
 
@@ -185,10 +193,23 @@ class ChooseOrder extends Component {
               </div>
               
             </div>
+            
             <div
-              className="flex right"
+              className="flex space-bw"
               style={{padding: 10}}
             >
+              <div>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={showDelivered}
+                      onChange={(e, showDelivered) => this.setState({showDelivered})}
+                      color="primary"
+                    />
+                  }
+                  label="Delivered"
+                />
+              </div>
               <div >
                 <Button
                   color="primary"
