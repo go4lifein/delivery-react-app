@@ -61,7 +61,7 @@ function MenuAppBar(props) {
           <div>
             <Link to="/admin/customer" className="nav-link">
               <Button
-                // variant="out"
+                variant="outlined"
                 color="primary"
               >
                 Customer Sheet
@@ -70,7 +70,7 @@ function MenuAppBar(props) {
             
             <Link to="/admin/product" className="nav-link">
               <Button
-                // variant="out"
+                variant="outlined"
                 color="primary"
               >
                 Product Sheet
@@ -79,23 +79,25 @@ function MenuAppBar(props) {
 
             <Link to="/admin/manageOrders" className="nav-link">
               <Button
-                // variant="out"
+                variant="outlined"
                 color="primary"
               >
                 Manage Orders
               </Button>
             </Link>
 
-            <Button
-              className="nav-link"
-              color="secondary"
-              onClick={() => {
-                let {onUpdateAdmin} = props;
-                onUpdateAdmin(null);
-              }}
-            >
-              Logout
-            </Button>
+            <span className="nav-link">
+              <Button
+                color="secondary"
+                variant="outlined"
+                onClick={() => {
+                  let {onUpdateAdmin} = props;
+                  onUpdateAdmin(null);
+                }}
+              >
+                Logout
+              </Button>
+            </span>
             
           </div>
 

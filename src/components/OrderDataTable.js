@@ -1,7 +1,8 @@
 import React from 'react';
 import DataTable from "react-data-table-component";
-import DeliveryInfo from "./DeliveryInfo";
-
+import Checkbox from '@material-ui/core/Checkbox';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
+const sortIcon = <ArrowDownward />;
 function OrderDataTable(props) {
   const {data, onRowSelect, onSelectionChange, deliveryBoys} = props;
   const columns = [
@@ -135,6 +136,8 @@ function OrderDataTable(props) {
         selectableRows
         onSelectedRowsChange={onSelectionChange}
         dense={true}
+        selectableRowsComponent={Checkbox}
+        sortIcon={sortIcon}
         data={data}
         columns={columns}
         highlightOnHover={true}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Slider from '@material-ui/core/Slider';
 import IconButton from '@material-ui/core/IconButton';
@@ -21,6 +21,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import WebCam from "./WebCam";
 import {submitOrderDelivery} from '../api/driver';
+import { CircularProgress } from '@material-ui/core';
 
 function mapStateToProps(state) {
   let {setDriver} = state;
@@ -77,6 +78,120 @@ function dataURItoBlob(dataURI) {
 
   //New Code
   return new Blob([ab], {type: mimeString});
+}
+
+
+function Review ({state, props}) {
+  const {delivery_type, delivery_img, complete_delivery, boxes, milk_packets} = state;
+
+  const {history, match, driver} = props;
+  const {params} = match;
+  let order_id = parseInt(params.orderId);
+
+  const [loading, setLoading] = useState(false);
+
+  const onSubmit = () => {
+    setLoading(true);
+    const photoBlob = dataURItoBlob(delivery_img);
+    const formData = new FormData();
+    formData.append("delivery_img", photoBlob);
+    formData.append("order_id", order_id);
+    formData.append("driver_id", driver.id);
+    formData.append("delivery_type", delivery_type);
+    formData.append("complete_delivery", complete_delivery);
+    formData.append("boxes", boxes);
+    formData.append("milk_packets", milk_packets);
+    submitOrderDelivery(formData)
+    .then(res => {
+      history.push('/');
+      setLoading(false);
+    })
+    .catch(err => {
+      setLoading(false);
+      alert(err.message);
+    });
+
+  }
+
+  function mapDeliveryType(delivery_type) {
+    switch (delivery_type) {
+      
+      case "in_hand":
+        return "In Hand Delivery - कस्टमर के हाथ में डिलीवरी की"
+      case "doorstep":
+        return "Doorstep Delivery - घर के गेट के बहार आर्डर रखा"
+      case "society_guard":
+        return "Handed over to society guard - सोसाइटी गार्ड के पास आर्डर छोड़ा"
+      case "tower_guard":
+        return "Handed over to tower guard - टावर गार्ड के पास आर्डर छोड़ा"
+      case "order_cancelled":
+        return "Order Cancelled - आर्डर कैंसिल"
+      default:
+        return <span style={{color: 'red'}}>Select Delivery Type - डिलीवरी कहाँ करी</span>;
+    }
+  }
+  function mapCompleteDelivery(complete_delivery) {
+    switch (complete_delivery) {
+      
+      case "yes":
+        return "Yes - हाँ, मैंने पूरा आर्डर डिलीवर किया"
+      case "no":
+        return "No - नहीं,  पूरा आर्डर डिलीवर नहीं हुआ है"
+      default:
+        return <span style={{color: 'red'}}>Complete Order Delivered? - क्या आपने पूरा आर्डर डिलीवर किया?</span>;
+    }
+  }
+  return (
+    <div className="pv-10">
+      <Card variant="outlined">
+        
+        <div className="p-10">
+            <Typography variant="body">Select Delivery Type - डिलीवरी कहाँ करी</Typography>
+            <Typography variant="h6">
+              {mapDeliveryType(delivery_type)}
+            </Typography>
+        </div>
+        <Divider />
+        <div className="p-10">
+          <Typography variant="body">Take Photo - आर्डर की फोटो लीजिये</Typography>
+          {
+            delivery_img ?
+            <div>
+              <img alt="order" src={delivery_img} width={300} /> 
+            </div> :
+            <Typography variant="h6"><span style={{color: 'red'}}>Please take picture</span></Typography>
+          }
+        </div>
+        <Divider />
+        <div className="p-10">
+        <Typography variant="body">Complete Order Delivered? - क्या आपने पूरा आर्डर डिलीवर किया?</Typography>
+          <Typography variant="h6">
+            {mapCompleteDelivery(complete_delivery)}
+          </Typography>
+        </div>
+        <Divider />
+        <div className="p-10">
+        <Typography variant="body">Boxes - कितने डब्बे डिलीवर करे</Typography>
+          <Typography variant="h6">{boxes}</Typography>
+        </div>
+        <Divider />
+        <div className="p-10">
+        <Typography variant="body">Milk Packets - कितने दूध के पैकेट डिलीवर करे</Typography>
+          <Typography variant="h6">{milk_packets}</Typography>
+        </div>
+      </Card>
+      <div className="pv-10">
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={onSubmit}
+          disabled={loading}
+        >
+          Submit {loading && <CircularProgress />}
+        </Button>
+      </div>
+    </div>
+  )
 }
 
 class OrderDeliveryForm extends React.Component {
@@ -200,111 +315,6 @@ class OrderDeliveryForm extends React.Component {
       </div>
     )
   }
-  Review = () => {
-    const {delivery_type, delivery_img, complete_delivery, boxes, milk_packets} = this.state;
-
-    const {history, match, driver} = this.props;
-    const {params} = match;
-    let order_id = parseInt(params.orderId);
-
-    const onSubmit = () => {
-      const photoBlob = dataURItoBlob(delivery_img);
-      const formData = new FormData();
-      formData.append("delivery_img", photoBlob);
-      formData.append("order_id", order_id);
-      formData.append("driver_id", driver.id);
-      formData.append("delivery_type", delivery_type);
-      formData.append("complete_delivery", complete_delivery);
-      formData.append("boxes", boxes);
-      formData.append("milk_packets", milk_packets);
-      submitOrderDelivery(formData)
-      .then(res => {
-        history.push('/');
-      })
-      .catch(err => {
-        alert(err.message);
-      })
-
-    }
-    function mapDeliveryType(delivery_type) {
-      switch (delivery_type) {
-        
-        case "in_hand":
-          return "In Hand Delivery - कस्टमर के हाथ में डिलीवरी की"
-        case "doorstep":
-          return "Doorstep Delivery - घर के गेट के बहार आर्डर रखा"
-        case "society_guard":
-          return "Handed over to society guard - सोसाइटी गार्ड के पास आर्डर छोड़ा"
-        case "tower_guard":
-          return "Handed over to tower guard - टावर गार्ड के पास आर्डर छोड़ा"
-        case "order_cancelled":
-          return "Order Cancelled - आर्डर कैंसिल"
-        default:
-          return <span style={{color: 'red'}}>Select Delivery Type - डिलीवरी कहाँ करी</span>;
-      }
-    }
-    function mapCompleteDelivery(complete_delivery) {
-      switch (complete_delivery) {
-        
-        case "yes":
-          return "Yes - हाँ, मैंने पूरा आर्डर डिलीवर किया"
-        case "no":
-          return "No - नहीं,  पूरा आर्डर डिलीवर नहीं हुआ है"
-        default:
-          return <span style={{color: 'red'}}>Complete Order Delivered? - क्या आपने पूरा आर्डर डिलीवर किया?</span>;
-      }
-    }
-    return (
-      <div className="pv-10">
-        <Card variant="outlined">
-          
-          <div className="p-10">
-              <Typography variant="body">Select Delivery Type - डिलीवरी कहाँ करी</Typography>
-              <Typography variant="h6">
-                {mapDeliveryType(delivery_type)}
-              </Typography>
-          </div>
-          <Divider />
-          <div className="p-10">
-            <Typography variant="body">Take Photo - आर्डर की फोटो लीजिये</Typography>
-            {
-              delivery_img ?
-              <div>
-                <img alt="order" src={delivery_img} width={300} /> 
-              </div> :
-              <Typography variant="h6"><span style={{color: 'red'}}>Please take picture</span></Typography>
-            }
-          </div>
-          <Divider />
-          <div className="p-10">
-          <Typography variant="body">Complete Order Delivered? - क्या आपने पूरा आर्डर डिलीवर किया?</Typography>
-            <Typography variant="h6">
-              {mapCompleteDelivery(complete_delivery)}
-            </Typography>
-          </div>
-          <Divider />
-          <div className="p-10">
-          <Typography variant="body">Boxes - कितने डब्बे डिलीवर करे</Typography>
-            <Typography variant="h6">{boxes}</Typography>
-          </div>
-          <Divider />
-          <div className="p-10">
-          <Typography variant="body">Milk Packets - कितने दूध के पैकेट डिलीवर करे</Typography>
-            <Typography variant="h6">{milk_packets}</Typography>
-          </div>
-        </Card>
-        <div className="pv-10">
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={onSubmit}
-          >
-            Submit
-          </Button>
-        </div>
-      </div>
-    )
-  }
   render() {
     
     const {history, match, orders, customers} = this.props;
@@ -379,7 +389,10 @@ class OrderDeliveryForm extends React.Component {
           }
           {
             activeStep === 5 &&
-            <this.Review />
+            <Review 
+              state={this.state}
+              props={this.props}
+            />
           }
         </div>
         <MobileStepper

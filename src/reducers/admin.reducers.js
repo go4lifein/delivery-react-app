@@ -211,6 +211,7 @@ export const setAdmin = (state = initialState, action = {}) => {
           } else {
             let productData = {
               package_size,
+              product_id,
               product,
               unit: package_type,
               crates: [crateData]

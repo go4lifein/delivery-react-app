@@ -112,6 +112,7 @@ class OrderManagement extends Component {
         }
         if(phone) {
           if(item.phone.indexOf(phone) !== -1) return true;
+          if(item.name.toLowerCase().indexOf(phone.toLowerCase()) !== -1) return true;
           return false;
         }
         return true;
@@ -130,10 +131,10 @@ class OrderManagement extends Component {
               style={{padding: 10}}
             >
 
-              <div style={{marginRight: 20, width: 120}}>
+              <div style={{marginRight: 20, width: 150}}>
                 <TextField
                   value={phone}
-                  label="Phone"
+                  label="Phone or Name"
                   onChange={(e) => this.setState({phone: e.target.value})}
                 />
               </div>

@@ -95,8 +95,12 @@ class ChooseOrder extends Component {
         }
         if(phone) {
           if(item.phone.indexOf(phone) !== -1) return true;
+          if(item.name.toLowerCase().indexOf(phone.toLowerCase()) !== -1) return true;
           return false;
         }
+        return true;
+      });
+      data = data.filter((item) => {
         if(showDelivered) {
           if(item.delivery.deliver_date) return true;
           return false;
@@ -121,7 +125,7 @@ class ChooseOrder extends Component {
               <div style={{marginRight: 20}}>
                 <TextField
                   value={phone}
-                  label="Phone"
+                  label="Phone or Name"
                   onChange={(e) => this.setState({phone: e.target.value})}
                 />
               </div>

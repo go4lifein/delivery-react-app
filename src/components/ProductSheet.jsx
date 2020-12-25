@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DataTable from "react-data-table-component";
-
+import DownloadIcon from '@material-ui/icons/CloudDownload';
+import Button from '@material-ui/core/Button';
+import exportCSV from '../helpers/exportCSV';
 import Loading from './Loading';
 
 function mapStateToProps(state) {
@@ -58,7 +60,24 @@ class CustomerSheet extends Component {
       }
     }
   ]
-  
+  exportData = () => {
+    let { productsCollection} = this.props;
+    
+    let data = Array.from(productsCollection.values());
+
+    let rows = [
+      ['Product Id', 'Product', 'Crate', 'Total', 'Qty'],
+    ];
+    data.forEach(productItem => {
+      const {crates, unit, product, product_id} = productItem;
+      crates.forEach(crate => {
+        const {crateId, total, quantity} = crate;
+        let row = [product_id, product, crateId, `${total} ${unit}`, quantity];
+        rows.push(row);
+      });
+    });
+    exportCSV(rows, `Product Sheet - ${new Date().toLocaleDateString()}.csv`);
+  }
   render() {
     let loading = true;
 
@@ -66,7 +85,6 @@ class CustomerSheet extends Component {
     
     let data = [];
     if(customers) {
-      console.log(productsCollection);
       loading = false;
       data = Array.from(productsCollection.values());
       // data = data.filter(customer => (customer.onlyDairy === false))
@@ -78,9 +96,22 @@ class CustomerSheet extends Component {
             loading?
             <Loading /> :
             <div>
+              {/* <div className="p-10">
+                
+              </div> */}
               <DataTable
                 data={data}
                 columns={this.columns}
+                actions={
+                  <Button 
+                    onClick={this.exportData}
+                    startIcon={<DownloadIcon />}
+                    color="secondary"
+                    variant="outlined"
+                  >
+                    Download Excel
+                  </Button>
+                }
                 // onSelectedRowsChange={this.updateState}
                 // selectableRows
               />
