@@ -33,3 +33,15 @@ export function assignDrivers(data) {
     }
   });
 }
+
+export function login(data) {
+  let url = `${API_URL}/admin/login`;
+  return request({
+    url: url,
+    method: 'post',
+    data,
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+}

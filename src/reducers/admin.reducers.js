@@ -56,6 +56,7 @@ export const setAdmin = (state = initialState, action = {}) => {
         }
       }
       */
+      // prepare location data
       orders.forEach(order => {
         let { subarea, area, hub } = order;
         if(locations.has(hub)) {
@@ -94,7 +95,8 @@ export const setAdmin = (state = initialState, action = {}) => {
           address_id, house_number, subarea, area, hub,
           category, product, quantity,
           package_size, package_type, product_package_id, product_id, 
-          region_id, location_id, delivery_person_id
+          region_id, location_id, delivery_person_id,
+          driver_id, deliver_date, delivery_type, proof_img, complete_delivery, order_cancel_reason, boxes, milk_packets
         } = order;
 
         if(delivery_person_id) {
@@ -108,6 +110,9 @@ export const setAdmin = (state = initialState, action = {}) => {
           quantity,
           total: package_size * quantity,
           unit: package_type
+        }
+        let deliveryData = {
+          driver_id, deliver_date, delivery_type, proof_img, complete_delivery, order_cancel_reason, boxes, milk_packets
         }
         
         if(categories.includes(category) === false) {
@@ -130,6 +135,7 @@ export const setAdmin = (state = initialState, action = {}) => {
           }
 
           customer.products = products;
+          customer.delivery = deliveryData;
         } else {
           
           if(areas.includes(area) === false) {
@@ -155,7 +161,8 @@ export const setAdmin = (state = initialState, action = {}) => {
             products: {
               [category]: [productData]
             },
-            delivery_person_id
+            delivery_person_id,
+            delivery: deliveryData
           }
           customers.set(customer_id, customer);
         }

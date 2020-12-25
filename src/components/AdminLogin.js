@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import { Button, Card, CardContent, CardHeader, Divider, TextField } from '@material-ui/core';
 
+import {login} from '../api/admin';
 import {updateAdmin} from '../actions/admin.actions';
 
 function mapStateToProps(state) {
@@ -20,16 +21,20 @@ function mapDispatchToProps(dispatch) {
 
 class LoginAdmin extends Component {
   state = {
-    phone: 8377072597,
-    password: '121212'
+    username: 'umakant',
+    password: 'pass'
   }
   handleSubmit = () => {
-    let {phone, password} = this.state;
+    let {username, password} = this.state;
     let {onUpdateAdmin} = this.props;
-    onUpdateAdmin({phone, password, name: 'Kulwant'})
+    login({username, password})
+    .then(res => {
+      onUpdateAdmin(res.data);
+    })
+    // .catch(err => alert("Please check username and password"));
   }
   render() {
-    let {phone, password} = this.state;
+    let {username, password} = this.state;
     return (
       <div 
         style={{
@@ -49,9 +54,9 @@ class LoginAdmin extends Component {
                 autoFocus
                 fullWidth
                 variant="outlined"
-                label="Phone"
-                value={phone}
-                onChange={(e) => this.setState({phone: e.target.value})}
+                label="Username"
+                value={username}
+                onChange={(e) => this.setState({username: e.target.value})}
               />
             </div>
             <div style={{marginBottom: 10}}>

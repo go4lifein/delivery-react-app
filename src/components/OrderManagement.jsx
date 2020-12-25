@@ -11,6 +11,7 @@ import { Button, Divider, TextField } from '@material-ui/core';
 import Loading from './Loading';
 import OrderDataTable from './OrderDataTable';
 import {assignDrivers, getAllOrders} from '../api/admin';
+import DeliveryInfo from "./DeliveryInfo";
 import {updateOrdersData} from '../actions/admin.actions';
 
 function mapStateToProps(state) {
@@ -264,7 +265,12 @@ const AssignOrders = connect(
 
   let deliveryBoysData = Array.from(deliveryBoys.values());
   let [selectedRows, setSelectedRows] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState(false);
 
+  const onSelectCustomer = useCallback((selectedCustomer) => {
+    setSelectedCustomer(selectedCustomer);
+  }, []);
+  
   const changeSelection = useCallback(({ allSelected, selectedCount, selectedRows }) => {
     setSelectedRows(selectedRows)
   }, []);
@@ -319,9 +325,14 @@ const AssignOrders = connect(
           </div>
         </div>
       </div>
+      <DeliveryInfo 
+        customer={selectedCustomer}
+        setSelectedCustomer={setSelectedCustomer}
+      />
       <OrderDataTable
         data={data}
         onSelectionChange={changeSelection}
+        onRowSelect={onSelectCustomer}
         deliveryBoys={deliveryBoys}
       />
     </div>

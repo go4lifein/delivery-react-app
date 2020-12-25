@@ -1,9 +1,9 @@
 import React from 'react';
 import DataTable from "react-data-table-component";
+import DeliveryInfo from "./DeliveryInfo";
 
 function OrderDataTable(props) {
-  
-  const {data, onSelectionChange, deliveryBoys} = props;
+  const {data, onRowSelect, onSelectionChange, deliveryBoys} = props;
   const columns = [
     {
       name: 'Crate',
@@ -109,22 +109,39 @@ function OrderDataTable(props) {
         }
         return '';
       }
+    },
+    {
+      name: 'Delivered by',
+      selector: 'delivery',
+      cell: (row, idx) => {
+        let {delivery} = row;
+        const {driver_id, deliver_date} = delivery;
+        if(driver_id && deliver_date) {
+          let driver = deliveryBoys.get(driver_id);
+          return driver ? driver.name : 'Not Delivered yet';
+        }
+        return '';
+      }
     }
   ];
 
   console.log("Rerendering Table");
 
   return (
-    
-    <DataTable
-      striped={true}
-      noHeader
-      selectableRows
-      onSelectedRowsChange={onSelectionChange}
-      dense={true}
-      data={data}
-      columns={columns}
-    />
+    <div>
+      <DataTable
+        striped={true}
+        noHeader
+        selectableRows
+        onSelectedRowsChange={onSelectionChange}
+        dense={true}
+        data={data}
+        columns={columns}
+        onRowClicked={(row, e) => {
+          onRowSelect(row);
+        }}
+      />
+    </div>
   )
 };
 

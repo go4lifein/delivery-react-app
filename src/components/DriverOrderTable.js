@@ -1,19 +1,19 @@
 import React from 'react';
 import { withRouter } from "react-router";
 import DataTable from "react-data-table-component";
-
+import PhoneIcon from '@material-ui/icons/Phone';
 
 function DriverOrderTable(props) {
   
   const {data, history} = props;
   console.log(history);
   const columns = [
-    {
-      name: 'Crate',
-      selector: 'crateId',
-      sortable: true,
-      width: '70px'
-    },
+    // {
+    //   name: 'Crate',
+    //   selector: 'crateId',
+    //   sortable: true,
+    //   width: '70px'
+    // },
     {
       name: 'Name',
       selector: 'name',
@@ -24,7 +24,18 @@ function DriverOrderTable(props) {
       name: 'Phone',
       selector: 'phone',
       sortable: true,
-      width: '140px'
+      width: '140px',
+      cell: (row, idx) => {
+        let {phone} = row;
+        return (
+          // address.hub
+          <div>
+            <a href={`tel:+91${phone}`} className="flex middle">
+              <PhoneIcon /> {phone}
+            </a>
+          </div>
+        );
+      }
     },
     {
       name: 'Hub',

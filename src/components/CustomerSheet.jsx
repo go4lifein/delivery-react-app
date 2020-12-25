@@ -1,9 +1,7 @@
-import CircularProgress from '@material-ui/core/CircularProgress';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DataTable from "react-data-table-component";
 
-import {getAllOrders} from '../api/admin';
 import {updateOrdersData} from '../actions/admin.actions';
 import Loading from './Loading';
 
@@ -105,7 +103,7 @@ class CustomerSheet extends Component {
   render() {
     let loading = true;
 
-    let {customers, areas, subareas, categories, hubs, orders} = this.props;
+    let {customers } = this.props;
     
     let data = [];
     if(customers) {

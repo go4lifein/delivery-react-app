@@ -1,7 +1,7 @@
-import React, {useState, Suspense, lazy} from 'react';
+import React, { Suspense, lazy} from 'react';
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+// import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline} from '@material-ui/core';
 
@@ -11,12 +11,11 @@ const Admin = lazy(() => import('./containers/Admin.jsx'));
 const Driver = lazy(() => import('./containers/Driver.jsx'));
 
 function App() {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  let [themeType = 'light', setTheme] = useState(prefersDarkMode ? 'light' : 'light');
+  // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
   const theme = createMuiTheme({
     palette: {
-      type: themeType,
+      // type: 'light',
       // primary: colors.green[400],
       secondary: {
         light: '#ff4081',
@@ -25,8 +24,8 @@ function App() {
         contrastText: '#fff'
       },
       background: {
-        default: themeType === 'dark' ? '#232323': '#fff',
-        paper: themeType === 'dark' ? '#161616': '#fff'
+        // default: themeType === 'dark' ? '#232323': '#fff',
+        // paper: themeType === 'dark' ? '#161616': '#fff'
       },
     },
   });

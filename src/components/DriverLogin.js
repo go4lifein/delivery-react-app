@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import { Button, Card, CardContent, CardHeader, Divider, Link as A, TextField } from '@material-ui/core';
 
+import {login} from '../api/driver';
 import {updateDriver} from '../actions/driver.actions';
 
 function mapStateToProps(state) {
@@ -20,12 +21,16 @@ function mapDispatchToProps(dispatch) {
 
 class LoginAdmin extends Component {
   state = {
-    phone: '',
+    phone: '7056206263',
   }
   handleSubmit = () => {
-    let {phone } = this.state;
     let {onUpdateDriver} = this.props;
-    onUpdateDriver({phone: 7056206263, name: 'Vishal', id: 1})
+    let {phone } = this.state;
+    login({phone})
+    .then(res => {
+      onUpdateDriver(res.data);
+    })
+    .catch(err => alert("Please check phone number"));
   }
   render() {
     let {phone} = this.state;

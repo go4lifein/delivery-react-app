@@ -7,7 +7,8 @@ import ReplayIcon from '@material-ui/icons/Replay';
 const videoConstraints = {
   // width: 1280,
   // height: 720,
-  facingMode: "user"
+  // facingMode: "user",
+  facingMode: "environment"
 };
  
 const WebcamCapture = ({onCapture, image}) => {

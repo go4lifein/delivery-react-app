@@ -295,6 +295,8 @@ class OrderDeliveryForm extends React.Component {
         </Card>
         <div className="pv-10">
           <Button
+            color="primary"
+            variant="contained"
             onClick={onSubmit}
           >
             Submit
@@ -349,7 +351,7 @@ class OrderDeliveryForm extends React.Component {
             </Typography>
           </Toolbar>
         </AppBar>
-        <div style={{marginTop: 60, padding: 10}}>
+        <div style={{margin: '60px 10px 20px 10px', padding: '30px 10px'}}>
           <Typography variant="h4" >
             {tutorialSteps[activeStep].label}
           </Typography>
