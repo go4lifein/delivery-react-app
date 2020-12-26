@@ -70,9 +70,12 @@ class CustomerSheet extends Component {
     ];
     data.forEach(productItem => {
       const {crates, unit, product, product_id} = productItem;
-      crates.forEach(crate => {
+      crates.forEach((crate, i) => {
         const {crateId, total, quantity} = crate;
-        let row = [product_id, product, crateId, `${total} ${unit}`, quantity];
+        let row = ['', '', crateId, `${total} ${unit}`, quantity];
+        if(i === 0) {
+          row = [product_id, product, crateId, `${total} ${unit}`, quantity];
+        }
         rows.push(row);
       });
     });

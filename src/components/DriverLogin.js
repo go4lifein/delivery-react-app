@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
-import { Button, Card, CardContent, CardHeader, Divider, Link as A, TextField } from '@material-ui/core';
+import { Button, Card, CardContent, CardHeader, Divider, TextField } from '@material-ui/core';
 
 import {login} from '../api/driver';
 import {updateDriver} from '../actions/driver.actions';

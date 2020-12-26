@@ -1,5 +1,5 @@
 import {API_URL , request} from '../helpers/utils';
-import axios, { post } from 'axios';
+import { post } from 'axios';
 
 export function login(data) {
   let url = `${API_URL}/driver/login`;

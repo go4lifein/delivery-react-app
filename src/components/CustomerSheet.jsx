@@ -131,7 +131,7 @@ class CustomerSheet extends Component {
         } else {
           const { total, unit, quantity} = product;
           let row = [
-            customer.crateId, `${customer.address.hub}`, `${customer.name}`, `${phone}`,`${product.product}`, `${total} ${unit}`, `${quantity}`
+            '', '', '', '',`${product.product}`, `${total} ${unit}`, `${quantity}`
           ];
           rows.push(row);
         }

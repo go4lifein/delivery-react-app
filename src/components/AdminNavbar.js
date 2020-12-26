@@ -6,7 +6,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import { Divider } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import { connect } from 'react-redux';
 
 import {updateAdmin} from '../actions/admin.actions';
@@ -59,6 +61,14 @@ function MenuAppBar(props) {
           </Typography>
           
           <div>
+            
+            <IconButton 
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
+              <RefreshIcon />
+            </IconButton>
             <Link to="/admin/customer" className="nav-link">
               <Button
                 variant="outlined"

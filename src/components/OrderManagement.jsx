@@ -6,7 +6,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import { Button, Divider, TextField } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import TextField from '@material-ui/core/TextField';
+import DownloadIcon from '@material-ui/icons/CloudDownload';
+import exportCSV from '../helpers/exportCSV';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
@@ -35,7 +39,7 @@ class OrderManagement extends Component {
     this.state = {
       loading: true,
       phone: "",
-      selectedArea: 'all',
+      selectedArea: [],
       selectedSubarea: 'all',
       selectedHub: 'all',
       selectedDriver: 'all',
@@ -46,43 +50,88 @@ class OrderManagement extends Component {
   }
   hideAddress = () => this.setState({hiddenAddress: true})
   
+  exportData = () => {
+    let {customers } = this.props;
+    let data = Array.from(customers.values());
+    data = data.filter(customer => (customer.onlyDairy === false));
+
+    let rows = [
+      ['Crate', 'Hub', 'Name', 'Phone', 'Product', 'Total', 'Qty'],
+    ];
+    exportCSV(rows, `Warehouse Sheet - ${new Date().toLocaleDateString()}.csv`);
+  }
   render() {
     let loading = true;
-    let {selectedArea, selectedHub, selectedSubarea, selectedDriver, showWithoutDairy, phone, showDelivered } = this.state;
-    let {customers, locations, areas, subareas, hubs, deliveryBoys} = this.props;
+    let {selectedArea, selectedHub, selectedSubarea, selectedDriver, orderType, phone, showDelivered } = this.state;
+    let {customers, locations, hubs, deliveryBoys} = this.props;
     let deliveryBoysData = deliveryBoys ? Array.from(deliveryBoys.values()) : [];
     deliveryBoysData = deliveryBoysData.sort((a, b) => (a.name.localeCompare(b.name)));
 
-    if(selectedHub !== 'all') {
-      let filteredAreas = locations.get(selectedHub);
-      areas = Array.from(filteredAreas.keys());
+    /* 
+      locations = {
+        "Gurgaon": {
+          "Sector 69": [
+            "Tulip White"
+          ]
+        },
+        "South Delhi": {
 
-      areas = areas.sort((a, b) => a.localeCompare(b));
-      
-      let subareasCollection = selectedArea !== 'all' ? [filteredAreas.get(selectedArea)] : Array.from(filteredAreas.values());
-      subareas = [];
-      subareasCollection.forEach(areaSubareas => {
-        areaSubareas.forEach(subarea => subareas.push(subarea));
-      });
-      subareas = subareas.sort((a, b) => a.localeCompare(b));
-    }
-
-    if(selectedArea !== 'all') {
-      
-      let filteredAreas = new Map();
-      Array.from(locations.keys()).forEach(hub => {
-        if(locations.get(hub).has(selectedArea)) {
-          filteredAreas = locations.get(hub);
         }
-      })
-
-      let subareasCollection = [filteredAreas.get(selectedArea)]
-      subareas = [];
-      subareasCollection.forEach(areaSubareas => {
-        areaSubareas.forEach(subarea => subareas.push(subarea));
+      }
+    */
+    // console.log(locations);
+    let areas = [], subareas = [];
+    
+    if(locations) locations.forEach((hub, hubName) => {
+      hub.forEach((area, areaName) => {
+        // if valid, insert into areas
+        if( (hubName === selectedHub) || (selectedHub === 'all') ) {
+          areas.push(areaName);
+        }
+        
+        if( selectedArea.includes(areaName) || selectedArea.length === 0 ) {
+          subareas.concat(area);
+        }
       });
-      subareas = subareas.sort((a, b) => a.localeCompare(b));
-    }
+    });
+    areas = areas.sort((a, b) => a.localeCompare(b));
+
+    // if(selectedHub !== 'all') {
+    //   let filteredAreas = locations.get(selectedHub);
+    //   areas = Array.from(filteredAreas.keys());
+
+    //   areas = areas.sort((a, b) => a.localeCompare(b));
+      
+    //   let subareasCollection =  Array.from(filteredAreas.values());
+    //   // selectedArea !== 'all' ? [filteredAreas.get(selectedArea)] : Array.from(filteredAreas.values());
+    //   if(selectedArea && selectedArea.length) {
+    //     selectedArea.forEach(area => {
+    //       subareasCollection.concat(filteredAreas.get(area));
+    //     })
+    //   }
+    //   subareas = [];
+    //   subareasCollection.forEach(areaSubareas => {
+    //     areaSubareas.forEach(subarea => subareas.push(subarea));
+    //   });
+    //   subareas = subareas.sort((a, b) => a.localeCompare(b));
+    // }
+
+    // if(selectedArea && selectedArea.length) {
+      
+    //   let filteredAreas = new Map();
+    //   Array.from(locations.keys()).forEach(hub => {
+    //     if(locations.get(hub).has(selectedArea)) {
+    //       filteredAreas = locations.get(hub);
+    //     }
+    //   })
+
+    //   let subareasCollection = [filteredAreas.get(selectedArea)]
+    //   subareas = [];
+    //   subareasCollection.forEach(areaSubareas => {
+    //     areaSubareas.forEach(subarea => subareas.push(subarea));
+    //   });
+    //   subareas = subareas.sort((a, b) => a.localeCompare(b));
+    // }
     
     let data = [];
     if(customers) {
@@ -93,22 +142,35 @@ class OrderManagement extends Component {
         if(selectedHub !== 'all') {
           if(item.address.hub !== selectedHub) return false;
         }
-        if(selectedArea !== 'all') {
-          if(item.address.area !== selectedArea) return false;
+        if(selectedArea.length) {
+          if(!selectedArea.includes(item.address.area)) return false;
         }
-        if(selectedSubarea !== 'all') {
-          if(item.address.subarea !== selectedSubarea) return false;
-        }
+        // if(selectedSubarea !== 'all') {
+        //   if(item.address.subarea !== selectedSubarea) return false;
+        // }
         if(selectedDriver !== 'all') {
-          if(item.delivery_person_id !== selectedDriver) return false;
+          if(selectedDriver === 'none') {
+            if(item.delivery_person_id !== null) return false;
+          } else if(item.delivery_person_id !== selectedDriver) return false;
         }
         if(showDelivered) {
           if(item.delivery.deliver_date) return true;
           return false;
         }
-        if(showWithoutDairy) {
-          if(item.hasNoDairy) return true;
-          return false;
+        if(orderType) {
+          console.log(orderType)
+          switch (orderType) {
+            case 'all':
+              return true;
+            case 'dairy':
+              return item.onlyDairy;
+            case 'grocery':
+              return item.hasNoDairy;
+            case 'both':
+              return item.hasNoDairy === false && item.onlyDairy === false;
+            default:
+              return true;
+          }
         }
         if(phone) {
           if(item.phone.indexOf(phone) !== -1) return true;
@@ -159,36 +221,24 @@ class OrderManagement extends Component {
                   </FormControl>
               </div>
               
-              <div style={{marginRight: 20, width: 180}}>
+              <div style={{marginRight: 20, width: 250}}>
                 <FormControl style={{width: '100%'}}>
                   <Autocomplete
                     labelId="area-filter"
                     options={areas}
                     // getOptionLabel={partner => partner.name}
+                    multiple={true}
                     renderInput={(params) => <TextField {...params} label="Area" />}
                     onChange={(e, selectedArea) => {
                       console.log(selectedArea);
-                      this.setState({selectedArea : selectedArea || 'all', selectedSubarea: 'all'})
-                    }}
-                  />
-                  {/* <Select
-                    style={{width: 180}}
-                    value={selectedArea}
-                    onChange={(e) => {
-                      let selectedArea = e.target.value;
                       this.setState({selectedArea, selectedSubarea: 'all'})
                     }}
-                  >
-                    <MenuItem value="all">All</MenuItem>
-                    {areas.map(item => (
-                      <MenuItem value={item} key={item}>{item}</MenuItem>
-                    ))}
-                  </Select> */}
+                  />
                 </FormControl>
               </div>
 
               
-              <div style={{marginRight: 20, width: 180}}>
+              {/* <div style={{marginRight: 20, width: 180}}>
                 <FormControl style={{width: '100%'}}>
                   <Autocomplete
                     labelId="area-filter"
@@ -199,22 +249,8 @@ class OrderManagement extends Component {
                       this.setState({ selectedSubarea: selectedSubarea || 'all'})
                     }}
                   />
-                  {/* <Select
-                    labelId="subarea-filter"
-                    style={{width: 180}}
-                    value={selectedSubarea}
-                    onChange={(e, b) => {
-                      let selectedSubarea = e.target.value;
-                      this.setState({selectedSubarea});
-                    }}
-                  >
-                    <MenuItem value="all">All</MenuItem>
-                    {subareas.map(item => (
-                      <MenuItem value={item} key={item}>{item}</MenuItem>
-                    ))}
-                  </Select> */}
                   </FormControl>
-              </div>
+              </div> */}
 
               <div style={{marginRight: 20}}>
                 <FormControl>
@@ -229,32 +265,13 @@ class OrderManagement extends Component {
                     }}
                   >
                     <MenuItem value="all">All</MenuItem>
+                    <MenuItem value="none">None</MenuItem>
                     {deliveryBoysData.map(item => (
                       <MenuItem value={item.id} key={`driver-${item.id}`}>{item.name}</MenuItem>
                     ))}
                   </Select>
                 </FormControl>
               </div>
-
-              {/* <div style={{marginRight: 20}}>
-                <FormControl>
-                  <InputLabel id="driver-filter">Delivered by</InputLabel>
-                  <Select
-                    labelId="driver-filter"
-                    style={{width: 200}}
-                    value={selectedDriver}
-                    onChange={(e, b) => {
-                      let selectedDriver = e.target.value;
-                      this.setState({selectedDriver});
-                    }}
-                  >
-                    <MenuItem value="all">All</MenuItem>
-                    {deliveryBoysData.map(item => (
-                      <MenuItem value={item.id} key={`driver-${item.id}`}>{item.name}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </div> */}
 
               <div style={{marginRight: 20}}>
                 <FormControlLabel
@@ -269,17 +286,23 @@ class OrderManagement extends Component {
                 />
               </div>
 
+
               <div style={{marginRight: 20}}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={showWithoutDairy}
-                      onChange={(e, showWithoutDairy) => this.setState({showWithoutDairy})}
-                      color="primary"
-                    />
-                  }
-                  label="Show Customers Without Dairy"
-                />
+                <FormControl>
+                  <InputLabel id="order-type-filter">Order Type</InputLabel>
+                  <Select
+                    labelId="order-type-filter"
+                    style={{width: 200}}
+                    onChange={(e) => {
+                      this.setState({orderType: e.target.value});
+                    }}
+                  >
+                    <MenuItem value="all">All</MenuItem>
+                    <MenuItem value="dairy">Dairy</MenuItem>
+                    <MenuItem value="grocery">Grocery</MenuItem>
+                    <MenuItem value="both">Dairy + Grocery</MenuItem>
+                  </Select>
+                </FormControl>
               </div>
 
               <div style={{marginRight: 20}}>
@@ -303,6 +326,7 @@ class OrderManagement extends Component {
             
             <AssignOrders 
               data={data}
+              exportData={this.exportData}
               deliveryBoys={deliveryBoys}
             />
           </div>
@@ -353,7 +377,7 @@ const AssignOrders = connect(
   }
 
   return (
-    <div>
+    <div id="assign-orders">
       <Divider />
       <div className="flex right middle">
         <div className="p-10">
@@ -383,6 +407,17 @@ const AssignOrders = connect(
               </Select>
             </FormControl>
           </div>
+        </div>
+        <div className="p-10">
+          <Button 
+            startIcon={<DownloadIcon />}
+            color="secondary"
+            variant="outlined"
+            onClick={props.exportData}
+            disabled={true}
+          >
+            Download Excel
+          </Button>
         </div>
       </div>
       <DeliveryInfo 

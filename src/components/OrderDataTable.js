@@ -64,6 +64,16 @@ function OrderDataTable(props) {
       }
     },
     {
+      name: 'Order Type',
+      selector: 'order-type',
+      width: '80px',
+      cell: (row, idx) => {
+        if(row.onlyDairy) return 'Dairy';
+        else if(row.hasNoDairy) return 'Grocery';
+        else return 'Dairy + Grocery';
+      }
+    },
+    {
       name: 'Gable Top',
       selector: 'gable-top',
       width: '80px',
@@ -74,6 +84,24 @@ function OrderDataTable(props) {
           let count = 0;
           dairyProducts.forEach(item => {
             if(item.product_id === 811) count += item.quantity;
+          });
+          if(count) return count;
+          else return '';
+        }
+        return '';
+      }
+    },
+    {
+      name: 'Milk Packets',
+      selector: 'milk-packets',
+      width: '80px',
+      cell: (row, idx) => {
+        let {products} = row;
+        if('Dairy' in products) {
+          let dairyProducts = products['Dairy'];
+          let count = 0;
+          dairyProducts.forEach(item => {
+            if(item.product_id === 1) count += item.quantity;
           });
           if(count) return count;
           else return '';
