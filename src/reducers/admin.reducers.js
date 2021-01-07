@@ -90,7 +90,7 @@ export const setAdmin = (state = initialState, action = {}) => {
 
       orders.forEach(order => {
         let { 
-          order_id, 
+          order_id, crate_id,
           customer_id, customer_name, phone_number, 
           address_id, house_number, subarea, area, hub,
           category, product, quantity,
@@ -153,6 +153,7 @@ export const setAdmin = (state = initialState, action = {}) => {
             name: customer_name,
             phone: phone_number,
             order_id,
+            crate_id,
             address: {
               address_id,
               house_number, subarea,
@@ -187,6 +188,14 @@ export const setAdmin = (state = initialState, action = {}) => {
           customer[1].hasNoDairy = false;
         }
       }
+      
+      for(const customer of customers) {
+        const {products} = customer[1];
+        if(hasOnlyDairyProducts(products)) {
+          customer[1].crateId = crateId;
+          crateId++;
+        }
+      }
 
       orders.forEach(order => {
         let { 
@@ -200,7 +209,8 @@ export const setAdmin = (state = initialState, action = {}) => {
           let crateData = {
             quantity,
             total: package_size * quantity,
-            crateId: customers.get(customer_id).crateId
+            crateId: customers.get(customer_id).crateId,
+            crate_id: customers.get(customer_id).crate_id
           }
           if(productsCollection.has(product_id)) {
             let productValue = productsCollection.get(product_id);

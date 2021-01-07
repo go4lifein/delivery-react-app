@@ -51,14 +51,61 @@ class OrderManagement extends Component {
   hideAddress = () => this.setState({hiddenAddress: true})
   
   exportData = () => {
-    let {customers } = this.props;
+    let {customers, deliveryBoys } = this.props;
     let data = Array.from(customers.values());
-    data = data.filter(customer => (customer.onlyDairy === false));
 
     let rows = [
-      ['Crate', 'Hub', 'Name', 'Phone', 'Product', 'Total', 'Qty'],
+      ['order_id', 'Crate', 'Name', 'Phone', 'Hub', 'Region', 'Locality', 'House', 'Order Type', 'Gable Top', 'Milk Packets', 'Paneer', 'Driver', 'Delivered By'],
     ];
-    exportCSV(rows, `Warehouse Sheet - ${new Date().toLocaleDateString()}.csv`);
+    data.forEach(item => {
+      const {order_id, crate_id, name, phone, address, onlyDairy, hasNoDairy, products, delivery_person_id, delivery } = item;
+      const {hub, area, subarea, house_number} = address;
+      const {driver_id, deliver_date} = delivery;
+      let order_type;
+      
+      if(onlyDairy) order_type = 'Dairy'
+      else if(hasNoDairy) order_type = 'Grocery'
+      else order_type = 'Dairy + Grocery';
+
+      let gable_top = 0, milk_packets = 0, paneer = 0, driverName = '', deliveredBy = '';
+      if('Dairy' in products) {
+        let dairyProducts = products['Dairy'];
+        dairyProducts.forEach(item => {
+          if(item.product_id === 811) gable_top += item.quantity;
+          if(item.product_id === 1) milk_packets += item.quantity;
+          if(item.product_id === 225) paneer += item.total;
+        });
+      }
+
+      if(delivery_person_id) {
+        let driver = deliveryBoys.get(delivery_person_id);
+        if(driver) driverName = driver.name;
+      }
+
+      if(driver_id && deliver_date) {
+        let driver = deliveryBoys.get(driver_id);
+        if(driver) deliveredBy = driver.name;
+      }
+
+      let row = [
+        order_id,
+        crate_id,
+        name, 
+        phone,
+        hub,
+        area,
+        subarea,
+        `"${house_number}"`,
+        order_type,
+        gable_top,
+        milk_packets,
+        paneer,
+        driverName,
+        deliveredBy
+      ];
+      rows.push(row);
+    });
+    exportCSV(rows, `Delivery Sheet - ${new Date().toLocaleDateString()}.csv`);
   }
   render() {
     let loading = true;
@@ -138,6 +185,17 @@ class OrderManagement extends Component {
       loading = false
       data = Array.from(customers.values());
 
+      /* 
+      Clear all Filters
+          phone: "",
+          selectedArea: [],
+          selectedSubarea: 'all',
+          selectedHub: 'all',
+          selectedDriver: 'all',
+          showWithoutDairy: false,
+          showDelivered: false,
+          orderType: 'all'
+       */
       data = data.filter((item) => {
         if(selectedHub !== 'all') {
           if(item.address.hub !== selectedHub) return false;
@@ -309,14 +367,17 @@ class OrderManagement extends Component {
                 <Button
                   color="primary"
                   onClick={() => {
-                    this.setState({
-                      phone: "",
-                      selectedArea: 'all',
-                      selectedSubarea: 'all',
-                      selectedHub: 'all',
-                      selectedDriver: 'all',
-                      showWithoutDairy: false
-                    })
+                    window.location.reload();
+                    // this.setState({
+                    //   phone: "",
+                    //   selectedArea: [],
+                    //   selectedSubarea: 'all',
+                    //   selectedHub: 'all',
+                    //   selectedDriver: 'all',
+                    //   showWithoutDairy: false,
+                    //   showDelivered: false,
+                    //   orderType: 'all'
+                    // })
                   }}
                 >
                   Clear All Filters
@@ -414,7 +475,7 @@ const AssignOrders = connect(
             color="secondary"
             variant="outlined"
             onClick={props.exportData}
-            disabled={true}
+            // disabled={true}
           >
             Download Excel
           </Button>

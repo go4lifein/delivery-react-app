@@ -82,7 +82,7 @@ export const setDriver = (state = initialState, action = {}) => {
 
       orders.forEach(order => {
         let { 
-          order_id, 
+          order_id, crate_id,
           customer_id, customer_name, phone_number, 
           address_id, house_number, subarea, area, hub,
           category, product, quantity,
@@ -179,40 +179,8 @@ export const setDriver = (state = initialState, action = {}) => {
           customer[1].onlyDairy = false;
         }
       }
-
-      orders.forEach(order => {
-        let { 
-          customer_id, 
-          category, product, quantity,
-          package_size, package_type, product_id
-        } = order;
-
-        if(category !== 'Dairy') {
-          
-          let crateData = {
-            quantity,
-            total: package_size * quantity,
-            crateId: customers.get(customer_id).crateId
-          }
-          if(productsCollection.has(product_id)) {
-            let productValue = productsCollection.get(product_id);
-            let {crates} = productValue;
-            crates.push(crateData);
-
-            productValue.crates = crates;
-          } else {
-            let productData = {
-              package_size,
-              product,
-              unit: package_type,
-              crates: [crateData]
-            }
-            productsCollection.set(product_id, productData);
-          }
-        }
-      })
       
-      return {...state, customers, locations, productsCollection, products, areas, subareas, categories, hubs, orders};
+      return {...state, customers, locations,  areas, subareas, hubs, orders};
     default:
       return state;
   }

@@ -186,8 +186,9 @@ function Review ({state, props}) {
           variant="contained"
           onClick={onSubmit}
           disabled={loading}
+          startIcon={loading ? <CircularProgress size={12} /> : null}
         >
-          Submit {loading && <CircularProgress />}
+          Submit
         </Button>
       </div>
     </div>

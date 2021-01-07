@@ -8,7 +8,7 @@ function OrderDataTable(props) {
   const columns = [
     {
       name: 'Crate',
-      selector: 'crateId',
+      selector: 'crate_id',
       sortable: true,
       width: '70px'
     },

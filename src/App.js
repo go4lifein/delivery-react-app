@@ -24,8 +24,8 @@ function App() {
         contrastText: '#fff'
       },
       background: {
-        // default: themeType === 'dark' ? '#232323': '#fff',
-        // paper: themeType === 'dark' ? '#161616': '#fff'
+        default:'#fff',
+        paper:'#fff'
       },
     },
   });

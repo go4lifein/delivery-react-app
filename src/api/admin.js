@@ -34,6 +34,18 @@ export function assignDrivers(data) {
   });
 }
 
+export function updateCrateId(data) {
+  let url = `${API_URL}/order/updateCrateId`;
+  return request({
+    url: url,
+    method: 'post',
+    data,
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+}
+
 export function login(data) {
   let url = `${API_URL}/admin/login`;
   return request({

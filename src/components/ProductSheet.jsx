@@ -44,10 +44,10 @@ class CustomerSheet extends Component {
             <tbody>
             {
               crates.map(crate => {
-                const {crateId, total, quantity} = crate;
+                const { total, quantity, crate_id} = crate;
                 return (
-                  <tr key={product + crateId.toString()}>
-                    <td className="fixed-width-column">{crateId}</td>
+                  <tr key={product + crate_id.toString()}>
+                    <td className="fixed-width-column">{crate_id}</td>
                     <td className="fixed-width-column">{total} {unit}</td>
                     <td className="fixed-width-column">{quantity}</td>
                   </tr>

@@ -16,5 +16,4 @@ function downloadCSV(array, filename = 'export.csv') {
   link.setAttribute('download', filename);
   link.click();
 }
-
 export default downloadCSV;

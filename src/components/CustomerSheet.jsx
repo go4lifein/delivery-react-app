@@ -5,10 +5,11 @@ import DownloadIcon from '@material-ui/icons/CloudDownload';
 import Button from '@material-ui/core/Button';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import exportCSV from '../helpers/exportCSV';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import {updateOrdersData} from '../actions/admin.actions';
+import {updateCrateId} from '../api/admin';
 import Loading from './Loading';
-const sortIcon = <ArrowDownward />;
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -32,10 +33,33 @@ class CustomerSheet extends Component {
   updateState = state => {
     this.setState({ selectedRows: state.selectedRows });
   }
+  createCrateNumbers = () => {
+    this.setState({
+      creatingCrate: true
+    });
+    let {customers } = this.props;
+    let orderCrateIds = [
+      /*
+      {
+        order_id: 
+        crate_id: 
+      } 
+      */
+    ];
+
+    customers.forEach(item => {
+      const {order_id, crateId} = item;
+      orderCrateIds.push({order_id, crate_id: crateId});
+    });
+    updateCrateId({orderCrateIds})
+    .then(res => {
+      window.location.reload();
+    })
+  }
   columns = [
     {
       name: 'Crate',
-      selector: 'crateId',
+      selector: 'crate_id',
       sortable: true,
       width: '90px'
     },
@@ -143,10 +167,13 @@ class CustomerSheet extends Component {
     let loading = true;
 
     let {customers } = this.props;
+    let {creatingCrate } = this.state;
     
     let data = [];
+
     if(customers) {
       loading = false;
+      console.log(customers);
       data = Array.from(customers.values());
       data = data.filter(customer => (customer.onlyDairy === false))
     }
@@ -160,16 +187,34 @@ class CustomerSheet extends Component {
               <DataTable
                 data={data}
                 columns={this.columns}
-                sortIcon={sortIcon}
+                sortIcon={<ArrowDownward />}
                 actions={
-                  <Button 
-                    startIcon={<DownloadIcon />}
-                    color="secondary"
-                    variant="outlined"
-                    onClick={this.exportData}
-                  >
-                    Download Excel
-                  </Button>
+                  <div>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      startIcon={
+                        // <CircularProgress size={12} />
+                        creatingCrate ? <CircularProgress size={12} /> : null
+                      }
+                      disabled={creatingCrate}
+                      style={{
+                        marginRight: 4
+                      }}
+                      onClick={this.createCrateNumbers}
+                    >
+                      Create Crate Numbers
+                    </Button>
+
+                    <Button 
+                      startIcon={<DownloadIcon />}
+                      color="secondary"
+                      variant="outlined"
+                      onClick={this.exportData}
+                    >
+                      Download Excel
+                    </Button>
+                  </div>
                 }
                 // onSelectedRowsChange={this.updateState}
                 // selectableRows
