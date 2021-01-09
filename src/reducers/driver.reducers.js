@@ -145,6 +145,7 @@ export const setDriver = (state = initialState, action = {}) => {
             name: customer_name,
             phone: phone_number,
             order_id,
+            crate_id,
             address: {
               address_id,
               house_number, subarea,
@@ -162,15 +163,12 @@ export const setDriver = (state = initialState, action = {}) => {
         }
       });
 
-      let crateId = 1;
       for(const customer of customers) {
         const {products} = customer[1];
         if(hasOnlyDairyProducts(products)) {
           customer[1].onlyDairy = true;
         } else {
           customer[1].onlyDairy = false;
-          customer[1].crateId = crateId;
-          crateId++;
         }
         
         if(hasNoDairy(products)) {

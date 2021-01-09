@@ -173,6 +173,8 @@ function OrderDataTable(props) {
         onRowClicked={(row, e) => {
           onRowSelect(row);
         }}
+        pagination={true}
+        paginationPerPage={30}
       />
     </div>
   )
