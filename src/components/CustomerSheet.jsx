@@ -64,6 +64,12 @@ class CustomerSheet extends Component {
       width: '90px'
     },
     {
+      name: 'Order Id',
+      selector: 'order_id',
+      sortable: true,
+      width: '90px'
+    },
+    {
       name: 'Hub',
       sortable: true,
       width: '100px',
@@ -134,28 +140,44 @@ class CustomerSheet extends Component {
     data = data.filter(customer => (customer.onlyDairy === false));
 
     let rows = [
-      ['Crate', 'Hub', 'Name', 'Phone', 'Product', 'Total', 'Qty'],
+      ['Crate', 'Hub', 'Name', 'Phone', 'Address', 'Product', 'Category', 'Total', 'Qty'],
     ];
     data.forEach(customer => {
-      const {products, phone} = customer;
+      const {products, phone, address} = customer;
+      const {house_number, subarea, area, hub} = address;
+      let addressString = `"${house_number}, ${subarea}, ${area}"`;
       const categories = Object.entries(products);
       let allProducts = [];
       categories.forEach(([category, value]) => {
         if(category !== 'Dairy') {
-          value.forEach(product => allProducts.push(product));
+          value.forEach(product => {
+            product.category = category;
+            allProducts.push(product);
+          });
         }
       });
       allProducts.forEach((product, i) => {
+        const { total, unit, quantity, category} = product;
+        console.log(product);
         if(i === 0) {
-          const { total, unit, quantity} = product;
           let row = [
-            customer.crateId, `${customer.address.hub}`, `${customer.name}`, `${phone}`,`${product.product}`, `${total} ${unit}`, `${quantity}`
+            customer.crate_id, 
+            `${hub}`, 
+            `${customer.name}`, 
+            `${phone}`,
+            addressString,
+            `"${product.product}"`,
+            `${category}`,
+            `${total} ${unit}`, 
+            `${quantity}`
           ];
           rows.push(row);
         } else {
-          const { total, unit, quantity} = product;
           let row = [
-            '', '', '', '',`${product.product}`, `${total} ${unit}`, `${quantity}`
+            '', '', '', '', '',
+            `"${product.product}"`, 
+            `${category}`,
+            `${total} ${unit}`, `${quantity}`
           ];
           rows.push(row);
         }

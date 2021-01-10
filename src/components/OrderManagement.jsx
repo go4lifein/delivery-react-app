@@ -233,6 +233,7 @@ class OrderManagement extends Component {
         if(phone) {
           if(item.phone.indexOf(phone) !== -1) return true;
           if(item.name.toLowerCase().indexOf(phone.toLowerCase()) !== -1) return true;
+          if(item.order_id.toString().indexOf(phone.toLowerCase()) !== -1) return true;
           return false;
         }
         return true;
@@ -250,11 +251,11 @@ class OrderManagement extends Component {
               className="flex middle"
               style={{padding: 10}}
             >
-
-              <div style={{marginRight: 20, width: 150}}>
+              <div style={{marginRight: 20, width: 220}}>
                 <TextField
                   value={phone}
-                  label="Phone or Name"
+                  fullWidth
+                  label="Phone or Name or Order Id"
                   onChange={(e) => this.setState({phone: e.target.value})}
                 />
               </div>
@@ -368,16 +369,6 @@ class OrderManagement extends Component {
                   color="primary"
                   onClick={() => {
                     window.location.reload();
-                    // this.setState({
-                    //   phone: "",
-                    //   selectedArea: [],
-                    //   selectedSubarea: 'all',
-                    //   selectedHub: 'all',
-                    //   selectedDriver: 'all',
-                    //   showWithoutDairy: false,
-                    //   showDelivered: false,
-                    //   orderType: 'all'
-                    // })
                   }}
                 >
                   Clear All Filters

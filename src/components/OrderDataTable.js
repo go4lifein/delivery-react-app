@@ -13,6 +13,12 @@ function OrderDataTable(props) {
       width: '70px'
     },
     {
+      name: 'Order Id',
+      selector: 'order_id',
+      sortable: true,
+      width: '200px'
+    },
+    {
       name: 'Name',
       selector: 'name',
       sortable: true,
