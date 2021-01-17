@@ -38,7 +38,6 @@ class CustomerSheet extends Component {
       sortable: false,
       cell: (row, idx) => {
         const {crates, unit, product} = row;
-        console.log(row);
         let total_qty = 0, total_val = 0; 
 
         return (
@@ -57,7 +56,7 @@ class CustomerSheet extends Component {
                   total_qty += quantity;
                   total_val += total;
                   return (
-                    <tr key={product + crate_id.toString()}>
+                    <tr key={product + Math.random().toString()}>
                       <td className="fixed-width-column">{crate_id}</td>
                       <td className="fixed-width-column">{total} {unit}</td>
                       <td className="fixed-width-column">{quantity}</td>

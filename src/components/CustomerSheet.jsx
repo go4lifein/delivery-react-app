@@ -153,15 +153,13 @@ class CustomerSheet extends Component {
       const categories = Object.entries(products);
       let allProducts = [];
       categories.forEach(([category, value]) => {
-        if(category !== 'Dairy') {
-          value.forEach(product => {
-            product.category = category;
-            if(removeSelectedDairy) {
-              if(product.product.toLowerCase().includes("milk") || product.product.toLowerCase().includes("paneer")) return;
-            }
-            allProducts.push(product);
-          });
-        }
+        value.forEach(product => {
+          product.category = category;
+          if(removeSelectedDairy) {
+            if(product.product.toLowerCase().includes("milk") || product.product.toLowerCase().includes("paneer")) return;
+          }
+          allProducts.push(product);
+        });
       });
       allProducts.forEach((product, i) => {
         const { total, unit, quantity, category} = product;
@@ -196,29 +194,26 @@ class CustomerSheet extends Component {
 
     let {customers } = this.props;
     let {creatingCrate, removeSelectedDairy, search } = this.state;
-    
+    console.log("removeSelectedDairy", removeSelectedDairy);
     
     let data = [];
 
     if(customers) {
       loading = false;
       data = Array.from(customers.values());
+
       data.forEach(customer => {
-        const {products, phone, address} = customer;
-        const {house_number, subarea, area, hub} = address;
-        let addressString = `"${house_number}, ${subarea}, ${area}"`;
+        const {products} = customer;
         const categories = Object.entries(products);
         let allProducts = [];
         categories.forEach(([category, value]) => {
-          if(category !== 'Dairy') {
-            value.forEach(product => {
-              product.category = category;
-              if(removeSelectedDairy) {
-                if(product.product.toLowerCase().includes("milk") || product.product.toLowerCase().includes("paneer")) return;
-              }
-              allProducts.push(product);
-            });
-          }
+          value.forEach(product => {
+            product.category = category;
+            if(removeSelectedDairy) {
+              if(product.product.toLowerCase().includes("milk") || product.product.toLowerCase().includes("paneer")) return;
+            }
+            allProducts.push(product);
+          });
         });
         customer.allProducts = allProducts;
       });
@@ -233,8 +228,6 @@ class CustomerSheet extends Component {
         }
         return true;
       });
-
-      console.log(data);
     }
 
     return (
