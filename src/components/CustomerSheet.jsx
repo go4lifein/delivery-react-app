@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import exportCSV from '../helpers/exportCSV';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { TextField, Switch, FormControlLabel } from '@material-ui/core';
 
 import {updateOrdersData} from '../actions/admin.actions';
 import {updateCrateId} from '../api/admin';
@@ -27,13 +28,21 @@ class CustomerSheet extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true
+      loading: true,
+      removeSelectedDairy: true
     }
   }
   updateState = state => {
     this.setState({ selectedRows: state.selectedRows });
   }
   createCrateNumbers = () => {
+    let cratesLastCreated = new Date(localStorage.getItem('cratesLastCreated', new Date().toISOString()));
+    let today = new Date().setHours(0);
+    if(cratesLastCreated > today) {
+      alert("Crates IDs Already created");
+      return;
+    }
+    localStorage.setItem('cratesLastCreated', new Date().toISOString());
     this.setState({
       creatingCrate: true
     });
@@ -96,15 +105,8 @@ class CustomerSheet extends Component {
       selector: 'products',
       sortable: false,
       cell: (row, idx) => {
-        const {products, phone} = row;
-        const categories = Object.entries(products);
-        let allProducts = [];
-        categories.forEach(([category, value]) => {
-          if(category !== 'Dairy') {
-            value.forEach(product => allProducts.push(product));
-          }
-        });
-
+        const {phone, allProducts} = row;
+        
         return (
           <table style={{width: '100%', textAlign: 'left'}} id="customer-sheet-table">
             <thead>
@@ -117,10 +119,10 @@ class CustomerSheet extends Component {
             <tbody>
             {
               allProducts.map(product => {
-                const {product_id, total, unit, quantity} = product;
+                const { total, unit, quantity} = product;
                 const name = product.product;
                 return (
-                  <tr key={phone.toString() + product_id.toString()}>
+                  <tr key={phone.toString() + Math.random().toString()}>
                     <td>{name}</td>
                     <td className="fixed-width-column">{total} {unit}</td>
                     <td className="fixed-width-column">{quantity}</td>
@@ -137,7 +139,9 @@ class CustomerSheet extends Component {
   exportData = () => {
     let {customers } = this.props;
     let data = Array.from(customers.values());
-    data = data.filter(customer => (customer.onlyDairy === false));
+    const {removeSelectedDairy} = this.state;
+
+    data.sort((c1, c2) => c1.crate_id - c2.crate_id);
 
     let rows = [
       ['Crate', 'Hub', 'Name', 'Phone', 'Address', 'Product', 'Category', 'Total', 'Qty'],
@@ -152,13 +156,15 @@ class CustomerSheet extends Component {
         if(category !== 'Dairy') {
           value.forEach(product => {
             product.category = category;
+            if(removeSelectedDairy) {
+              if(product.product.toLowerCase().includes("milk") || product.product.toLowerCase().includes("paneer")) return;
+            }
             allProducts.push(product);
           });
         }
       });
       allProducts.forEach((product, i) => {
         const { total, unit, quantity, category} = product;
-        console.log(product);
         if(i === 0) {
           let row = [
             customer.crate_id, 
@@ -189,15 +195,46 @@ class CustomerSheet extends Component {
     let loading = true;
 
     let {customers } = this.props;
-    let {creatingCrate } = this.state;
+    let {creatingCrate, removeSelectedDairy, search } = this.state;
+    
     
     let data = [];
 
     if(customers) {
       loading = false;
-      console.log(customers);
       data = Array.from(customers.values());
-      data = data.filter(customer => (customer.onlyDairy === false))
+      data.forEach(customer => {
+        const {products, phone, address} = customer;
+        const {house_number, subarea, area, hub} = address;
+        let addressString = `"${house_number}, ${subarea}, ${area}"`;
+        const categories = Object.entries(products);
+        let allProducts = [];
+        categories.forEach(([category, value]) => {
+          if(category !== 'Dairy') {
+            value.forEach(product => {
+              product.category = category;
+              if(removeSelectedDairy) {
+                if(product.product.toLowerCase().includes("milk") || product.product.toLowerCase().includes("paneer")) return;
+              }
+              allProducts.push(product);
+            });
+          }
+        });
+        customer.allProducts = allProducts;
+      });
+
+      data = data.filter(item => {
+        const {name, phone, allProducts} = item;
+        if(allProducts.length === 0) return false;
+        if(search) {
+          if(name.toLowerCase().includes(search.toLowerCase())) return true;
+          if(phone.toLowerCase().includes(search.toLowerCase())) return true;
+          return false;
+        }
+        return true;
+      });
+
+      console.log(data);
     }
 
     return (
@@ -211,7 +248,30 @@ class CustomerSheet extends Component {
                 columns={this.columns}
                 sortIcon={<ArrowDownward />}
                 actions={
-                  <div>
+                  <div className="flex middle">
+                    
+                    <TextField 
+                      label="Search Customer"
+                      style={{
+                        marginRight: 10
+                      }}
+                      onChange={(e) => {
+                        this.setState({
+                          search: e.target.value
+                        });
+                      }}
+                    />
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={removeSelectedDairy}
+                          onChange={(e, removeSelectedDairy) => this.setState({ removeSelectedDairy })}
+                          color="primary"
+                        />
+                      }
+                      label="Remove Milk and Paneer"
+                    />
+                    
                     <Button
                       variant="outlined"
                       color="primary"

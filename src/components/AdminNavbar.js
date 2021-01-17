@@ -54,7 +54,7 @@ function MenuAppBar(props) {
   const { location} = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default">
+      <AppBar position="static" color="warning">
         <Toolbar>
           <Typography variant="h4" className={classes.title}>
             {getTitle(location)}

@@ -2,6 +2,9 @@ import React from 'react';
 import DataTable from "react-data-table-component";
 import Checkbox from '@material-ui/core/Checkbox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import Chip from '@material-ui/core/Chip';
+// import moment from 'moment';
+
 const sortIcon = <ArrowDownward />;
 function OrderDataTable(props) {
   const {data, onRowSelect, onSelectionChange, deliveryBoys} = props;
@@ -16,7 +19,24 @@ function OrderDataTable(props) {
       name: 'Order Id',
       selector: 'order_id',
       sortable: true,
-      width: '200px'
+      width: '130px',
+      cell: (row) => {
+        const {order_id, TIMESTAMP} = row;
+        const time = new Date(TIMESTAMP).valueOf();
+        const today = new Date().setHours(8).valueOf();
+        if(time > today) {
+          return (
+            <div className="flex middle space-bw w-100">
+              <div>{order_id}</div> {
+                time > today &&
+                <Chip size="small" color="primary" label="New" />
+              }
+            </div>
+          )
+        } else {
+          return order_id;
+        }
+      }
     },
     {
       name: 'Name',
@@ -180,7 +200,7 @@ function OrderDataTable(props) {
           onRowSelect(row);
         }}
         pagination={true}
-        paginationPerPage={30}
+        paginationPerPage={20}
       />
     </div>
   )

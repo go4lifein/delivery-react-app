@@ -25,6 +25,18 @@ function hasNoDairy(products) {
   return false;
 }
 
+function onlyMilkAndPaneer(products) {
+  const categories = Object.entries(products);
+  categories.forEach(([category, value]) => {
+    value.forEach(product => {
+      const name = product.product;
+      if(name.toLowerCase().includes("milk") === false) return false;
+      if(name.toLowerCase().includes("paneer") ===false) return false;
+    });
+  });
+  return true;
+}
+
 export const setAdmin = (state = initialState, action = {}) => {
   switch(action.type) {
     case UPDATE_ADMIN:
@@ -88,10 +100,11 @@ export const setAdmin = (state = initialState, action = {}) => {
       let subareas = [];
       let products = {};
 
+      // accumulate customer data
       orders.forEach(order => {
         let { 
           order_id, crate_id,
-          order_staus, order_type,
+          order_staus, order_type, TIMESTAMP,
           customer_id, customer_name, phone_number, 
           address_id, house_number, subarea, area, hub,
           category, product, quantity,
@@ -100,9 +113,10 @@ export const setAdmin = (state = initialState, action = {}) => {
           driver_id, deliver_date, delivery_type, proof_img, complete_delivery, order_cancel_reason, boxes, milk_packets
         } = order;
 
-        if(delivery_person_id) {
-          // console.log(order);
-        }
+        // if(order_id === 129779) {
+        //   console.log(order);
+        // }
+
         let productData = {
           product,
           product_id,
@@ -113,6 +127,7 @@ export const setAdmin = (state = initialState, action = {}) => {
           total: package_size * quantity,
           unit: package_type
         }
+        
         let deliveryData = {
           driver_id, deliver_date, delivery_type, proof_img, complete_delivery, order_cancel_reason, boxes, milk_packets
         }
@@ -125,6 +140,7 @@ export const setAdmin = (state = initialState, action = {}) => {
         }
 
         if(customers.has(customer_id)) {
+          
           let customer = customers.get(customer_id);
           let {products} = customer;
           
@@ -135,11 +151,15 @@ export const setAdmin = (state = initialState, action = {}) => {
               productData
             ]
           }
-
+          
           customer.products = products;
           customer.delivery = deliveryData;
           customer.delivered = deliveryData.deliver_date;
         } else {
+          
+          // if(order_id === 129779) {
+          //   console.log(order);
+          // }
           
           if(areas.includes(area) === false) {
             areas.push(area);
@@ -156,7 +176,7 @@ export const setAdmin = (state = initialState, action = {}) => {
             phone: phone_number,
             order_id,
             crate_id,
-            order_staus, order_type,
+            order_staus, order_type, TIMESTAMP,
             address: {
               address_id,
               house_number, subarea,
@@ -166,6 +186,7 @@ export const setAdmin = (state = initialState, action = {}) => {
             products: {
               [category]: [productData]
             },
+            fnvProducts: [],
             delivery_person_id,
             delivery: deliveryData,
             delivered: deliveryData.deliver_date
@@ -190,6 +211,8 @@ export const setAdmin = (state = initialState, action = {}) => {
         } else {
           customer[1].hasNoDairy = false;
         }
+
+        
       }
       
       for(const customer of customers) {
@@ -207,7 +230,7 @@ export const setAdmin = (state = initialState, action = {}) => {
           package_size, package_type, product_id
         } = order;
 
-        if(category !== 'Dairy') {
+        // if(category !== 'Dairy') {
           
           let crateData = {
             quantity,
@@ -226,12 +249,13 @@ export const setAdmin = (state = initialState, action = {}) => {
               package_size,
               product_id,
               product,
+              category,
               unit: package_type,
               crates: [crateData]
             }
             productsCollection.set(product_id, productData);
           }
-        }
+        // }
       })
       
       return {...state, customers, locations, productsCollection, products, areas, subareas, categories, hubs, orders};
