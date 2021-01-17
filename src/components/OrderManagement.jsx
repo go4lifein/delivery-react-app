@@ -452,7 +452,7 @@ const AssignOrders = connect(
                 disabled={selectedRows.length < 1}
                 onChange={updateDriver}
               >
-                <MenuItem value="">None</MenuItem>
+                <MenuItem value="null">None</MenuItem>
                 {deliveryBoysData.map(item => (
                   <MenuItem value={item.id} key={`driver-${item.id}`}>{item.name}</MenuItem>
                 ))}
