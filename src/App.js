@@ -1,14 +1,15 @@
-import React, { Suspense, lazy} from 'react';
+import React, { Suspense, lazy } from "react";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
 // import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { CssBaseline} from '@material-ui/core';
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { CssBaseline } from "@material-ui/core";
 
-import './css/style.css';
-import Loading from './components/Loading';
-const Admin = lazy(() => import('./containers/Admin.jsx'));
-const Driver = lazy(() => import('./containers/Driver.jsx'));
+import "./css/style.css";
+import Loading from "./components/Loading";
+const Admin = lazy(() => import("./containers/Admin.jsx"));
+const Driver = lazy(() => import("./containers/Driver.jsx"));
+const Tracability = lazy(() => import("./components/tracability.js"));
 
 function App() {
   // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -18,14 +19,14 @@ function App() {
       // type: 'light',
       // primary: colors.green[400],
       secondary: {
-        light: '#ff4081',
-        main: '#f50057',
-        dark: '#c51162',
-        contrastText: '#fff'
+        light: "#ff4081",
+        main: "#f50057",
+        dark: "#c51162",
+        contrastText: "#fff",
       },
       background: {
-        default:'#fff',
-        paper:'#fff'
+        default: "#fff",
+        paper: "#fff",
       },
     },
   });
@@ -33,19 +34,14 @@ function App() {
   return (
     <div id="app">
       <ThemeProvider theme={theme}>
-        <CssBaseline /> 
-        <Router base={'delivery-react-app'}>
+        <CssBaseline />
+        <Router base={"delivery-react-app"}>
           <main>
             <Suspense fallback={<Loading />}>
               <Switch>
-                <Route 
-                  path="/admin"
-                  component={Admin} 
-                />
-                <Route 
-                  path="/"
-                  component={Driver} 
-                />
+                <Route path="/trace" exact component={Tracability} />
+                <Route path="/admin" component={Admin} />
+                <Route path="/" component={Driver} />
               </Switch>
             </Suspense>
           </main>
