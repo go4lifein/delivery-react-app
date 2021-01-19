@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../fonts/go4life.webp";
+import logo from "../fonts/logo.webp";
 import "../css/trace.scss";
 
 export default function Tracability() {
