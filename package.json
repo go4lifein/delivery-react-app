@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.0",
     "react": "^17.0.1",
+    "react-csv-reader": "^3.1.2",
     "react-data-table-component": "^6.11.6",
     "react-dom": "^17.0.1",
     "react-google-maps": "^9.4.5",

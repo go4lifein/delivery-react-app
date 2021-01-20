@@ -56,3 +56,35 @@ td.fixed-width-column {
 .nav-link {
   margin-left: 10px;
 }
+
+.csv-reader-input {
+  display: flex;
+}
+.csv-input {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+label.csv-input-label {
+  border: 1px solid #f50057;
+  padding: 3px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #f50057;
+}
+
+label.csv-input-label .icon {
+  padding: 3px;
+  /* width: 50px;
+  height: 50px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+label.csv-input-label:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
