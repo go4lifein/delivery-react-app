@@ -1,0 +1,2 @@
+(this["webpackJsonpdelivery-crm"]=this["webpackJsonpdelivery-crm"]||[]).push([[12],{205:function(e,c,s){},284:function(e,c,s){"use strict";s.r(c),s.d(c,"default",(function(){return i}));var t=s(3),a=(s(0),s.p+"static/media/logo.06af865d.webp");s(205);function i(){return Object(t.jsxs)("div",{className:"trace",children:[Object(t.jsx)("img",{src:a,alt:"logo",className:"logo"}),Object(t.jsx)("h1",{className:"heading"})]})}}}]);
+//# sourceMappingURL=12.c38536a3.chunk.js.map
