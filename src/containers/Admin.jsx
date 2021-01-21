@@ -11,6 +11,7 @@ import LoginAdmin from '../components/AdminLogin';
 const CustomerSheet = lazy(() => import('../components/CustomerSheet'));
 const ProductSheet = lazy(() => import('../components/ProductSheet'));
 const OrderManagement = lazy(() => import('../components/OrderManagement'));
+const AddReport = lazy(() => import('../components/AddReport'));
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -73,6 +74,10 @@ class AdminRouter extends Component {
                     path="/admin/customer"
                     exact
                     component={CustomerSheet} 
+                  />
+                  <Route 
+                    path="/admin/addReport"
+                    component={AddReport} 
                   />
                   <Route 
                     path="/admin"
