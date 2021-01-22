@@ -10,10 +10,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.0",
-<<<<<<< HEAD
     "lottie-web": "^5.7.6",
-=======
->>>>>>> 8e3b7be7b85462994ce0b06572366468b03482c3
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
     "react-data-table-component": "^6.11.6",
