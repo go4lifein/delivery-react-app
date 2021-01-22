@@ -1,0 +1,19 @@
+@font-face {
+  font-family: "American Typewriter";
+  src: url("./American Typewriter Regular.ttf");
+}
+
+@font-face {
+  font-family: "HK-Grotesk";
+  src: url("./HKGrotesk-Medium.otf");
+}
+
+@font-face {
+  font-family: "Circular";
+  src: url("./CircularStd-Black.otf");
+}
+
+@font-face {
+  font-family: "Corsica";
+  src: url("./CorsicaSX-SemiBold.ttf");
+}
