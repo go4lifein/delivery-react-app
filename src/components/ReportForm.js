@@ -130,7 +130,7 @@ class ReportForm extends Component {
           <Grid item xs={12} sm={6} md={3} lg={2}>
             <TextField fullWidth
               label="pH *"
-              name='pH'
+              name='ph'
               onChange={this.onChange}
               type="number"
               value={ph}
