@@ -56,6 +56,8 @@ function getTitle(location) {
       return 'Product Sheet';
     case '/admin/manageOrders':
       return 'Manage Orders';
+    case '/admin/pack':
+      return 'Pack Orders';
     default:
       return 'Customer Sheet';
   }
