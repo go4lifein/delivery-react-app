@@ -4,9 +4,15 @@ import ArrowRight from '@material-ui/icons/ArrowRight';
 import ArrowLeft from '@material-ui/icons/ArrowLeft';
 
 function LeftRightSwitch(props) {
-  const {left, onLeft, right, onRight, center, leftIcon, rightIcon, disabledLeft = false, disabledRight = false} = props;
+  const {left, onLeft, right, onRight, center, leftIcon, rightIcon, disabledLeft = false, disabledRight = false, style={}, className = ""} = props;
   return (
-    <div className="flex p-10" style={{justifyContent: 'space-around'}}>
+    <div 
+      className={`flex p-10 ${className}`}
+      style={{
+        justifyContent: 'space-around',
+        ...style
+      }}
+    >
       <div>
         {
           left ?

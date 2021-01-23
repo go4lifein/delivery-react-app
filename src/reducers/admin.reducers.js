@@ -105,6 +105,7 @@ export const setAdmin = (state = initialState, action = {}) => {
         let { 
           order_id, crate_id,
           order_staus, order_type, TIMESTAMP, last_update_on,
+          crates, remark, small_boxes, large_boxes,
           customer_id, customer_name, phone_number, 
           address_id, house_number, subarea, area, hub,
           category, product, quantity,
@@ -177,6 +178,7 @@ export const setAdmin = (state = initialState, action = {}) => {
             order_id,
             crate_id,
             order_staus, order_type, TIMESTAMP,  last_update_on,
+            crates, remark, small_boxes, large_boxes,
             address: {
               address_id,
               house_number, subarea,

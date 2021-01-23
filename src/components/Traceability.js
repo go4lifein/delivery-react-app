@@ -1,18 +1,22 @@
 import React, { Component, Fragment } from "react";
 import logo from '../images/logo.webp';
 import { Timeline, Event } from "react-timeline-scribble";
-import "../css/trace.scss";
-
-import "../css/style.css";
 
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowRight from '@material-ui/icons/ArrowRight';
 import ArrowLeft from '@material-ui/icons/ArrowLeft';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import {getReport} from '../api/misc';
 import moment from 'moment-timezone';
 import Loading from './Loading';
-import { Button, Typography } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
+import LeftRightSwitch from './LeftRightSwitch';
+import "../css/trace.scss";
+import "../css/style.css";
+import '../css/radio.css';
+
 
 class Traceability extends Component{
   constructor(props) {
@@ -90,60 +94,172 @@ class Traceability extends Component{
   }
   render() {
     let {loading, report, report_date, milk_type, error} = this.state;
+
     return (
       <Fragment>
         <div id="trace" className="flex middle">
-          <img src={logo} alt="logo" className="logo" width="20%" />
+          <img src={logo} alt="logo" className="logo" width="20%" style={{maxWidth: 140}} />
           {/* <h1 className="heading">Trace Your Milk</h1> */}
           <Typography variant="h5">Trace Your Milk</Typography>
         </div>
         <Divider />
-        <div className="flex p-10" style={{justifyContent: 'space-around'}}>
-          <div>
-            <IconButton 
-              onClick={this.gotoPreviousDay}
-              style={{border: '1px solid rgba(0, 0, 0, 0.23)'}} 
-              disabled={moment(report_date) <= moment('2021-01-15').endOf('day')}
-            >
-              <ArrowLeft />
-            </IconButton>
-          </div>
-          <div className="flex center middle " style={{flexGrow: 0.5, paddingRight: 10, paddingLeft: 10}}>
-            <Button variant="outlined" fullWidth style={{height: 50}}>
-              {moment(report_date).format('DD MMM YYYY')}
-            </Button>
-          </div>
-          <div>
-            <IconButton 
-              onClick={this.gotoNextDay}
-              style={{border: '1px solid rgba(0, 0, 0, 0.23)'}} 
-              disabled={moment(report_date) >= moment().startOf('day')}
-            >
-              <ArrowRight />
-            </IconButton>
+
+        <div className="flex middle">
+          <LeftRightSwitch 
+            className="middle"
+            style={{flex: 1}}
+            onLeft={this.gotoPreviousDay}
+            left={
+              <IconButton 
+                size="small"
+                onClick={this.gotoPreviousDay}
+                disabled={moment(report_date) <= moment('2021-01-15').endOf('day')}
+                style={{border: '1px solid rgba(0, 0, 0, 0.23)'}}
+              >
+                <ArrowLeft />
+              </IconButton>
+            }
+            center={
+              <Button variant="outlined" fullWidth>
+                {moment(report_date).format('DD MMM YYYY')}
+              </Button>
+            }
+            right={
+              <IconButton 
+                size="small"
+                onClick={this.gotoNextDay}
+                disabled={moment(report_date) >= moment().startOf('day')}
+                style={{border: '1px solid rgba(0, 0, 0, 0.23)'}}
+              >
+                <ArrowRight />
+              </IconButton>
+            }
+          />
+
+          <div class="switch-field p-10">
+            <input type="radio" id="radio-one" name="switch-one" value="yes" checked/>
+            <label for="radio-one">A2</label>
+            <input type="radio" id="radio-two" name="switch-one" value="no" />
+            <label for="radio-two">MIX</label>
           </div>
         </div>
+
         <Divider />
         {
           loading ?
           <div>
             <Loading />
           </div> :
-          <div style={{marginTop: 10}}>
-            <Timeline>
-              <Event interval={moment(report.bmc_receive).format('DD MMM YYYY hh:mm A')} title={"BMC"} subtitle={"Your milk arrived at the BMC."} />
-              <Event interval={moment(report.bmc_dispatch).format('DD MMM YYYY hh:mm A')} title={"BMC"} subtitle={"Your milk left the BMC."} />
-              <Event interval={moment(report.plant_receive).format('DD MMM YYYY hh:mm A')} title={"Plant"} subtitle={"Your milk arrived at the Plant."} />
-              <Event interval={moment(report.plant_dispatch).format('DD MMM YYYY hh:mm A')} title={"Plant"} subtitle={"Your milk left the Plant."} />
-              <Event interval={moment(report.whs_receive).format('DD MMM YYYY hh:mm A')} title={"Warehouse"} subtitle={"Your milk arrived at the warehouse."} />
-              <Event interval={moment(report.whs_dispatch).format('DD MMM YYYY hh:mm A')} title={"Warehouse"} subtitle={"Your milk left the warehouse."} />
-            </Timeline>
+          <div className="p-10">
+            <Report report={report} />
           </div>
+        }
+        <Divider />
+        {
+          loading ?
+          <div>
+            <Loading />
+          </div> :
+          <TimelineReport report={report} />
         }
         
       </Fragment>
     );
   }
+}
+
+function TimelineReport(props) {
+  const {report} = props;
+  if(!report) {
+    return (
+      <Typography>
+        Sorry, we didn't find any report for that date.
+      </Typography>
+    )
+  }
+  const {
+    bmc_receive,
+    bmc_dispatch,
+    plant_receive,
+    plant_dispatch,
+    whs_receive,
+    whs_dispatch
+  } = report;
+  return (
+    <div style={{marginTop: 10}}>
+      <div className="p-10">
+        <Typography variant="h5">Journey Your Milk Went On</Typography>
+      </div>
+      <Timeline>
+        <Event interval={moment(bmc_receive).format('DD MMM YYYY hh:mm A')} title={"BMC"} subtitle={"Your milk arrived at the BMC."} />
+        <Event interval={moment(bmc_dispatch).format('DD MMM YYYY hh:mm A')} title={"BMC"} subtitle={"Your milk left the BMC."} />
+        <Event interval={moment(plant_receive).format('DD MMM YYYY hh:mm A')} title={"Plant"} subtitle={"Your milk arrived at the Plant."} />
+        <Event interval={moment(plant_dispatch).format('DD MMM YYYY hh:mm A')} title={"Plant"} subtitle={"Your milk left the Plant."} />
+        <Event interval={moment(whs_receive).format('DD MMM YYYY hh:mm A')} title={"Warehouse"} subtitle={"Your milk arrived at the warehouse."} />
+        <Event interval={moment(whs_dispatch).format('DD MMM YYYY hh:mm A')} title={"Warehouse"} subtitle={"Your milk left the warehouse."} />
+      </Timeline>
+    </div>
+  )
+}
+
+function Report(props) {
+  const {report} = props;
+  if(!report) {
+    return (
+      <Typography>
+        Sorry, we didn't find any report for that date.
+      </Typography>
+    )
+  }
+  const {
+    fat, snf, ph, mbrt
+  } = report;
+
+  return (
+    <div>
+      <Grid container spacing={1}>
+        <Grid item xs={6} sm={6} >
+          <StatCard title={"FAT"} value={fat} subtitle={"Benefits"} content={"Normal Amount"} suffix={"%"} />
+        </Grid>
+
+        <Grid item xs={6} sm={6} >
+          <StatCard title={"SNF"} value={snf} subtitle={"Benefits"} content={"Normal Amount"} suffix={"%"} />
+        </Grid>
+        
+        <Grid item xs={6} sm={6} >
+          <StatCard title={"PH"} value={ph} subtitle={"Harms"} content={"Critical Amount"} suffix={""} />
+        </Grid>
+        
+        <Grid item xs={6} sm={6} >
+          <StatCard title={"MBRT"} value={mbrt} subtitle={"Subtitle"} content={"Normal Amount"} suffix={"mins"} />
+        </Grid>
+        
+      </Grid>
+    </div>
+  )
+}
+
+function StatCard(props) {
+  const {title, value, suffix, subtitle, content} = props;
+  return (
+    <Card>
+      <CardContent>
+        <Typography color="textSecondary" gutterBottom>
+          {title}
+        </Typography>
+        <Typography variant="h5" component="h2">
+          {value} {suffix}
+        </Typography>
+        {/* <Typography color="textSecondary">
+          {subtitle}
+        </Typography> */}
+        {/* <Typography variant="body2" component="p">
+          {content}
+        </Typography> */}
+      </CardContent>
+    </Card>
+  )
+
 }
 
 export default Traceability;
