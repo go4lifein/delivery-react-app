@@ -40,7 +40,7 @@ export default function Trace() {
       <Header />
       <GetDate startDate = {startDate} setStartDate ={setStartDate} isA2 = {isA2} setIsA2 = {setIsA2}/>
         {loading && <Loading />}
-      {!data && <p>Maa chud gayi</p>}
+      {!data && <p>Record Not Found</p>}
       {data && <> <Main data= {data}  />
       <Journey data = {data} />
       <Facts data= {data}  /> </>}
