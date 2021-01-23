@@ -3,40 +3,33 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./getdate.scss";
 
-export default function GetDate() {
-  const [startDate, setStartDate] = useState(new Date());
-  const [state, setState] = useState({
-    A2: true,
-    B2: false,
-  });
+export default function GetDate( {startDate ,setStartDate ,setIsA2 ,isA2}) {
+  
 
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
+  
   return (
     <div className="datepicker">
       <DatePicker
         className="box"
         selected={startDate}
+        
         onChange={(date) => setStartDate(date)}
       />
       <div className="tabs">
         <button
-          className="a2"
-          checked={state.A2}
-          onChange={handleChange}
+          className= {`a2 ${isA2 ? "primary" : ""}`}
+          
+          onClick={() => setIsA2(true)}
           name="A2"
-          color="primary"
-          inputProps={{ "aria-label": "primary checkbox" }}
+          
         >
           A2
         </button>
         <button
-          className="b2"
-          checked={state.checkedB}
-          onChange={handleChange}
+          className={`b2 ${!isA2 ? "primary" : "" }`}
+         
+          onClick={() => setIsA2(false)}
           name="B2"
-          inputProps={{ "aria-label": "secondary checkbox" }}
         >
           B2
         </button>
