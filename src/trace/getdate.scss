@@ -27,6 +27,13 @@ $lightblack: rgb(54, 60, 76);
     margin-left: 10%;
     margin-top: -0.5%;
 
+      button {
+        background: none ;
+        padding: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-top: 5%;
+      }
     .a2 {
       background: none;
       border: 1px solid $lightblack;
@@ -34,6 +41,10 @@ $lightblack: rgb(54, 60, 76);
     .b2 {
       background: none;
       border: 1px solid $lightblack;
+
+      &::before{
+        color: aqua;
+      }
     }
   }
 }

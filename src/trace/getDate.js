@@ -7,7 +7,7 @@ export default function GetDate() {
   const [startDate, setStartDate] = useState(new Date());
   const [state, setState] = useState({
     A2: true,
-    B2: true,
+    B2: false,
   });
 
   const handleChange = (event) => {
