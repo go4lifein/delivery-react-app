@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh'
 // import { Link } from 'react-router-dom';
+import logo from '../images/logo.png';
 import { Divider } from '@material-ui/core';
 import { connect } from 'react-redux';
 
@@ -56,6 +57,7 @@ function MenuAppBar(props) {
     <div className={classes.root}>
       <AppBar position="static" color="default">
         <Toolbar>
+          <img src={logo} alt="logo" className="logo" style={{maxWidth: 140, maxHeight: 40}} />
           <Typography variant="h4" className={classes.title}>
             {getTitle(location)}
           </Typography>

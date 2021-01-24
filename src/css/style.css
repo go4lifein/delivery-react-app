@@ -111,6 +111,12 @@ label.required::after {
   flex-direction: column;
 }
 
+.logo {
+  display: flex;
+  margin: 4px;
+}
+
+
 .css-692fgp, .css-vcfpfv, .css-1b3lipl:before {
   background-color: #277048;
 }

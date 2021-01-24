@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import logo from '../images/logo.webp';
+import logo from '../images/logo.png';
 import { Timeline, Event } from "react-timeline-scribble";
 
 import Fab from '@material-ui/core/Fab';
