@@ -21,6 +21,7 @@ import ExitToApp from '@material-ui/icons/ExitToAppOutlined';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
 import { connect } from 'react-redux';
+import logo from '../images/logo.webp';
 
 import {updateAdmin} from '../actions/admin.actions';
 import { Box, Grid } from '@material-ui/core';
@@ -58,6 +59,8 @@ function getTitle(location) {
       return 'Manage Orders';
     case '/admin/pack':
       return 'Pack Orders';
+    case '/admin/addReport':
+      return 'Add Milk Report'
     default:
       return 'Customer Sheet';
   }
@@ -75,6 +78,7 @@ function MenuAppBar(props) {
       <AppBar position="static" color="warning">
         <Toolbar style={{padding: 10}}>
           
+          <img src={logo} alt="logo" className="logo" style={{maxWidth: 140, maxHeight: 50}} />
           <Typography variant="h4" className={classes.title}>
             {getTitle(location)}
           </Typography>

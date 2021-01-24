@@ -2,16 +2,19 @@ import React, { Component, Fragment } from "react";
 import logo from '../images/logo.webp';
 import { Timeline, Event } from "react-timeline-scribble";
 
+import Fab from '@material-ui/core/Fab';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowRight from '@material-ui/icons/ArrowRight';
 import ArrowLeft from '@material-ui/icons/ArrowLeft';
+import DownloadIcon from '@material-ui/icons/GetApp';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import {getReport} from '../api/misc';
-import moment from 'moment-timezone';
+import moment from 'moment';
 import Loading from './Loading';
 import { Button, Grid, Typography } from "@material-ui/core";
+import Alert from '@material-ui/lab/Alert';
 import LeftRightSwitch from './LeftRightSwitch';
 import "../css/trace.scss";
 import "../css/style.css";
@@ -24,6 +27,7 @@ class Traceability extends Component{
     this.state = {
       report_date: moment().format('YYYY-MM-DD'),
       milk_type: 'a2',
+      loading: true,
       report: {
         aflatoxin: false,
         antibiotics1: false,
@@ -53,14 +57,17 @@ class Traceability extends Component{
     this.setState({
       loading: true
     })
+
     getReport(milk_type, report_date)
     .then(res => {
-      this.state({
+      this.setState({
         report: res.data,
-        loading: false
+        loading: false,
+        error: false
       });
     })
     .catch(err => {
+      console.log(err);
       this.setState({
         error: err.response ? err.response.data : "Some error occured",
         loading: false
@@ -72,7 +79,7 @@ class Traceability extends Component{
     let {search} = location;
     search = new URLSearchParams(search);
     let milk_type = search.get('milk_type') || 'a2';
-    let report_date = search.get('report_date') || moment().format('YYYY-MM-YY');
+    let report_date = search.get('report_date') || moment().format('YYYY-MM-DD');
 
     this.setState({
       milk_type, 
@@ -83,13 +90,24 @@ class Traceability extends Component{
   gotoPreviousDay = () => {
     let {report_date} = this.state;
     this.setState({
-      report_date: moment(report_date).subtract(1, 'day')
+      report_date: moment(report_date).subtract(1, 'day').format('YYYY-MM-DD')
     }, () => this.update());
   }
   gotoNextDay = () => {
     let {report_date} = this.state;
     this.setState({
-      report_date: moment(report_date).add(1, 'day')
+      report_date: moment(report_date).add(1, 'day').format('YYYY-MM-DD')
+    }, () => this.update());
+  }
+  onTypeChange = (e) => {
+    console.log(e);
+    this.setState({
+      milk_type: e.currentTarget.value
+    }, () => this.update());
+  }
+  setType = (milk_type) => {
+    this.setState({
+      milk_type
     }, () => this.update());
   }
   render() {
@@ -137,10 +155,10 @@ class Traceability extends Component{
           />
 
           <div class="switch-field p-10">
-            <input type="radio" id="radio-one" name="switch-one" value="yes" checked/>
-            <label for="radio-one">A2</label>
-            <input type="radio" id="radio-two" name="switch-one" value="no" />
-            <label for="radio-two">MIX</label>
+            <input type="radio" id="milk-type-a2" name="milk_type" value="a2" checked={milk_type === 'a2'} />
+            <label for="radio-one" onClick={() => this.setType('a2')}>A2</label>
+            <input type="radio" id="milk-type-mix" name="milk_type" value="mix" checked={milk_type === 'mix'} />
+            <label for="radio-two" onClick={() => this.setType('mix')}>MIX</label>
           </div>
         </div>
 
@@ -151,16 +169,40 @@ class Traceability extends Component{
             <Loading />
           </div> :
           <div className="p-10">
-            <Report report={report} />
+            {
+              error ?
+              <div>
+                <Alert severity="error">
+                  {error}
+                </Alert>
+              </div> :
+              <div>
+                <Report report={report} />
+                <TimelineReport report={report} />
+                <div
+                  style={{
+                    position: 'fixed',
+                    bottom: 20,
+                    right: 10
+                  }}
+                >
+                  <Fab 
+                    color="primary" 
+                    aria-label="add"
+                    style={{
+                      backgroundColor: '#277048'
+                    }}
+                    onClick={() => {
+                      window.open(report.pdf_url);
+                    }}
+                  >
+                    <DownloadIcon />
+                  </Fab>
+                </div>
+              </div>
+            
+            }
           </div>
-        }
-        <Divider />
-        {
-          loading ?
-          <div>
-            <Loading />
-          </div> :
-          <TimelineReport report={report} />
         }
         
       </Fragment>
@@ -212,7 +254,7 @@ function Report(props) {
     )
   }
   const {
-    fat, snf, ph, mbrt
+    fat, snf, ph, mbrt, sodium_content
   } = report;
 
   return (
@@ -227,11 +269,15 @@ function Report(props) {
         </Grid>
         
         <Grid item xs={6} sm={6} >
-          <StatCard title={"PH"} value={ph} subtitle={"Harms"} content={"Critical Amount"} suffix={""} />
+          <StatCard title={"PH"} value={ph} subtitle={"Should be between 6.5 and 7"} content={"Critical Amount"} suffix={""} />
         </Grid>
         
         <Grid item xs={6} sm={6} >
-          <StatCard title={"MBRT"} value={mbrt} subtitle={"Subtitle"} content={"Normal Amount"} suffix={"mins"} />
+          <StatCard title={"MBRT"} value={mbrt} subtitle={"Should be above 35 mins"} content={"Normal Amount"} suffix={"mins"} />
+        </Grid>
+
+        <Grid item xs={6} sm={6} >
+          <StatCard title={"Sodium Content"} value={sodium_content} subtitle={"mg/100 gm SNF"} content={"Normal Amount"} suffix={""} />
         </Grid>
         
       </Grid>
@@ -250,9 +296,9 @@ function StatCard(props) {
         <Typography variant="h5" component="h2">
           {value} {suffix}
         </Typography>
-        {/* <Typography color="textSecondary">
+        <Typography color="textSecondary">
           {subtitle}
-        </Typography> */}
+        </Typography>
         {/* <Typography variant="body2" component="p">
           {content}
         </Typography> */}

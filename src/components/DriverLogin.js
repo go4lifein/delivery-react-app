@@ -21,7 +21,7 @@ function mapDispatchToProps(dispatch) {
 
 class LoginAdmin extends Component {
   state = {
-    phone: '7056206263',
+    phone: '',
   }
   handleSubmit = () => {
     let {onUpdateDriver} = this.props;
