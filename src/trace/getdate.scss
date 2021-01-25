@@ -31,16 +31,19 @@ $lightblack: rgb(54, 60, 76);
 
     .a2 {
       background: white;
-      border: 1px solid $lightblack;
+      border: 2px solid $lightblack;
+      transition: all 0.5s;
       &:focus{
         outline :none;
       }
      
     }
     
-    .b2 {
+    .Mix {
       background: white;
-      border: 1px solid $lightblack;
+      border: 2px solid $lightblack;
+      transition: all 0.5s;
+      
       &:focus{
         outline :none;
       }
@@ -49,6 +52,7 @@ $lightblack: rgb(54, 60, 76);
       
       background-color: $lightblack;
       color: white;
+      transition: all 0.5s;
     }
   }
 }

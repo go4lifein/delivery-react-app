@@ -5,8 +5,7 @@ import "./main.scss";
 import plant from "./icons/plant.svg";
 import factory from "./icons/factory.svg";
 import warehouse from "./icons/warehouse.svg";
-import right from "./icons/right.svg";
-import left from "./icons/left.svg";
+import arrow from "./icons/arrow.svg";
 import moment from "moment";
 
 export default function Main({data}) {
@@ -39,7 +38,7 @@ export default function Main({data}) {
         </div>
       </div>
       <div className="right-arrow">
-        <img src={right} className="right-img" alt="right-img" />
+        <img src={arrow} className="right-img" alt="right-img" />
       </div>
 
       <div className="factory">
@@ -64,7 +63,7 @@ export default function Main({data}) {
         </div>
       </div>
       <div className="left-arrow">
-        <img src={left} className="left-img" alt="left-img" />
+        <img src={arrow} className="left-img" alt="left-img" />
       </div>
 
       <div className="warehouse">

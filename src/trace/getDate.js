@@ -26,12 +26,12 @@ export default function GetDate( {startDate ,setStartDate ,setIsA2 ,isA2}) {
           A2
         </button>
         <button
-          className={`b2 ${!isA2 ? "primary" : "" }`}
+          className={`Mix ${!isA2 ? "primary" : "" }`}
          
           onClick={() => setIsA2(false)}
-          name="B2"
+          name="Mix"
         >
-          B2
+          Mix
         </button>
       </div>
     </div>

@@ -14,7 +14,7 @@ $lightblack: rgb(54, 60, 76);
     display: flex;
     flex-direction: column;
     margin-top: -15%;
-    margin-left: 5%;
+    margin-left: 1%;
   }
 
   .Milk {
@@ -77,13 +77,19 @@ $lightblack: rgb(54, 60, 76);
       }
       h1 {
         color: #000;
-        font-size: clamp(0.5rem, 3vw, 1.8rem);
+        font-size: clamp(0.9rem, 3vw, 1.8rem);
         margin-top: 30px;
+        @include sm {
+          margin-top: 22%;
+        }
       }
       p {
-        font-size: clamp(0.4rem, 2vw, 1.2rem);
+        font-size: clamp(0.7rem, 2vw, 1.2rem);
         color: black;
         margin-top: 30px;
+        @include sm {
+          margin-top: 22%;
+        }
       }
     }
     .f2 {
@@ -100,13 +106,19 @@ $lightblack: rgb(54, 60, 76);
       }
       h1 {
         color: #000;
-        font-size: clamp(0.5rem, 3vw, 1.6rem);
+        font-size: clamp(0.9rem, 3vw, 1.6rem);
         margin-top: 30px;
+        @include sm {
+          margin-top: 22%;
+        }
       }
       p {
-        font-size: clamp(0.4rem, 2vw, 1.2rem);
+        font-size: clamp(.7rem, 2vw, 1.2rem);
         color: black;
         margin-top: 30px;
+        @include sm {
+          margin-top: 22%;
+        }
       }
     }
   }
@@ -127,14 +139,21 @@ $lightblack: rgb(54, 60, 76);
       }
       h1 {
         color: #000;
-        font-size: clamp(0.5rem, 3vw, 1.6rem);
+        font-size: clamp(0.9rem, 3vw, 1.6rem);
         margin-top: 30px;
+        @include sm {
+          margin-top: 22%;
+        }
       }
       p {
-        font-size: clamp(0.4rem, 2vw, 1.2rem);
+        font-size: clamp(.7rem, 2vw, 1.2rem);
         color: black;
         margin-top: 30px;
+        @include sm {
+          margin-top: 22%;
+        }
       }
+
     }
     .f4 {
       width: 200px;
@@ -149,13 +168,19 @@ $lightblack: rgb(54, 60, 76);
       }
       h1 {
         color: #000;
-        font-size: clamp(0.5rem, 3vw, 1.6rem);
+        font-size: clamp(0.9rem, 3vw, 1.6rem);
         margin-top: 30px;
+        @include sm {
+          margin-top: 22%;
+        }
       }
       p {
-        font-size: clamp(0.4rem, 2vw, 1.2rem);
+        font-size: clamp(0.7rem, 2vw, 1.2rem);
         color: black;
         margin-top: 30px;
+        @include sm {
+          margin-top: 22%;
+        }
       }
     }
   }
@@ -177,13 +202,19 @@ $lightblack: rgb(54, 60, 76);
       }
       h1 {
         color: #000;
-        font-size: clamp(0.5rem, 3vw, 1.6rem);
+        font-size: clamp(0.9rem, 3vw, 1.6rem);
         margin-top: 30px;
+        @include sm {
+          margin-top: 22%;
+        }
       }
       p {
-        font-size: clamp(0.4rem, 2vw, 1.2rem);
+        font-size: clamp(0.7rem, 2vw, 1.2rem);
         color: black;
         margin-top: 30px;
+        @include sm {
+          margin-top: 22%;
+        }
       }
     }
 
@@ -200,13 +231,19 @@ $lightblack: rgb(54, 60, 76);
       }
       h1 {
         color: #000;
-        font-size: clamp(0.5rem, 3vw, 1.6rem);
+        font-size: clamp(0.9rem, 3vw, 1.6rem);
         margin-top: 30px;
+        @include sm {
+          margin-top: 22%;
+        }
       }
       p {
-        font-size: clamp(0.4rem, 2vw, 1.2rem);
+        font-size: clamp(0.7rem, 2vw, 1.2rem);
         color: black;
         margin-top: 30px;
+        @include sm {
+          margin-top: 22%;
+        }
       }
     }
   }
