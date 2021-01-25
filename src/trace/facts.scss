@@ -53,6 +53,7 @@ $lightblack: rgb(54, 60, 76);
     flex-direction: column;
     margin-left: 20%;
     margin-top: 10%;
+    
 
     @include sm {
       margin-left: 18%;
@@ -70,25 +71,26 @@ $lightblack: rgb(54, 60, 76);
       background: #ed213a;
       border-radius: 20px;
       text-align: center;
+      color:white;
 
       @include sm {
         width: 100px;
         height: 100px;
       }
       h1 {
-        color: #000;
-        font-size: clamp(0.9rem, 3vw, 1.8rem);
+      
+        font-size: clamp(1.1rem, 3vw, 1.8rem);
         margin-top: 30px;
         @include sm {
-          margin-top: 22%;
+          margin-top: 20%;
         }
       }
       p {
-        font-size: clamp(0.7rem, 2vw, 1.2rem);
+        font-size: clamp(0.9rem, 2vw, 1.2rem);
         color: black;
         margin-top: 30px;
         @include sm {
-          margin-top: 22%;
+          margin-top: 18%;
         }
       }
     }
@@ -98,6 +100,7 @@ $lightblack: rgb(54, 60, 76);
       background: #f46b45;
       border-radius: 20px;
       text-align: center;
+      color: white;
 
       margin-left: 30px;
       @include sm {
@@ -105,19 +108,19 @@ $lightblack: rgb(54, 60, 76);
         height: 100px;
       }
       h1 {
-        color: #000;
-        font-size: clamp(0.9rem, 3vw, 1.6rem);
+        
+        font-size: clamp(1.1rem, 3vw, 1.6rem);
         margin-top: 30px;
         @include sm {
-          margin-top: 22%;
+          margin-top: 20%;
         }
       }
       p {
-        font-size: clamp(.7rem, 2vw, 1.2rem);
+        font-size: clamp(.9rem, 2vw, 1.2rem);
         color: black;
         margin-top: 30px;
         @include sm {
-          margin-top: 22%;
+          margin-top: 18%;
         }
       }
     }
@@ -133,24 +136,25 @@ $lightblack: rgb(54, 60, 76);
       background: #4286f4;
       border-radius: 20px;
       text-align: center;
+      color: white;
       @include sm {
         width: 100px;
         height: 100px;
       }
       h1 {
-        color: #000;
-        font-size: clamp(0.9rem, 3vw, 1.6rem);
+        
+        font-size: clamp(1.1rem, 3vw, 1.6rem);
         margin-top: 30px;
         @include sm {
-          margin-top: 22%;
+          margin-top: 20%;
         }
       }
       p {
-        font-size: clamp(.7rem, 2vw, 1.2rem);
+        font-size: clamp(.9rem, 2vw, 1.2rem);
         color: black;
         margin-top: 30px;
         @include sm {
-          margin-top: 22%;
+          margin-top: 18%;
         }
       }
 
@@ -162,24 +166,25 @@ $lightblack: rgb(54, 60, 76);
       border-radius: 20px;
       text-align: center;
       margin-left: 30px;
+      color: white;
       @include sm {
         width: 100px;
         height: 100px;
       }
       h1 {
-        color: #000;
-        font-size: clamp(0.9rem, 3vw, 1.6rem);
+        
+        font-size: clamp(1.1rem, 3vw, 1.6rem);
         margin-top: 30px;
         @include sm {
-          margin-top: 22%;
+          margin-top: 20%;
         }
       }
       p {
-        font-size: clamp(0.7rem, 2vw, 1.2rem);
+        font-size: clamp(0.9rem, 2vw, 1.2rem);
         color: black;
         margin-top: 30px;
         @include sm {
-          margin-top: 22%;
+          margin-top: 18%;
         }
       }
     }

@@ -21,8 +21,8 @@ export default function Facts( {data} ) {
             <p>{data.ph}</p>
           </div>
           <div className="f2">
-            <h1>Sodium </h1>
-            <p>{data.sodium_content} mg</p>
+            <h1>Fat </h1>
+            <p>{data.fat} mg</p>
           </div>
         </div>
         <div className="section2">
@@ -35,16 +35,7 @@ export default function Facts( {data} ) {
             <p>{data.mbrt} mins</p>
           </div>
         </div>
-        <div className="section3">
-          <div className="f5">
-            <h1>Fat</h1>
-            <p>{data.fat} %</p>
-          </div>
-          <div className="f6">
-            <h1>Antibiotics</h1>
-            <p>{data.antibiotics1 ? "Positive" :" Negative"}</p>
-          </div>
-        </div>
+        
       </div>
 }
     </div>
