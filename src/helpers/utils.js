@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_URL = "https://api.deliver.go4life.in/api";
+export const API_URL = 'https://api.deliver.go4life.in/api';
 // export const API_URL = 'https://go4life-deliver.herokuapp.com/api';
 // export const API_URL = 'http://localhost:5000/api';
 // export const API_URL = 'http://192.168.40.14:5000/api';
@@ -33,4 +33,31 @@ initRequestAuthHeader();
 
 export function request(config) {
   return axios.request(config);
+}
+
+export function onlyMilkAndPaneer(products) {
+  const categories = Object.entries(products);
+  categories.forEach(([category, value]) => {
+    value.forEach(product => {
+      const name = product.product;
+      if(name.toLowerCase().includes("milk") === false) return false;
+      if(name.toLowerCase().includes("paneer") ===false) return false;
+    });
+  });
+  return true;
+}
+
+
+export function hasOnlyDairyProducts(products) {
+  if('Dairy' in products && Object.entries(products).length === 1) {
+    return true;
+  }
+  return false;
+}
+
+export function hasNoDairy(products) {
+  if(!('Dairy' in products)) {
+    return true;
+  }
+  return false;
 }

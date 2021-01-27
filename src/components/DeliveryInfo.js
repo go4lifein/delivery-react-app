@@ -34,7 +34,10 @@ class OrderDeliveryForm extends React.Component {
     
     let {customer, deliveryBoys} = this.props;
     console.log(customer);
-    const {driver_id, deliver_date, delivery_type, proof_img, complete_delivery, order_cancel_reason, boxes, milk_packets} = customer.delivery;
+    const {
+      driver_id, deliver_date, delivery_type, proof_img, complete_delivery, 
+      // order_cancel_reason, 
+      boxes, milk_packets} = customer.delivery;
 
     let driver = deliveryBoys.get(driver_id);
 

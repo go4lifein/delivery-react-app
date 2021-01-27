@@ -1,6 +1,5 @@
 {
   "name": "delivery-crm",
-  
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,11 +10,11 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.0",
-    "classnames": "^2.2.6",
-    "lottie-web": "^5.7.6",
-    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.32",
     "node-sass": "^4.14.1",
+    "lottie-web": "^5.7.6",
     "react": "^17.0.1",
+    "react-csv-reader": "^3.1.2",
     "react-data-table-component": "^6.11.6",
     "react-datepicker": "^3.4.1",
     "react-dom": "^17.0.1",
@@ -24,6 +23,7 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "react-timeline-scribble": "^1.0.14",
     "react-webcam": "^5.2.2",
     "redux": "^4.0.5",
     "socket.io-client": "^3.0.3",

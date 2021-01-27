@@ -6,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Grid } from '@material-ui/core';
 
 import Loading from '../components/Loading';
 import {getMyOrders} from '../api/driver';
@@ -122,20 +122,22 @@ class ChooseOrder extends Component {
               style={{padding: 10}}
             >
 
-              <div style={{marginRight: 20}}>
-                <TextField
-                  value={phone}
-                  label="Phone or Name"
-                  onChange={(e) => this.setState({phone: e.target.value})}
-                />
-              </div>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <TextField
+                    fullWidth
+                    value={phone}
+                    label="Phone or Name"
+                    onChange={(e) => this.setState({phone: e.target.value})}
+                  />
+                </Grid>
 
-              <div>
-                <FormControl>
+              <Grid item xs={6}>
+                <FormControl fullWidth>
                   <InputLabel id="hub-filter">Hub</InputLabel>
                   <Select
+                    fullWidth
                     labelId="hub-filter"
-                    style={{width: 160}}
                     value={selectedHub}
                     onChange={(e) => {
                       let selectedHub = e.target.value;
@@ -148,20 +150,23 @@ class ChooseOrder extends Component {
                     ))}
                   </Select>
                 </FormControl>
-              </div>
+              </Grid>
+            </Grid>
               
             </div>
+
             <div
               className="flex middle"
               style={{padding: 10}}
             >
               
-              <div style={{marginRight: 20}}>
-                <FormControl>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                <FormControl fullWidth>
                   <InputLabel id="area-filter">Area</InputLabel>
                   <Select
                     labelId="area-filter"
-                    style={{width: 150}}
+                    fullWidth
                     value={selectedArea}
                     onChange={(e) => {
                       let selectedArea = e.target.value;
@@ -174,14 +179,14 @@ class ChooseOrder extends Component {
                     ))}
                   </Select>
                 </FormControl>
-              </div>
-              
-              <div >
-                <FormControl>
+              </Grid>
+
+              <Grid item xs={6}>
+                <FormControl fullWidth>
                   <InputLabel id="subarea-filter">Subareas</InputLabel>
                   <Select
                     labelId="subarea-filter"
-                    style={{width: 150}}
+                    fullWidth
                     value={selectedSubarea}
                     onChange={(e, b) => {
                       let selectedSubarea = e.target.value;
@@ -194,10 +199,10 @@ class ChooseOrder extends Component {
                     ))}
                   </Select>
                   </FormControl>
-              </div>
+              </Grid>
               
+            </Grid>
             </div>
-            
             <div
               className="flex space-bw"
               style={{padding: 10}}

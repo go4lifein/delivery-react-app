@@ -12,7 +12,7 @@ useEffect(() => {
     let startTime = moment(data.bmc_receive);
   let endTime = moment(data.whs_dispatch);
   let duration = moment.duration(endTime.diff(startTime));
-  console.log(duration);
+
   let hours = parseInt(duration.asHours());
   let minutes = parseInt(duration.asMinutes()) % 60;
   setJourney(hours + " hours " +  minutes + " minutes ");

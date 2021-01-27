@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh'
 // import { Link } from 'react-router-dom';
+import logo from '../images/logo.png';
 import { Divider } from '@material-ui/core';
 import { connect } from 'react-redux';
 
@@ -54,13 +55,14 @@ function MenuAppBar(props) {
   const { location} = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default">
+      <AppBar position="static" color="warning">
         <Toolbar>
-          <Typography variant="h4" className={classes.title}>
+          <img src={logo} alt="logo" className="logo" />
+          <Typography variant="h5" className={classes.title}>
             {getTitle(location)}
           </Typography>
           
-          <div>
+          <div className="flex">
             <IconButton 
               onClick={() => {
                 window.location.reload();

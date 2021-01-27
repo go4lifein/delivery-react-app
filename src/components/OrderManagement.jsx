@@ -10,7 +10,9 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import DownloadIcon from '@material-ui/icons/CloudDownload';
+import UploadIcon from '@material-ui/icons/CloudUpload';
 import exportCSV from '../helpers/exportCSV';
+import CSVReader from 'react-csv-reader';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
@@ -55,7 +57,7 @@ class OrderManagement extends Component {
     let data = Array.from(customers.values());
 
     let rows = [
-      ['order_id', 'Crate', 'Name', 'Phone', 'Hub', 'Region', 'Locality', 'House', 'Order Type', 'Gable Top', 'Milk Packets', 'Paneer', 'Driver', 'Delivered By'],
+      ['order_id', 'Crate', 'Name', 'Phone', 'Hub', 'Region', 'Locality', 'House', 'Order Type', 'Gable Top', 'Milk Packets', 'Paneer', 'Driver', 'Delivered By', 'crates', 'small_boxes', 'large_boxes'],
     ];
     data.forEach(item => {
       const {order_id, crate_id, name, phone, address, onlyDairy, hasNoDairy, products, delivery_person_id, delivery } = item;
@@ -109,7 +111,7 @@ class OrderManagement extends Component {
   }
   render() {
     let loading = true;
-    let {selectedArea, selectedHub, selectedSubarea, selectedDriver, orderType, phone, showDelivered } = this.state;
+    let {selectedArea, selectedHub, selectedDriver, orderType, phone, showDelivered } = this.state;
     let {customers, locations, hubs, deliveryBoys} = this.props;
     let deliveryBoysData = deliveryBoys ? Array.from(deliveryBoys.values()) : [];
     deliveryBoysData = deliveryBoysData.sort((a, b) => (a.name.localeCompare(b.name)));
@@ -234,6 +236,7 @@ class OrderManagement extends Component {
           if(item.phone.indexOf(phone) !== -1) return true;
           if(item.name.toLowerCase().indexOf(phone.toLowerCase()) !== -1) return true;
           if(item.order_id.toString().indexOf(phone.toLowerCase()) !== -1) return true;
+          if(String(item.crate_id) === phone) return true;
           return false;
         }
         return true;
@@ -255,7 +258,7 @@ class OrderManagement extends Component {
                 <TextField
                   value={phone}
                   fullWidth
-                  label="Phone or Name or Order Id"
+                  label="Phone, Name, Crate, Order Id"
                   onChange={(e) => this.setState({phone: e.target.value})}
                 />
               </div>
@@ -427,49 +430,82 @@ const AssignOrders = connect(
       setSelectedRows([]);
     });
   }
+  
+  const handleFileError = (val) => {
+    window.alert("Something is not right in this CSV");
+  }
+  const handleFile = (data, fileInfo) => {
+    window.alert("Nice");
+  }
 
   return (
     <div id="assign-orders">
       <Divider />
-      <div className="flex right middle">
-        <div className="p-10">
-          {
-            data.length 
-          } Rows Filtered
-        </div>
-        <div className="p-10">
-          {
-            selectedRows.length 
-          } Rows Selected
-        </div>
-        <div className="p-10">
-          <div>
-            <FormControl variant="outlined">
-              <InputLabel id="driver-filter">Select Driver</InputLabel>
-              <Select
-                labelId="driver-filter"
-                style={{width: 200}}
-                disabled={selectedRows.length < 1}
-                onChange={updateDriver}
-              >
-                <MenuItem value="null">None</MenuItem>
-                {deliveryBoysData.map(item => (
-                  <MenuItem value={item.id} key={`driver-${item.id}`}>{item.name}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+      <div className="flex space-bw middle p-10">
+        <div className="flex right middle">
+          
+          <FormControl variant="outlined" size="small">
+            <InputLabel id="driver-filter">Select Driver</InputLabel>
+            <Select
+              labelId="driver-filter"
+              style={{width: 200}}
+              disabled={selectedRows.length < 1}
+              onChange={updateDriver}
+            >
+              <MenuItem value="null">None</MenuItem>
+              {deliveryBoysData.map(item => (
+                <MenuItem value={item.id} key={`driver-${item.id}`}>{item.name}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <div className="p-10">
+            {
+              data.length 
+            } Customers Filtered
           </div>
-        </div>
-        <div className="p-10">
-          <Button 
-            startIcon={<DownloadIcon />}
-            color="secondary"
-            variant="outlined"
-            onClick={props.exportData}
-            // disabled={true}
-          >
-            Download Excel
-          </Button>
+          <div className="p-10">
+            {
+              selectedRows.length 
+            } Customers Selected
+          </div>
+          <div className="p-10">
+            <Button 
+              startIcon={<DownloadIcon />}
+              color="secondary"
+              variant="outlined"
+              onClick={props.exportData}
+              // disabled={true}
+            >
+              Download Excel
+            </Button>
+          </div>
+          <CSVReader
+            cssInputClass="csv-input"
+            label={
+              <div className="flex middle">
+                <div className="icon">
+                  <UploadIcon />
+                </div>
+                UPLOAD BAG AND CRATE
+              </div>
+              // <Button 
+              //   startIcon={<UploadIcon />}
+              //   color="secondary"
+              //   variant="outlined"
+              // >
+              //   Upload CSV
+              // </Button>
+            }
+            cssLabelClass="csv-input-label"
+            onFileLoaded={handleFile}
+            onError={handleFileError}
+            parserOptions={{
+              header: true,
+              dynamicTyping: true,
+              skipEmptyLines: true,
+              transformHeader: header => header.toLowerCase().replace(/\W/g, "_")
+            }}
+          />
         </div>
       </div>
       <DeliveryInfo 

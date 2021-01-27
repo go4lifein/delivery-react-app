@@ -35,7 +35,7 @@ export const setDriver = (state = initialState, action = {}) => {
 
       let orders = action.payload;
       let customers = new Map();
-      let productsCollection = new Map();
+      // let productsCollection = new Map();
       let locations = new Map();
       /* 
       locations = {

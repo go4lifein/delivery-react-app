@@ -1,4 +1,5 @@
 import {API_URL , request} from '../helpers/utils';
+import { post } from 'axios';
 
 export function getAllOrders() {
   let url = `${API_URL}/order/getAllOrders`;
@@ -46,6 +47,18 @@ export function updateCrateId(data) {
   });
 }
 
+export function prepareOrder(data) {
+  let url = `${API_URL}/order/prepareOrder`;
+  return request({
+    url: url,
+    method: 'post',
+    data,
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+}
+
 export function login(data) {
   let url = `${API_URL}/admin/login`;
   return request({
@@ -56,4 +69,14 @@ export function login(data) {
       'Content-Type': 'application/json',
     }
   });
+}
+
+export function addReport(formData) {
+  let url = `${API_URL}/admin/addReport`;
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data'
+    }
+  }
+  return post(url, formData, config);
 }

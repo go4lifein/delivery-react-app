@@ -1,4 +1,4 @@
-import { Box, Typography } from '@material-ui/core';
+import { Box} from '@material-ui/core';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {getReport} from '../api/misc';
@@ -60,9 +60,6 @@ class AddReport extends Component {
     }
     return (
       <div >
-        <Box m={1}>
-          <Typography variant="h4">Add Milk Report</Typography>
-        </Box>
         <Box m={1}>
           <ReportForm onSubmit={this.onSubmit} loading={loading} />
         </Box>

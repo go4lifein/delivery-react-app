@@ -9,45 +9,64 @@ import Facts from "./Facts.js";
 import GetDate from "./getDate.js";
 import {getReport} from "../api/misc.js";
 import Loading from "../components/Loading.js";
-export default function Trace() {
+
+export default function Trace({ location }) {
   const [startDate, setStartDate] = useState(new Date());
   const [isA2, setIsA2] = useState(true);
   const [data ,setData] = useState(null);
-  const [loading, setLoading] =useState(false);
+  const [loading, setLoading] = useState(false);
+  const [load ,setLoad] = useState(false);
+
+  useEffect(() =>{
+    console.log(load);
+  },[load])
+  useEffect(() => {
+    let {search} = location;
+    search = new URLSearchParams(search);
+    const reportDate = search.get('report_date');
+    if(!reportDate)
+    return
+    const date = new Date(reportDate);
+    
+    const type = search.get('milk_type');
+    
+    
+    setStartDate(date);
+    setIsA2(type === "a2" ? true : false);
+  }, [location]);
+
+  useEffect(() => {
   
-
- 
-
-   useEffect(() =>{
-    async function getData()
-    {
-      try{
+    async function getData() {
+      try {
         setLoading(true);
-    const response = await getReport(isA2 ? "a2" :"b2" , startDate) ;
-    setData(response.data);
-    setLoading(false);
-
+        const response = await getReport("a2" , startDate);
+        setData(response.data);
+        setLoading(false);
       }
-    catch
-      (err ){
+      catch (err) {
         console.log(err);
         setData(null);
         setLoading(false);
       }
-  
     }
     getData();
- },[ startDate , isA2])
+  }, [startDate, isA2]);
 
   return (
     <div className="trace">
       <Header />
       <GetDate startDate = {startDate} setStartDate ={setStartDate} isA2 = {isA2} setIsA2 = {setIsA2}/>
-        {loading && <Loading />}
-      {!data && <p>Record Not Found</p>}
-      {data && <> <Main data= {data}  />
-      <Journey data = {data} />
-      <Facts data= {data}  /> </>}
+      {loading && <Loading />}
+      {!data && !loading && <p>Record Not Found</p>}
+      <Main data= {data} load = {load} setLoad = {setLoad} />
+      {data && load &&
+        <>
+          
+          <Journey data = {data} />
+          <Facts data= {data}  />
+        </>
+      }
     </div>
   );
 }

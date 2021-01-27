@@ -36,11 +36,13 @@ $yellow: #cc9600;
 
         h1{
           font-size:clamp(0.4rem, 3vw, 1.2rem);
+          min-height: 0vw;
           font-weight: 600;
           
         }
         p{
           font-size:clamp(0.7rem, 3vw, 1.8rem);
+          min-height: 0vw;
           font-weight: 600;
           margin-top: -5%;
         }
@@ -63,10 +65,12 @@ $yellow: #cc9600;
   
           h1{
             font-size:clamp(0.4rem, 3vw, 1.2rem);
+            min-height: 0vw;
             font-weight: 600;
           }
           p{
             font-size:clamp(0.7rem, 3vw, 1.8rem);
+            min-height: 0vw;
             font-weight: 800;
             margin-top: 1%;
           }}
@@ -91,10 +95,12 @@ $yellow: #cc9600;
           }
           h1{
             font-size:clamp(0.4rem, 3vw, 1.2rem);
+            min-height: 0vw;
             font-weight: 600;
           }
           p{
             font-size:clamp(0.7rem, 3vw, 1.8rem);
+            min-height: 0vw;
             font-weight: 800;
             margin-top: 1%;
           }}
@@ -118,10 +124,12 @@ $yellow: #cc9600;
            
             h1{
               font-size:clamp(0.4rem, 3vw, 1.2rem);
+              min-height: 0vw;
               font-weight: 600;
             }
             p{
               font-size:clamp(0.7rem, 3vw, 1.8rem);
+              min-height: 0vw;
               font-weight: 800;
               margin-top: 1%;
             }}
@@ -138,11 +146,13 @@ $yellow: #cc9600;
              
       
               h1{
-                font-size:clamp(0.5rem, 3vw, 1.2rem);
+                font-size:clamp(0.5rem, 3vw, 1.2rem );
+                min-height: 0vw;
                 font-weight: 600;
               }
               p{
                 font-size:clamp(0.7rem, 3vw, 1.8rem);
+                min-height: 0vw;
                 font-weight: 800;
                 margin-top: 1%;
               }}

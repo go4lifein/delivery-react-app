@@ -5,8 +5,6 @@ import "./getdate.scss";
 
 export default function GetDate( {startDate ,setStartDate ,setIsA2 ,isA2}) {
   
-
-  
   return (
     <div className="datepicker">
       <DatePicker
