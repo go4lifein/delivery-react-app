@@ -32,6 +32,25 @@ class CustomerSheet extends Component {
       removeSelectedDairy: true
     }
   }
+  componentDidMount() {
+    
+    let alreadyCreatedCratedToday = false;
+
+    let cratesLastCreated = new Date(localStorage.getItem('cratesLastCreated'));
+
+    if(cratesLastCreated) {
+      cratesLastCreated = new Date(cratesLastCreated);
+      let today = new Date().setHours(0);
+
+      console.log(today, cratesLastCreated.valueOf())
+      if(cratesLastCreated > today) {
+        alreadyCreatedCratedToday = true;
+      }
+    }
+    this.setState({
+      alreadyCreatedCratedToday
+    })
+  }
   updateState = state => {
     this.setState({ selectedRows: state.selectedRows });
   }
@@ -193,8 +212,8 @@ class CustomerSheet extends Component {
     let loading = true;
 
     let {customers } = this.props;
-    let {creatingCrate, removeSelectedDairy, search } = this.state;
-    console.log("removeSelectedDairy", removeSelectedDairy);
+    let {creatingCrate, removeSelectedDairy, search, alreadyCreatedCratedToday } = this.state;
+
     
     let data = [];
 
@@ -219,8 +238,12 @@ class CustomerSheet extends Component {
       });
 
       data = data.filter(item => {
-        const {name, phone, allProducts} = item;
+        const {name, phone, allProducts, crate_id} = item;
         if(allProducts.length === 0) return false;
+        if(alreadyCreatedCratedToday) {
+          if(crate_id) return true;
+          return false;
+        }
         if(search) {
           if(name.toLowerCase().includes(search.toLowerCase())) return true;
           if(phone.toLowerCase().includes(search.toLowerCase())) return true;
@@ -235,7 +258,7 @@ class CustomerSheet extends Component {
           {
             loading?
             <Loading /> :
-            <div id="customer-sheet-table">
+            <div id="customer-sheet-table" style={{minWidth: 1000}}>
               <DataTable
                 data={data}
                 columns={this.columns}
@@ -272,7 +295,7 @@ class CustomerSheet extends Component {
                         // <CircularProgress size={12} />
                         creatingCrate ? <CircularProgress size={12} /> : null
                       }
-                      disabled={creatingCrate}
+                      disabled={creatingCrate || alreadyCreatedCratedToday}
                       style={{
                         marginRight: 4
                       }}

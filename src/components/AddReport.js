@@ -61,9 +61,6 @@ class AddReport extends Component {
     return (
       <div >
         <Box m={1}>
-          <Typography variant="h4">Add Milk Report</Typography>
-        </Box>
-        <Box m={1}>
           <ReportForm onSubmit={this.onSubmit} loading={loading} />
         </Box>
         

@@ -21,8 +21,8 @@ function mapDispatchToProps(dispatch) {
 
 class LoginAdmin extends Component {
   state = {
-    username: 'umakant',
-    password: 'pass'
+    username: '',
+    password: ''
   }
   handleSubmit = () => {
     let {username, password} = this.state;

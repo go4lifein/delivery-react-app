@@ -1,3 +1,7 @@
+body {
+  font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
 .flex {
   display: flex;
 }
@@ -55,4 +59,79 @@ td.fixed-width-column {
 
 .nav-link {
   margin-left: 10px;
+}
+
+.csv-reader-input {
+  display: flex;
+}
+.file-input, .csv-input {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+label.file, label.csv-input-label {
+  border: 1px solid #f50057;
+  padding: 3px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #f50057;
+}
+
+label.file .icon, label.csv-input-label .icon {
+  padding: 3px;
+  /* width: 50px;
+  height: 50px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+label.file, label.file:hover, label.csv-input-label:hover, input[type="file"]:focus + label.file {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+label.file {
+  display: inline-block;
+}
+
+label.required::after {
+  content: ' *';
+  color: red;
+}
+
+#report-form .MuiGrid-item {
+  margin-top: 10px;
+  padding: 20px;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.logo {
+  display: flex;
+  margin: 4px;
+}
+
+
+.css-692fgp, .css-vcfpfv, .css-1b3lipl:before {
+  background-color: #277048;
+}
+
+::-webkit-scrollbar {
+  width: 10px;  /* for vertical scrollbars */
+  height: 10px; /* for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.01);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  border: 1px solid white;
 }
