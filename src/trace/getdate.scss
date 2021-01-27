@@ -1,0 +1,58 @@
+@import "./fonts/fonts.css";
+@import "./abstracts/_mixins.scss";
+@import "./abstracts/variables.scss";
+$font2: "Corsica";
+$font1: "Circular";
+$font3: "HK-Grotesk";
+$lightblack: rgb(54, 60, 76);
+
+.datepicker {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  .box {
+    background: none;
+    color: $lightblack;
+    border: 2px solid $lightblack;
+    box-shadow: rgb(54, 60, 76) 0px 0px 0px 2px inset;
+    font-family: $font2;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+  }
+
+  .tabs {
+    margin-left: 10%;
+    margin-top: -0.5%;
+
+      
+
+    .a2 {
+      background: white;
+      border: 2px solid $lightblack;
+      transition: all 0.5s;
+      &:focus{
+        outline :none;
+      }
+     
+    }
+    
+    .Mix {
+      background: white;
+      border: 2px solid $lightblack;
+      transition: all 0.5s;
+      
+      &:focus{
+        outline :none;
+      }
+    }
+    .primary{
+      
+      background-color: $lightblack;
+      color: white;
+      transition: all 0.5s;
+    }
+  }
+}

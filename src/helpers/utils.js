@@ -10,10 +10,10 @@ export const API_URL = 'https://api.deliver.go4life.in/api';
 
 export function getCookies() {
   var x = document.cookie;
-  let cookies = x.split(';'); 
+  let cookies = x.split(";");
   let data = {};
-  cookies.forEach(cookie => {
-    let values = cookie.split('=');
+  cookies.forEach((cookie) => {
+    let values = cookie.split("=");
     data[values[0]] = values[1];
   });
   return data;

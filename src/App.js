@@ -4,12 +4,13 @@ import { HashRouter as Router, Switch, Route } from "react-router-dom";
 // import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
-
 import "./css/style.css";
+
 import Loading from "./components/Loading";
 const Admin = lazy(() => import("./containers/Admin.jsx"));
 const Driver = lazy(() => import("./containers/Driver.jsx"));
-const Traceability = lazy(() => import("./components/Traceability.js"));
+const Trace = lazy(() => import("./trace/Trace.js"));
+
 function App() {
   // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
@@ -38,7 +39,7 @@ function App() {
           <main>
             <Suspense fallback={<Loading />}>
               <Switch>
-                <Route path="/trace" exact component={Traceability} />
+                <Route path="/trace" exact component={Trace} />
                 <Route path="/admin" component={Admin} />
                 <Route path="/" component={Driver} />
               </Switch>
