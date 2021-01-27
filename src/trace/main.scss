@@ -9,495 +9,151 @@ $yellow: #cc9600;
 .hero {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  font-family: $font2;
   @include sm {
     margin-top: 10%;
   }
-  width: 100%;
-  .left-arrow {
-    width: 100%;
-    display: flex;
-    margin-left: 45%;
 
-    animation: animates 3s infinite;
-
-    .left-img {
-      width: 8%;
-      height: 8%;
-
-      @include sm {
-        margin-top: 10%;
-      }
-      @keyframes animates {
-        0% {
-          transform: translate(0px);
-        }
-        50% {
-          transform: translateY(50px);
-        }
-
-        100% {
-          transform: translate(0px);
-        }
-      }
-    }
-  }
-  .right-arrow {
-    width: 100%;
-    display: flex;
-    margin-left: 55%;
-    margin-top: 6%;
-
-    .right-img {
-      width: 8%;
-      height: 8%;
-      animation: animate 3s infinite;
-
-      @include sm {
-        margin-left: -10%;
-      }
-
-      @keyframes animate {
-        0% {
-          transform: translate(0px);
-        }
-        50% {
-          transform: translateY(50px);
-          @include sm {
-            transform: translateY(20px);
-          }
-        }
-
-        100% {
-          transform: translate(0px);
-        }
-      }
-    }
-  }
-
-  .BMC {
-    display: flex;
-    flex-direction: row;
-
-    @include sm {
-      margin-left: 5%;
-    }
-
-    .BMC-img {
-      width: 10%;
-      height: 10%;
-      margin-left: 20%;
-      margin-top: 10%;
-
-      @include txl {
-        width: 9%;
-        height: 9%;
-        margin-top: 10%;
-        margin-left: 10%;
-      }
-      @include lg {
-        width: 14%;
-        height: 14%;
-        margin-top: 12%;
-      }
-      @include sm {
-        width: 20%;
-        height: 20%;
-        margin-top: 15%;
-      }
-    }
-
-    .card {
-      width: 20%;
-      height: 60%;
-      background: white;
-      font-family: $font2;
-      border-radius: 15px;
-      border: 2px solid $blue;
-      margin-left: 3%;
-      margin-top: 8%;
-
-      @include txl {
-        width: 20%;
-        height: 30%;
-      }
-
-      @include lg {
-        width: 24%;
-        height: 25%;
-      }
-
-      @include md {
-        width: 28%;
-        height: 20%;
-      }
-
-      @include sm {
-        width: 46%;
-        height: 20%;
-      }
-
-      .section {
-        display: flex;
-        p {
-          padding: 2%;
-          padding-left: 8%;
-          font-weight: 600;
-          @include lg {
-            font-size: 14px;
-            padding-left: 10%;
-
-            @include md {
-              font-size: 12px;
-              margin-top: 5%;
-            }
-
-            @include sm {
-              font-size: 10px;
-            }
-          }
-        }
-        ul {
-          list-style: none;
-          margin-top: 4.5%;
-          margin-left: 5%;
-          font-family: $font3;
-
-          @include lg {
-            margin-left: 1%;
-          }
-          @include md {
-            font-size: 12px;
-          }
-          @include sm {
-            font-size: 10px;
-            margin-left: -16%;
-          }
-        }
-      }
-      .section2 {
-        display: flex;
-        p {
-          padding-left: 8%;
-          font-weight: 600;
-          @include lg {
-            font-size: 14px;
-            margin-left: 2%;
-          }
-          @include md {
-            font-size: 12px;
-            margin-top: 5%;
-          }
-          @include sm {
-            font-size: 10px;
-          }
-        }
-        ul {
-          list-style: none;
-          margin-top: 4.5%;
-          font-family: $font3;
-
-          @include lg {
-            margin-left: 7%;
-            width: 100%;
-          }
-          @include md {
-            font-size: 12px;
-          }
-          @include sm {
-            font-size: 10px;
-            margin-left: -10%;
-          }
-        }
-      }
-
-      h1 {
-        text-align: center;
-        font-weight: 600;
-
-        @include md {
-          font-size: 22px;
-        }
+    .board{
+      display: flex;
+      justify-content: center;
+      position: relative;
+      margin-top: -10%;
+      .BMC{
+        position: absolute;
+        margin-top: 30%;
+        margin-left: -62%;
         @include sm {
-          font-size: 16px;
+          margin-top: 32%;
+          margin-left: -72%;
         }
-      }
-    }
-  }
-  .factory {
-    display: flex;
-    flex-direction: row;
-    margin-top: 28%;
-    @include sm {
-      margin-top: 60%;
-      margin-left: -60%;
-    }
-    .plant {
-      width: 10%;
-      height: 10%;
-      margin-left: 55%;
-      margin-top: -20%;
-      @include lg {
-        width: 14%;
-        height: 14%;
-        margin-left: 45%;
-      }
-    }
-    .card2 {
-      width: 20%;
-      height: 60%;
-      background: white;
-      font-family: $font2;
-      border-radius: 15px;
-      border: 2px solid $red;
-      margin-left: 4%;
-      margin-top: -22%;
+        @include md {
+          margin-top: 28%;
+          margin-left: -70%;
+        }
 
-      @include lg {
-        width: 24%;
-        height: 25%;
-      }
-      @include md {
-        width: 28%;
-        height: 20%;
-      }
-
-      @include sm {
-        width: 28%;
-        height: 20%;
-        margin-left: 1%;
-      }
-
-      .section3 {
-        display: flex;
-        p {
-          padding: 2%;
-          padding-left: 8%;
+        h1{
+          font-size:clamp(0.4rem, 3vw, 1.2rem);
           font-weight: 600;
-          @include lg {
-            font-size: 14px;
-            margin-left: 8%;
-            width: 100%;
-            padding: 0;
-          }
-          @include md {
-            font-size: 12px;
-          }
-          @include sm {
-            font-size: 10px;
-          }
+          
         }
-        ul {
-          list-style: none;
-          margin-top: 4.5%;
-          margin-left: 5%;
-          font-family: $font3;
-          @include lg {
+        p{
+          font-size:clamp(0.7rem, 3vw, 1.8rem);
+          font-weight: 600;
+          margin-top: -5%;
+        }
+        
+      }
+     
+        .plant-receive{
+          position: absolute;
+          margin-top: 45%;
+          margin-left: 6%;
+          @include sm {
+            margin-top: 51%;
             margin-left: 4%;
-            width: 100%;
           }
           @include md {
-            font-size: 12px;
+            margin-top: 41%;
+            margin-left: 3%;
           }
+  
+          h1{
+            font-size:clamp(0.4rem, 3vw, 1.2rem);
+            font-weight: 600;
+          }
+          p{
+            font-size:clamp(0.7rem, 3vw, 1.8rem);
+            font-weight: 800;
+            margin-top: 1%;
+          }}
+          
+        .plant-dispatch{
+          position: absolute;
+          margin-top: 59%;
+          margin-left: -58%;
           @include sm {
-            font-size: 10px;
-            margin-left: -24%;
+            margin-top: 72%;
+            margin-left: -65%;
           }
-        }
-      }
-      .section4 {
-        display: flex;
-        p {
-          padding: 2%;
-          padding-left: 8%;
-          font-weight: 600;
+          @include md {
+            margin-top: 56%;
+            margin-left: -66%;
+          }
           @include lg {
-            font-size: 14px;
-            margin-left: 8%;
-            width: 100%;
-            padding: 0;
+            margin-top:57%;
+            margin-left: -65%;
           }
-          @include md {
-            font-size: 12px;
+          h1{
+            font-size:clamp(0.4rem, 3vw, 1.2rem);
+            font-weight: 600;
           }
-          @include sm {
-            font-size: 10px;
-          }
-        }
-        ul {
-          list-style: none;
-          margin-top: 4.5%;
-          font-family: $font3;
-          @include lg {
-            margin-left: 5%;
-            width: 100%;
-          }
-          @include md {
-            font-size: 12px;
-          }
-          @include sm {
-            font-size: 10px;
-            margin-left: -24%;
-          }
-        }
-      }
-
-      h1 {
-        text-align: center;
-        font-weight: 600;
-        @include md {
-          font-size: 22px;
-        }
+          p{
+            font-size:clamp(0.7rem, 3vw, 1.8rem);
+            font-weight: 800;
+            margin-top: 1%;
+          }}
+          .whs-receive{
+            position: absolute;
+            margin-top: 79%;
+            margin-left: 60%;
+            @include sm {
+                margin-top: 90%;
+                margin-left: 70%;
+            }
+            @include md {
+              margin-top: 75%;
+              margin-left: 70%;
+            }
+            @include lg {
+              margin-top: 74%;
+              margin-left: 69%;
+            }
+            h1{
+              font-size:clamp(0.4rem, 3vw, 1.2rem);
+              font-weight: 600;
+            }
+            p{
+              font-size:clamp(0.7rem, 3vw, 1.8rem);
+              font-weight: 800;
+              margin-top: 1%;
+            }}
+            .whs-dispatch{
+              position: absolute;
+              margin-top: 102%;
+              margin-left: -5%;
+              @include sm {
+                margin-top: 130%;
+              }
+              @include md {
+                margin-top: 105%;
+              }
+      
+              h1{
+                font-size:clamp(0.5rem, 3vw, 1.2rem);
+                font-weight: 600;
+              }
+              p{
+                font-size:clamp(0.7rem, 3vw, 1.8rem);
+                font-weight: 800;
+                margin-top: 1%;
+              }}
+      .timeline{
+        width: 80%;
+        height: 80%;
+        align-items: center;
+        display:flex;
+        justify-content: center;
         @include sm {
-          font-size: 16px;
-        }
-      }
-    }
-  }
-
-  .warehouse {
-    display: flex;
-    flex-direction: row;
-    margin-top: 25%;
-
-    @include lg {
-      margin-left: -14%;
-      margin-top: 5%;
-    }
-    @include sm {
-      margin-top: 45%;
-      margin-left: -7%;
-    }
-    .dispatch {
-      width: 10%;
-      height: 10%;
-      margin-left: 20%;
-      margin-top: -15%;
-      @include lg {
-        width: 14%;
-        height: 14%;
-      }
-      @include sm {
-        width: 18%;
-        height: 18%;
-        margin-top: -10%;
-      }
-    }
-    .card3 {
-      width: 20%;
-      height: 60%;
-      background: white;
-      font-family: $font2;
-      border-radius: 15px;
-      border: 2px solid $yellow;
-      margin-left: 4%;
-      margin-top: -18%;
-      @include lg {
-        width: 24%;
-        height: 25%;
-      }
-      @include md {
-        width: 25%;
-        height: 20%;
-      }
-      @include sm {
-        width: 42%;
-        height: 20%;
-        margin-left: 3%;
-      }
-      .section5 {
-        display: flex;
-        p {
-          padding: 2%;
-          padding-left: 8%;
-          font-weight: 600;
-          @include lg {
-            font-size: 14px;
-            margin-left: 8%;
-            width: 100%;
-            padding: 0;
-          }
-          @include md {
-            font-size: 12px;
-          }
-          @include sm {
-            font-size: 10px;
-          }
-        }
-        ul {
-          list-style: none;
-          margin-top: 4.5%;
-          margin-left: 5%;
-          font-family: $font3;
-          @include lg {
-            margin-left: 5%;
-            width: 100%;
-          }
-          @include md {
-            font-size: 12px;
-          }
-          @include sm {
-            font-size: 10px;
-            margin-left: -26%;
-          }
-        }
-      }
-      .section6 {
-        display: flex;
-        p {
-          padding: 2%;
-          padding-left: 8%;
-          font-weight: 600;
-          @include lg {
-            font-size: 14px;
-            margin-left: 8%;
-            width: 100%;
-            padding: 0;
-          }
-          @include md {
-            font-size: 12px;
-          }
-          @include sm {
-            font-size: 10px;
-          }
-        }
-        ul {
-          list-style: none;
-          margin-top: 4.5%;
           width: 100%;
-          margin-left: 5.5%;
-          font-family: $font3;
-          @include md {
-            font-size: 12px;
-          }
-          @include sm {
-            font-size: 10px;
-            margin-left: -26%;
-          }
+          height: 100%;
         }
       }
 
-      h1 {
-        text-align: center;
-        font-weight: 600;
-        @include md {
-          font-size: 22px;
-        }
-        @include sm {
-          font-size: 16px;
-        }
-      }
     }
-  }
+  
 
-  .progress-icon {
-    width: 50%;
-    height: 50%;
-    margin-left: 25%;
-  }
-  .progress-icon2 {
-    width: 50%;
-    height: 50%;
-    margin-left: 25%;
-    margin-top: -10%;
-  }
+ 
+ 
 }

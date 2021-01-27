@@ -6,23 +6,34 @@ $font2: "Corsica";
 $font1: "Circular";
 $font3: "HK-Grotesk";
 $lightblack: rgb(54, 60, 76);
+$lightgrey1: #d1d9dc;
+$lightgreen: #bcd4bd;
+$lightbrown: #e6e2c7;
+$lightpurple: #d0cec9;
+
 .facts {
   display: flex;
   flex-direction: row;
   font-family: $font1;
+  padding-bottom: 10%;
   @include sm {
     display: flex;
     flex-direction: column;
     margin-top: -15%;
-    margin-left: 1%;
+    margin-left: 4%;
+    margin-bottom: 10%;
   }
 
   .Milk {
     margin-left: 20%;
-    margin-top: 20%;
+    margin-top: 12%;
     width: 15%;
     height: 15%;
+    
     @include sm {
+      display: none;
+    }
+    @include md {
       display: none;
     }
   }
@@ -30,7 +41,7 @@ $lightblack: rgb(54, 60, 76);
   .download-btn {
     width: 350px;
     height: 50px;
-    margin-top: 40%;
+    margin-top: 32%;
     margin-left: -19%;
     background: none;
 
@@ -46,6 +57,11 @@ $lightblack: rgb(54, 60, 76);
       margin-left: 10%;
       font-size: 12px;
     }
+    @include md {
+      width: 300px;
+      margin-left: 32.5%;
+      margin-top: 20%;
+    }
   }
 
   .cards {
@@ -58,6 +74,10 @@ $lightblack: rgb(54, 60, 76);
     @include sm {
       margin-left: 18%;
     }
+    @include md {
+      margin-top: 40%;
+      margin-left: -48%;
+    }
   }
 
   .section1 {
@@ -68,10 +88,10 @@ $lightblack: rgb(54, 60, 76);
     .f1 {
       height: 200px;
       width: 200px;
-      background: #ed213a;
+      background:$lightgrey1;
       border-radius: 20px;
       text-align: center;
-      color:white;
+      
 
       @include sm {
         width: 100px;
@@ -80,7 +100,7 @@ $lightblack: rgb(54, 60, 76);
       h1 {
       
         font-size: clamp(1.1rem, 3vw, 1.8rem);
-        margin-top: 30px;
+        margin-top: 40px;
         @include sm {
           margin-top: 20%;
         }
@@ -88,7 +108,7 @@ $lightblack: rgb(54, 60, 76);
       p {
         font-size: clamp(0.9rem, 2vw, 1.2rem);
         color: black;
-        margin-top: 30px;
+        margin-top: 40px;
         @include sm {
           margin-top: 18%;
         }
@@ -97,10 +117,10 @@ $lightblack: rgb(54, 60, 76);
     .f2 {
       width: 200px;
       height: 200px;
-      background: #f46b45;
+      background:$lightgreen;
       border-radius: 20px;
       text-align: center;
-      color: white;
+      
 
       margin-left: 30px;
       @include sm {
@@ -110,7 +130,7 @@ $lightblack: rgb(54, 60, 76);
       h1 {
         
         font-size: clamp(1.1rem, 3vw, 1.6rem);
-        margin-top: 30px;
+        margin-top: 45px;
         @include sm {
           margin-top: 20%;
         }
@@ -118,7 +138,7 @@ $lightblack: rgb(54, 60, 76);
       p {
         font-size: clamp(.9rem, 2vw, 1.2rem);
         color: black;
-        margin-top: 30px;
+        margin-top: 45px;
         @include sm {
           margin-top: 18%;
         }
@@ -133,10 +153,10 @@ $lightblack: rgb(54, 60, 76);
     .f3 {
       width: 200px;
       height: 200px;
-      background: #4286f4;
+      background:$lightbrown;
       border-radius: 20px;
       text-align: center;
-      color: white;
+      
       @include sm {
         width: 100px;
         height: 100px;
@@ -144,7 +164,7 @@ $lightblack: rgb(54, 60, 76);
       h1 {
         
         font-size: clamp(1.1rem, 3vw, 1.6rem);
-        margin-top: 30px;
+        margin-top: 40px;
         @include sm {
           margin-top: 20%;
         }
@@ -152,7 +172,7 @@ $lightblack: rgb(54, 60, 76);
       p {
         font-size: clamp(.9rem, 2vw, 1.2rem);
         color: black;
-        margin-top: 30px;
+        margin-top: 40px;
         @include sm {
           margin-top: 18%;
         }
@@ -162,11 +182,11 @@ $lightblack: rgb(54, 60, 76);
     .f4 {
       width: 200px;
       height: 200px;
-      background: #11998e;
+      background: $lightpurple;
       border-radius: 20px;
       text-align: center;
       margin-left: 30px;
-      color: white;
+    
       @include sm {
         width: 100px;
         height: 100px;
@@ -174,7 +194,7 @@ $lightblack: rgb(54, 60, 76);
       h1 {
         
         font-size: clamp(1.1rem, 3vw, 1.6rem);
-        margin-top: 30px;
+        margin-top: 40px;
         @include sm {
           margin-top: 20%;
         }
@@ -182,7 +202,7 @@ $lightblack: rgb(54, 60, 76);
       p {
         font-size: clamp(0.9rem, 2vw, 1.2rem);
         color: black;
-        margin-top: 30px;
+        margin-top: 40px;
         @include sm {
           margin-top: 18%;
         }

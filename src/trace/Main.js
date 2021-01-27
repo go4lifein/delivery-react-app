@@ -1,91 +1,43 @@
-import React, {useEffect ,useState} from "react";
+import React from 'react'
+
 
 
 import "./main.scss";
-import plant from "./icons/plant.svg";
-import factory from "./icons/factory.svg";
-import warehouse from "./icons/warehouse.svg";
-import arrow from "./icons/arrow.svg";
+import board from "./icons/board.svg";
 import moment from "moment";
+//{moment(data.plant_receive).format('DD MM YYYY')}
+//{moment(data.plant_receive).format('hh:mm A')}
 
 export default function Main({data}) {
 
   return (
     <div className="hero">
-      <div className="BMC">
-        <img src={plant} className="BMC-img" alt="BMC" />
-        <div className="card">
-          <h1>BMC</h1>
-          <div className="section">
-            <p>Recieved On:</p>
-            
-            <ul>
-              <li>{moment(data.bmc_receive).format('DD MM YYYY')}</li>
-              <li>{moment(data.bmc_receive).format('hh:mm A')}</li>
-            </ul>
-
-          </div>
-
-          <div className="section2">
-            <p>Dispatched On:</p>
-            
-            <ul>
-              <li>{moment(data.bmc_dispatch).format('DD MM YYYY')}</li>
-              <li>{moment(data.bmc_dispatch).format('hh:mm A')}</li>
-            </ul>
-
-          </div>
+      <div className = "board">
+        <div className = "BMC">
+          <h1 >Recieved at<br></br> BMC</h1>
+          <p>{moment(data.bmc_receive).format('hh:mm A')}</p>
         </div>
-      </div>
-      <div className="right-arrow">
-        <img src={arrow} className="right-img" alt="right-img" />
-      </div>
-
-      <div className="factory">
-        <img src={factory} className="plant" alt="plant" />
-        <div className="card2">
-          <h1>Plant</h1>
-          <div className="section3">
-            <p>Recieved On:</p>
-            <ul>
-              <li>{moment(data.plant_receive).format('DD MM YYYY')}</li>
-              <li>{moment(data.plant_receive).format('hh:mm A')}</li>
-            </ul>
-          </div>
-
-          <div className="section4">
-            <p>Dispatched On:</p>
-            <ul>
-              <li>{moment(data.plant_dispatch).format('DD MM YYYY')}</li>
-              <li>{moment(data.plant_dispatch).format('hh:mm A')}</li>
-            </ul>
-          </div>
+       
+        <div className = "plant-receive">
+          <h1> Milk Pasteurized<br></br>at 85<span>&#176;</span>C</h1>
+          <p>{moment(data.plant_receive).format('hh:mm A')}</p>
         </div>
-      </div>
-      <div className="left-arrow">
-        <img src={arrow} className="left-img" alt="left-img" />
-      </div>
+        <div className = "plant-dispatch">
+      <h1>Packed in a 3-Layer<br></br>Tamper-Proof<br></br> Packaging</h1>
+        <p>{moment(data.plant_dispatch).format('hh:mm A')}</p>
 
-      <div className="warehouse">
-        <img src={warehouse} className="dispatch" alt="warehouse " />
-        <div className="card3">
-          <h1>Warehouse</h1>
-          <div className="section5">
-            <p>Recieved On:</p>
-            <ul>
-              <li>{moment(data.whs_receive).format('DD MM YYYY')}</li>
-              <li>{moment(data.whs_receive).format('hh:mm A')}</li>
-            </ul>
-          </div>
-
-          <div className="section6">
-            <p>Dispatched On:</p>
-            <ul>
-              <li>{moment(data.whs_dispatch).format('DD MM YYYY')}</li>
-              <li>{moment(data.whs_dispatch).format('hh:mm A')}</li>
-            </ul>
-          </div>
         </div>
+        <div className = "whs-receive">
+        <h1>Arrived at <br></br> Warehouse</h1>
+        <p>{moment(data.whs_receive).format('hh:mm A')}</p>
+      </div>
+      <div className = "whs-dispatch">
+        <h1>Dispatched for <br></br>Delivery</h1>
+        <p>{moment(data.whs_dispatch).format('hh:mm A')}</p>
+      </div>
+     
+      <img src= {board} className = "timeline" alt = "timeline" />
+      
       </div>
     </div>
   );
