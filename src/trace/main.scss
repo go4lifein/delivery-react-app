@@ -24,13 +24,14 @@ $yellow: #cc9600;
         position: absolute;
         margin-top: 30%;
         margin-left: -62%;
-        @include sm {
-          margin-top: 32%;
-          margin-left: -72%;
-        }
+        
         @include md {
           margin-top: 28%;
           margin-left: -70%;
+        }
+        @include sm {
+          margin-top: 32%;
+          margin-left: -72%;
         }
 
         h1{
@@ -50,13 +51,14 @@ $yellow: #cc9600;
           position: absolute;
           margin-top: 45%;
           margin-left: 6%;
-          @include sm {
-            margin-top: 51%;
-            margin-left: 4%;
-          }
+         
           @include md {
             margin-top: 41%;
             margin-left: 3%;
+          }
+          @include sm {
+            margin-top: 51%;
+            margin-left: 4%;
           }
   
           h1{
@@ -73,16 +75,18 @@ $yellow: #cc9600;
           position: absolute;
           margin-top: 59%;
           margin-left: -58%;
-          @include sm {
-            margin-top: 72%;
+          
+          @include lg {
+            margin-top:57%;
             margin-left: -65%;
           }
           @include md {
             margin-top: 56%;
             margin-left: -66%;
           }
-          @include lg {
-            margin-top:57%;
+         
+          @include sm {
+            margin-top: 72%;
             margin-left: -65%;
           }
           h1{
@@ -98,18 +102,20 @@ $yellow: #cc9600;
             position: absolute;
             margin-top: 79%;
             margin-left: 60%;
-            @include sm {
-                margin-top: 90%;
-                margin-left: 70%;
+            @include lg {
+              margin-top: 74%;
+              margin-left: 69%;
             }
             @include md {
               margin-top: 75%;
               margin-left: 70%;
             }
-            @include lg {
-              margin-top: 74%;
-              margin-left: 69%;
+            @include sm {
+                margin-top: 90%;
+                margin-left: 70%;
             }
+            
+           
             h1{
               font-size:clamp(0.4rem, 3vw, 1.2rem);
               font-weight: 600;
@@ -123,12 +129,13 @@ $yellow: #cc9600;
               position: absolute;
               margin-top: 102%;
               margin-left: -5%;
-              @include sm {
-                margin-top: 130%;
-              }
               @include md {
                 margin-top: 105%;
               }
+              @include sm {
+                margin-top: 130%;
+              }
+             
       
               h1{
                 font-size:clamp(0.5rem, 3vw, 1.2rem);
