@@ -13,7 +13,7 @@ export async function getReport(type = 'a2', report_date = moment().format('YYYY
       'Content-Type': 'application/json',
     }
   });
-  console.log(result);
+ 
   return result ;
   
 }
