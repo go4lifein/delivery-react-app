@@ -8,11 +8,14 @@ import moment from "moment";
 //{moment(data.plant_receive).format('DD MM YYYY')}
 //{moment(data.plant_receive).format('hh:mm A')}
 
-export default function Main({data}) {
+export default function Main({data,setLoad,load}) {
 
   return (
     <div className="hero">
       <div className = "board">
+        {data && load &&
+        <>
+        
         <div className = "BMC">
           <h1 >Recieved at<br></br> BMC</h1>
           <p>{moment(data.bmc_receive).format('hh:mm A')}</p>
@@ -35,9 +38,10 @@ export default function Main({data}) {
         <h1>Dispatched for <br></br>Delivery</h1>
         <p>{moment(data.whs_dispatch).format('hh:mm A')}</p>
       </div>
-     
-      <img src= {board} className = "timeline" alt = "timeline" />
-      
+     </>
+}   {data&&
+      <img src= {board} onLoad = {() => setLoad(true)} className = "timeline" alt = "timeline" />
+}
       </div>
     </div>
   );

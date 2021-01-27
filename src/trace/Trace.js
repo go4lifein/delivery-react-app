@@ -15,12 +15,22 @@ export default function Trace({ location }) {
   const [isA2, setIsA2] = useState(true);
   const [data ,setData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [load ,setLoad] = useState(false);
 
+  useEffect(() =>{
+    console.log(load);
+  },[load])
   useEffect(() => {
     let {search} = location;
     search = new URLSearchParams(search);
-    const date = new Date(search.get('report_date'));
+    const reportDate = search.get('report_date');
+    if(!reportDate)
+    return
+    const date = new Date(reportDate);
+    
     const type = search.get('milk_type');
+    
+    
     setStartDate(date);
     setIsA2(type === "a2" ? true : false);
   }, [location]);
@@ -30,7 +40,7 @@ export default function Trace({ location }) {
     async function getData() {
       try {
         setLoading(true);
-        const response = await getReport(isA2 ? "a2" :"mix" , startDate);
+        const response = await getReport("a2" , startDate);
         setData(response.data);
         setLoading(false);
       }
@@ -48,10 +58,11 @@ export default function Trace({ location }) {
       <Header />
       <GetDate startDate = {startDate} setStartDate ={setStartDate} isA2 = {isA2} setIsA2 = {setIsA2}/>
       {loading && <Loading />}
-      {!data && <p>Record Not Found</p>}
-      {data &&
+      {!data && !loading && <p>Record Not Found</p>}
+      <Main data= {data} load = {load} setLoad = {setLoad} />
+      {data && load &&
         <>
-          <Main data= {data}  />
+          
           <Journey data = {data} />
           <Facts data= {data}  />
         </>
