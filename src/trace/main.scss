@@ -35,16 +35,28 @@ $yellow: #cc9600;
         }
 
         h1{
-          font-size:clamp(0.4rem, 3vw, 1.2rem);
+          font-size: 1.2rem;
           min-height: 0vw;
           font-weight: 600;
+          @include md {
+            font-size: 2vw;
+          }
+          @include sm {
+            font-size: 0.7rem;
+          }
           
         }
         p{
-          font-size:clamp(0.7rem, 3vw, 1.8rem);
+          font-size: 1.8rem;
           min-height: 0vw;
           font-weight: 600;
           margin-top: -5%;
+          @include md {
+            font-size: 2vw;
+          }
+          @include sm {
+            font-size: 0.7rem;
+          }
         }
         
       }
@@ -64,15 +76,27 @@ $yellow: #cc9600;
           }
   
           h1{
-            font-size:clamp(0.4rem, 3vw, 1.2rem);
+            font-size: 1.2rem;
             min-height: 0vw;
             font-weight: 600;
+            @include md {
+              font-size: 2vw;
+            }
+            @include sm {
+              font-size: 0.7rem;
+            }
           }
           p{
-            font-size:clamp(0.7rem, 3vw, 1.8rem);
+            font-size: 1.8rem;
             min-height: 0vw;
             font-weight: 800;
             margin-top: 1%;
+            @include md {
+              font-size: 2vw;
+            }
+            @include sm {
+              font-size: 0.7rem;
+            }
           }}
           
         .plant-dispatch{
@@ -94,15 +118,27 @@ $yellow: #cc9600;
             margin-left: -65%;
           }
           h1{
-            font-size:clamp(0.4rem, 3vw, 1.2rem);
+            font-size: 1.2rem;
             min-height: 0vw;
             font-weight: 600;
+            @include md {
+              font-size: 2vw;
+            }
+            @include sm {
+              font-size: 0.7rem;
+            }
           }
           p{
-            font-size:clamp(0.7rem, 3vw, 1.8rem);
+            font-size: 1.8rem;
             min-height: 0vw;
             font-weight: 800;
             margin-top: 1%;
+            @include md {
+              font-size: 2vw;
+            }
+            @include sm {
+              font-size: 0.7rem;
+            }
           }}
           .whs-receive{
             position: absolute;
@@ -123,15 +159,27 @@ $yellow: #cc9600;
             
            
             h1{
-              font-size:clamp(0.4rem, 3vw, 1.2rem);
+              font-size: 1.2rem;
               min-height: 0vw;
               font-weight: 600;
+              @include md {
+                font-size: 2vw;
+              }
+              @include sm {
+                font-size: 0.7rem;
+              }
             }
             p{
-              font-size:clamp(0.7rem, 3vw, 1.8rem);
+              font-size: 1.8rem;
               min-height: 0vw;
               font-weight: 800;
               margin-top: 1%;
+              @include md {
+                font-size: 2vw;
+              }
+              @include sm {
+                font-size: 0.7rem;
+              }
             }}
             .whs-dispatch{
               position: absolute;
@@ -146,15 +194,27 @@ $yellow: #cc9600;
              
       
               h1{
-                font-size:clamp(0.5rem, 3vw, 1.2rem );
+                font-size: 1.2rem ;
                 min-height: 0vw;
                 font-weight: 600;
+                @include md {
+                  font-size: 2vw;
+                }
+                @include sm {
+                  font-size: 0.7rem;
+                }
               }
               p{
-                font-size:clamp(0.7rem, 3vw, 1.8rem);
+                font-size: 1.8rem;
                 min-height: 0vw;
                 font-weight: 800;
                 margin-top: 1%;
+                @include md {
+                  font-size: 2vw;
+                }
+                @include sm {
+                  font-size: 0.7rem;
+                }
               }}
       .timeline{
         width: 80%;
