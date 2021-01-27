@@ -1,8 +1,9 @@
 import React , {useState , useEffect} from "react";
 import "./trace.scss";
 import Header from "./header.js";
-
+import {location ,search} from "react-router";
 import Main from "./Main.js";
+import moment from "moment";
 import Journey from "./Journey.js";
 import Facts from "./Facts.js";
 import GetDate from "./getDate.js";
@@ -13,6 +14,9 @@ export default function Trace() {
   const [isA2, setIsA2] = useState(true);
   const [data ,setData] = useState(null);
   const [loading, setLoading] =useState(false);
+  
+
+ 
 
    useEffect(() =>{
     async function getData()
@@ -22,6 +26,7 @@ export default function Trace() {
     const response = await getReport(isA2 ? "a2" :"b2" , startDate) ;
     setData(response.data);
     setLoading(false);
+
       }
     catch
       (err ){
@@ -33,7 +38,6 @@ export default function Trace() {
     }
     getData();
  },[ startDate , isA2])
-
 
   return (
     <div className="trace">
