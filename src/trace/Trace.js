@@ -26,10 +26,11 @@ export default function Trace({ location }) {
   }, [location]);
 
   useEffect(() => {
+  
     async function getData() {
       try {
         setLoading(true);
-        const response = await getReport(isA2 ? "a2" :"b2" , startDate);
+        const response = await getReport(isA2 ? "a2" :"mix" , startDate);
         setData(response.data);
         setLoading(false);
       }
