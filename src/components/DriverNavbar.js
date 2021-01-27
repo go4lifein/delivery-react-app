@@ -55,14 +55,14 @@ function MenuAppBar(props) {
   const { location} = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default">
+      <AppBar position="static" color="warning">
         <Toolbar>
-          <img src={logo} alt="logo" className="logo" style={{maxWidth: 140, maxHeight: 40}} />
-          <Typography variant="h4" className={classes.title}>
+          <img src={logo} alt="logo" className="logo" />
+          <Typography variant="h5" className={classes.title}>
             {getTitle(location)}
           </Typography>
           
-          <div>
+          <div className="flex">
             <IconButton 
               onClick={() => {
                 window.location.reload();

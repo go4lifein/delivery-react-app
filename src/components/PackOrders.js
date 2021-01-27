@@ -7,6 +7,8 @@ import {max} from '../helpers/math';
 
 import LeftRightSwitch from './LeftRightSwitch';
 import PackOrderForm from './PackOrderForm';
+import {prepareOrder} from '../api/admin';
+import {updateOrderCrateData} from '../actions/admin.actions';
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -17,7 +19,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-
+    onUpdateOrderCrateData: (data) => dispatch(updateOrderCrateData(data)),
   };
 }
 
@@ -63,11 +65,41 @@ class PackOrders extends Component{
       crate_id: crate_id + 1
     });
   }
-  render() {
-    let {loading, error, crate_id} = this.state;
-    const {customers} = this.props;
+  onSubmit = (data) => {
+
+    const {crate_id} = this.state;
+    const {onUpdateOrderCrateData} = this.state;
+
+    this.setState({
+      loading: true
+    })
+    prepareOrder(data)
+    .then(res => {
+      this.setState({
+        loading: false,
+        crate_id: crate_id+1
+      });
+      onUpdateOrderCrateData(data);
+    })
+    .catch(err => {
+      this.setState({
+        loading: false
+      })
+      alert(err.message);
+    })
     
-    console.log("Rendering");
+  }
+  render() {
+    let {loading, crate_id} = this.state;
+    const {customers, loadingOrderData} = this.props;
+
+    if(loadingOrderData) {
+      return (
+        <div style={{padding: 10}}>
+          <Loading />
+        </div>
+      )
+    }
 
     let order;
     if(customers) {
@@ -78,8 +110,6 @@ class PackOrders extends Component{
         }
       }
     }
-
-    console.log(order)
 
     if(!customers) {
       return (
@@ -108,27 +138,18 @@ class PackOrders extends Component{
           <div>
             <Loading />
           </div> :
-          <div style={{padding: 10}}>
-            {
-              order ? 
-                <CustomerDetails customer={order} />
-              : 
-              <div>
-                <Typography variant="h5">No such crate number found</Typography>
-              </div>
-            }
-          </div>
-        }
-        <Divider />
-        {
-          loading ?
           <div>
-            <Loading />
-          </div> :
-          <div style={{padding: 10}}>
             {
               order ? 
-                <PackOrderForm order={order} loading={loading} />
+                <div>
+                  <div style={{padding: 10}}>
+                    <CustomerDetails customer={order}/>
+                  </div>
+                  <Divider />
+                  <div style={{padding: 10}}>
+                    <PackOrderForm order={order} loading={loading} onSubmit={this.onSubmit} />
+                  </div>
+                </div>
               : 
               <div>
                 <Typography variant="h5">No such crate number found</Typography>

@@ -1,4 +1,6 @@
-import {UPDATE_ADMIN, UPDATE_ORDERS_DATA, UPDATE_ADMIN_DATA} from '../constants/index';
+import {UPDATE_ADMIN, UPDATE_ORDERS_DATA, UPDATE_ADMIN_DATA, UPDATE_ORDER_CRATE_DATA} from '../constants/index';
+
+import {hasOnlyDairyProducts, hasNoDairy} from '../helpers/utils';
 
 let admin = window.localStorage.getItem('admin');
 if(admin) {
@@ -6,35 +8,10 @@ if(admin) {
 } else {
   admin = undefined;
 }
-console.log(admin);
+// console.log(admin);
 const initialState = {
-  admin
-}
-
-function hasOnlyDairyProducts(products) {
-  if('Dairy' in products && Object.entries(products).length === 1) {
-    return true;
-  }
-  return false;
-}
-
-function hasNoDairy(products) {
-  if(!('Dairy' in products)) {
-    return true;
-  }
-  return false;
-}
-
-function onlyMilkAndPaneer(products) {
-  const categories = Object.entries(products);
-  categories.forEach(([category, value]) => {
-    value.forEach(product => {
-      const name = product.product;
-      if(name.toLowerCase().includes("milk") === false) return false;
-      if(name.toLowerCase().includes("paneer") ===false) return false;
-    });
-  });
-  return true;
+  admin,
+  loadingOrderData: true
 }
 
 export const setAdmin = (state = initialState, action = {}) => {
@@ -50,12 +27,21 @@ export const setAdmin = (state = initialState, action = {}) => {
         ...action.payload
       }
 
+    case UPDATE_ORDER_CRATE_DATA:
+      // let {customers, areas, subareas, categories, hubs, orders} = action.payload;
+      console.log(action.payload);
+      // return { 
+      //   ...state,
+      //   ...action.payload
+      // }
+
     case UPDATE_ORDERS_DATA:
 
       let orders = action.payload;
       let customers = new Map();
       let productsCollection = new Map();
       let locations = new Map();
+      let alreadyCreatedCratedToday = false;
       /* 
       locations = {
         "Gurgaon": {
@@ -68,9 +54,14 @@ export const setAdmin = (state = initialState, action = {}) => {
         }
       }
       */
+
       // prepare location data
       orders.forEach(order => {
-        let { subarea, area, hub } = order;
+        let { subarea, area, hub, crate_id } = order;
+        
+        if(crate_id) {
+          alreadyCreatedCratedToday = true;
+        }
         if(locations.has(hub)) {
           let hubAreas = locations.get(hub);
           if(hubAreas.has(area)) {
@@ -117,6 +108,13 @@ export const setAdmin = (state = initialState, action = {}) => {
         // if(order_id === 129779) {
         //   console.log(order);
         // }
+
+        // filter orders created after crate id is generated
+        if(alreadyCreatedCratedToday) {
+          if(!crate_id) {
+            return;
+          }
+        }
 
         let productData = {
           product,
@@ -197,6 +195,7 @@ export const setAdmin = (state = initialState, action = {}) => {
         }
       });
 
+      // create crate id for orders except onlyDairyProducts
       let crateId = 1;
       for(const customer of customers) {
         const {products} = customer[1];
@@ -212,11 +211,10 @@ export const setAdmin = (state = initialState, action = {}) => {
           customer[1].hasNoDairy = true;
         } else {
           customer[1].hasNoDairy = false;
-        }
-
-        
+        }  
       }
       
+      // create crate id for orders that has onlyDairyProducts
       for(const customer of customers) {
         const {products} = customer[1];
         if(hasOnlyDairyProducts(products)) {
@@ -260,7 +258,20 @@ export const setAdmin = (state = initialState, action = {}) => {
         // }
       })
       
-      return {...state, customers, locations, productsCollection, products, areas, subareas, categories, hubs, orders};
+      return {
+        ...state, 
+        alreadyCreatedCratedToday, 
+        loadingOrderData: false, 
+        customers, 
+        locations, 
+        productsCollection, 
+        products, 
+        areas, 
+        subareas, 
+        categories, 
+        hubs, 
+        orders
+      };
     default:
       return state;
   }

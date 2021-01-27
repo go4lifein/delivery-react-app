@@ -34,3 +34,30 @@ initRequestAuthHeader();
 export function request(config) {
   return axios.request(config);
 }
+
+export function onlyMilkAndPaneer(products) {
+  const categories = Object.entries(products);
+  categories.forEach(([category, value]) => {
+    value.forEach(product => {
+      const name = product.product;
+      if(name.toLowerCase().includes("milk") === false) return false;
+      if(name.toLowerCase().includes("paneer") ===false) return false;
+    });
+  });
+  return true;
+}
+
+
+export function hasOnlyDairyProducts(products) {
+  if('Dairy' in products && Object.entries(products).length === 1) {
+    return true;
+  }
+  return false;
+}
+
+export function hasNoDairy(products) {
+  if(!('Dairy' in products)) {
+    return true;
+  }
+  return false;
+}

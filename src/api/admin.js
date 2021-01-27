@@ -47,6 +47,18 @@ export function updateCrateId(data) {
   });
 }
 
+export function prepareOrder(data) {
+  let url = `${API_URL}/order/prepareOrder`;
+  return request({
+    url: url,
+    method: 'post',
+    data,
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+}
+
 export function login(data) {
   let url = `${API_URL}/admin/login`;
   return request({

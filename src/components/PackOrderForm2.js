@@ -58,6 +58,7 @@ function PackOrderForm(props) {
             />
             </Box>
           </Grid>
+
           <Grid item xs={12}>
             <Box p={1}>
             <Typography variant="h5">Large Boxes</Typography>
@@ -78,6 +79,7 @@ function PackOrderForm(props) {
             />
             </Box>
           </Grid>
+
           <Grid item xs={12}>
             
             <Box p={1}>
@@ -95,6 +97,7 @@ function PackOrderForm(props) {
             />
             </Box>
           </Grid>
+          
           <Grid item xs={12}>
             
             <Box p={1}>

@@ -1,4 +1,4 @@
-import { Box, Typography } from '@material-ui/core';
+import { Box} from '@material-ui/core';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {getReport} from '../api/misc';

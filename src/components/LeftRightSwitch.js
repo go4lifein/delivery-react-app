@@ -7,7 +7,7 @@ function LeftRightSwitch(props) {
   const {left, onLeft, right, onRight, center, leftIcon, rightIcon, disabledLeft = false, disabledRight = false, style={}, className = ""} = props;
   return (
     <div 
-      className={`flex p-10 ${className}`}
+      className={`flex p-10 middle ${className}`}
       style={{
         justifyContent: 'space-around',
         ...style
@@ -18,6 +18,7 @@ function LeftRightSwitch(props) {
           left ?
           left :
           <IconButton 
+            size="small"
             onClick={onLeft}
             disabled={disabledLeft}
             style={{border: '1px solid rgba(0, 0, 0, 0.23)'}}
@@ -27,7 +28,7 @@ function LeftRightSwitch(props) {
         }
 
       </div>
-      <div className="flex center middle " style={{flexGrow: 0.5, paddingRight: 10, paddingLeft: 10}}>
+      <div className="flex center middle" style={{flexGrow: 0.5, paddingRight: 10, paddingLeft: 10}}>
         {center}
       </div>
       <div>
@@ -35,6 +36,7 @@ function LeftRightSwitch(props) {
           right ?
           right :
           <IconButton 
+            size="small"
             onClick={onRight}
             disabled={disabledRight}
             style={{border: '1px solid rgba(0, 0, 0, 0.23)'}} 

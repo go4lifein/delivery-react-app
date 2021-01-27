@@ -55,6 +55,7 @@ class LoginAdmin extends Component {
                 fullWidth
                 label="Phone Number"
                 type="number"
+                name="Phone Number"
                 value={phone}
                 onChange={(e) => this.setState({phone: e.target.value})}
               />

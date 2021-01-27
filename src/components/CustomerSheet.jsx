@@ -33,8 +33,7 @@ class CustomerSheet extends Component {
     }
   }
   componentDidMount() {
-    
-    let alreadyCreatedCratedToday = false;
+    let {alreadyCreatedCratedToday} = this.props;
 
     let cratesLastCreated = new Date(localStorage.getItem('cratesLastCreated'));
 
@@ -213,6 +212,8 @@ class CustomerSheet extends Component {
 
     let {customers } = this.props;
     let {creatingCrate, removeSelectedDairy, search, alreadyCreatedCratedToday } = this.state;
+
+    alreadyCreatedCratedToday = alreadyCreatedCratedToday || this.props.alreadyCreatedCratedToday;
 
     
     let data = [];

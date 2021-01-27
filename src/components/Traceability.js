@@ -116,7 +116,7 @@ class Traceability extends Component{
     return (
       <Fragment>
         <div id="trace" className="flex middle">
-          <img src={logo} alt="logo" className="logo" width="20%" style={{maxWidth: 140}} />
+          <img src={logo} alt="logo" className="logo" width="20%" />
           {/* <h1 className="heading">Trace Your Milk</h1> */}
           <Typography variant="h5">Trace Your Milk</Typography>
         </div>
@@ -286,7 +286,7 @@ function Report(props) {
 }
 
 function StatCard(props) {
-  const {title, value, suffix, subtitle, content} = props;
+  const {title, value, suffix, subtitle} = props;
   return (
     <Card>
       <CardContent>

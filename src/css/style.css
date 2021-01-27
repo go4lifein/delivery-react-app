@@ -114,8 +114,9 @@ label.required::after {
 .logo {
   display: flex;
   margin: 4px;
+  width: 20%;
+  max-width: 120px;
 }
-
 
 .css-692fgp, .css-vcfpfv, .css-1b3lipl:before {
   background-color: #277048;

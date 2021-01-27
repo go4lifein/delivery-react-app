@@ -111,7 +111,7 @@ class OrderManagement extends Component {
   }
   render() {
     let loading = true;
-    let {selectedArea, selectedHub, selectedSubarea, selectedDriver, orderType, phone, showDelivered } = this.state;
+    let {selectedArea, selectedHub, selectedDriver, orderType, phone, showDelivered } = this.state;
     let {customers, locations, hubs, deliveryBoys} = this.props;
     let deliveryBoysData = deliveryBoys ? Array.from(deliveryBoys.values()) : [];
     deliveryBoysData = deliveryBoysData.sort((a, b) => (a.name.localeCompare(b.name)));
@@ -236,7 +236,7 @@ class OrderManagement extends Component {
           if(item.phone.indexOf(phone) !== -1) return true;
           if(item.name.toLowerCase().indexOf(phone.toLowerCase()) !== -1) return true;
           if(item.order_id.toString().indexOf(phone.toLowerCase()) !== -1) return true;
-          if(item.crate_id == phone) return true;
+          if(String(item.crate_id) === phone) return true;
           return false;
         }
         return true;
@@ -444,7 +444,7 @@ const AssignOrders = connect(
       <div className="flex space-bw middle p-10">
         <div className="flex right middle">
           
-          <FormControl variant="outlined">
+          <FormControl variant="outlined" size="small">
             <InputLabel id="driver-filter">Select Driver</InputLabel>
             <Select
               labelId="driver-filter"
