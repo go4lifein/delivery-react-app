@@ -8,6 +8,7 @@ import Journey from "./Journey.js";
 import Facts from "./Facts.js";
 import GetDate from "./getDate.js";
 import {getReport} from "../api/misc.js";
+import lottie from "lottie-web";
 import Loading from "../components/Loading.js";
 
 export default function Trace({ location }) {
@@ -58,7 +59,7 @@ export default function Trace({ location }) {
       <Header />
       <GetDate startDate = {startDate} setStartDate ={setStartDate} isA2 = {isA2} setIsA2 = {setIsA2}/>
       {loading && <Loading />}
-      {!data && !loading && <p>Record Not Found</p>}
+      {!data && !loading && <p className = "not-found">Record Not Found</p>}
       <Main data= {data} load = {load} setLoad = {setLoad} />
       {data && load &&
         <>
