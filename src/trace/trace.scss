@@ -1,3 +1,10 @@
+@import "./fonts/fonts.css";
+@import "./abstracts/variables.scss";
+@import "./abstracts/_mixins.scss";
+$font2: "American Typewriter";
+$lightred:#eb8373;
+$lightred1:#f0a2a1;
+
 html {
   scroll-behavior: smooth;
   margin: 0;
@@ -9,4 +16,43 @@ html {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  .not-found{
+    
+    display: flex;
+    width:500px;
+    margin-left: 33%;
+    align-items:center;
+    justify-content:center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-family: $font2;
+    margin-top: 15%;
+    background-color: $lightred1;
+    border: 4px solid $lightred;
+    padding: 15px;
+    border-radius: 10px;
+
+    @include lg{
+      margin-left: 25%;
+    }
+    @include md {
+      margin-left: 17%;
+    }
+
+    @include sm {
+      width: 300px;
+      font-size: 1rem;
+      margin-left: 15%;
+      margin-top: 20%;
+    }
+    @include xsm{
+      margin-left: 14%;
+    }
+    @include xs {
+      margin-left: 9%;
+    }
+
+    
+  }
 }
+

@@ -1,4 +1,11 @@
 /* Mixins for screen sizes */
+
+@mixin xs {
+  @media (max-width: #{$screen-xs-max}) {
+    @content;
+  }
+}
+
 @mixin xsm {
   @media (max-width: #{$screen-xsm-max}) {
     @content;

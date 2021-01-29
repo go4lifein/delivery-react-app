@@ -23,12 +23,31 @@ $lightpurple: #d0cec9;
     margin-left: 4%;
     margin-bottom: 10%;
   }
+  @include xsm{
+    display: flex;
+    flex-direction: column;
+    margin-left: 7%;
+  
+  }
+  @include xs {
+    display: flex;
+    flex-direction: column;
+    margin-left: 3%;
+  }
 
   .Milk {
     margin-left: 20%;
     margin-top: 12%;
     width: 15%;
     height: 15%;
+
+    @include lg {
+      display: none;
+    }
+
+    @include xl {
+      display: none;
+    }
     
     @include sm {
       display: none;
@@ -52,6 +71,13 @@ $lightpurple: #d0cec9;
     border: 2px solid $lightblack;
     box-shadow: rgb(54, 60, 76) 0px 0px 0px 2px inset;
 
+    @include lg {
+    
+      width: 300px;
+      margin-left: 37%;
+      margin-top: 5%;
+    }
+   
     @include md {
       width: 300px;
       margin-left: 32.5%;
@@ -72,7 +98,10 @@ $lightpurple: #d0cec9;
     margin-left: 20%;
     margin-top: 10%;
     
-
+    @include lg {
+      margin-top: 20%;
+      margin-left: -36%;
+    }
     
     @include md {
       margin-top: 40%;

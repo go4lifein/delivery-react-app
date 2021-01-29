@@ -7,6 +7,10 @@ $font2: "American Typewriter";
   display: flex;
   flex-direction: row;
 
+  @include lg {
+    margin-top: 10%;
+    margin-left: -13%;
+  }
  
   @include md {
     margin-left: -22%;
