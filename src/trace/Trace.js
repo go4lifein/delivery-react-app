@@ -1,9 +1,7 @@
 import React , {useState , useEffect} from "react";
 import "./trace.scss";
 import Header from "./header.js";
-import {location ,search} from "react-router";
 import Main from "./Main.js";
-import moment from "moment";
 import Journey from "./Journey.js";
 import Facts from "./Facts.js";
 import GetDate from "./getDate.js";
@@ -22,6 +20,7 @@ export default function Trace({ location }) {
     console.log(load);
   },[load])
   useEffect(() => {
+    document.title = "Go4Life - Trace Your Milk"
     let {search} = location;
     search = new URLSearchParams(search);
     const reportDate = search.get('report_date');
@@ -41,7 +40,7 @@ export default function Trace({ location }) {
     async function getData() {
       try {
         setLoading(true);
-        const response = await getReport("a2" , startDate);
+        const response = await getReport("a2", startDate);
         setData(response.data);
         setLoading(false);
       }
