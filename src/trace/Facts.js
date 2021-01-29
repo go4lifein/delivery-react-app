@@ -22,7 +22,7 @@ export default function Facts( {data} ) {
           </div>
           <div className="f2">
             <h1>Fat </h1>
-            <p>{data.fat} mg</p>
+            <p>{data.fat} %</p>
           </div>
         </div>
         <div className="section2">
