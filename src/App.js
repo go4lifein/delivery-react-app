@@ -10,6 +10,7 @@ import Loading from "./components/Loading";
 const Admin = lazy(() => import("./containers/Admin.jsx"));
 const Driver = lazy(() => import("./containers/Driver.jsx"));
 const Trace = lazy(() => import("./trace/Trace.js"));
+// const Trace = lazy(() => import("./components/Traceability.js"));
 
 function App() {
   // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
