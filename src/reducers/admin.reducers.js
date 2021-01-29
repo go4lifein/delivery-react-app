@@ -22,10 +22,13 @@ function updateOrderCrateData(state, action) {
     for(const customer of customers) {
       let data = customer[1];
       if(data.order_id === id) {
-        data.small_boxes = payload.small_boxes;
-        data.large_boxes = payload.large_boxes;
-        data.remark = payload.remark;
-        data.crates = payload.crates;
+        data = {
+          ...data,
+          ...payload
+        }
+        customer[1] = data;
+        console.log(customer[1]);
+        break;
       }
     }
   }
@@ -191,7 +194,7 @@ export const setAdmin = (state = initialState, action = {}) => {
             order_id,
             crate_id,
             order_staus, order_type, TIMESTAMP,  last_update_on,
-            crates, remark, small_boxes, large_boxes,
+            crates, remark, small_boxes, large_boxes, delivery_person_id,
             address: {
               address_id,
               house_number, subarea,
@@ -202,7 +205,6 @@ export const setAdmin = (state = initialState, action = {}) => {
               [category]: [productData]
             },
             fnvProducts: [],
-            delivery_person_id,
             delivery: deliveryData,
             delivered: deliveryData.deliver_date
           }

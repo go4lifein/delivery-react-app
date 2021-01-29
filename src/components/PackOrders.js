@@ -7,8 +7,8 @@ import {max} from '../helpers/math';
 
 import LeftRightSwitch from './LeftRightSwitch';
 import PackOrderForm from './PackOrderForm';
-import {prepareOrder} from '../api/admin';
-import {updateOrderCrateData} from '../actions/admin.actions';
+import {prepareOrder, getAllOrders} from '../api/admin';
+import {updateOrderCrateData, updateOrdersData} from '../actions/admin.actions';
 
 
 function mapStateToProps(state) {
@@ -21,6 +21,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onUpdateOrderCrateData: (data) => dispatch(updateOrderCrateData(data)),
+    onUpdateOrdersData: (data) => dispatch(updateOrdersData(data))
   };
 }
 
@@ -88,22 +89,26 @@ class PackOrders extends Component{
       large_boxes,
       crates,
       remark,
+      driver_id,
       id
     }
-     */
-
-    const {crate_id} = this.state;
-    const {onUpdateOrderCrateData} = this.props;
+    */
+    const {onUpdateOrdersData} = this.props;
 
     this.setState({
       loading: true
     })
     prepareOrder(data)
     .then(res => {
-      this.setState({
-        loading: false,
+      getAllOrders()
+      .then(res => {
+        let orders = res.data;
+        onUpdateOrdersData(orders);
+        this.setState({
+          loading: false,
+        });
       });
-      onUpdateOrderCrateData(data);
+      
       this.gotoNextCrate();
     })
     .catch(err => {
@@ -117,6 +122,8 @@ class PackOrders extends Component{
   render() {
     let {loading, crate_id} = this.state;
     const {customers, loadingOrderData} = this.props;
+
+    console.log("Loading", loadingOrderData);
 
     if(loadingOrderData) {
       return (
@@ -132,6 +139,7 @@ class PackOrders extends Component{
         let data = customer[1]
         if(data.crate_id === Number(crate_id)) {
           order = data;
+          break;
         }
       }
     }
@@ -175,7 +183,7 @@ class PackOrders extends Component{
                   <Divider />
                   
                   <div>
-                    <PackOrderForm key={String(order.order_id)} order={order} loading={loading} onSubmit={this.onSubmit} />
+                    <PackOrderForm key={String(order.order_id)} order={order} crate_id={crate_id} loading={loading} onSubmit={this.onSubmit} />
                   </div>
                 </div>
               : 

@@ -21,34 +21,42 @@ class PackOrderForm extends Component {
   componentDidMount() {
 
     // Will be called when order changes because the key props is used
+    let {customers, crate_id} = this.props;
     
-    console.log("Getting new");
-    let {order} = this.props;
+    let order;
+    if(customers) {
+      for(const customer of customers) {
+        let data = customer[1]
+        if(data.crate_id === Number(crate_id)) {
+          order = data;
+          break;
+        }
+      }
+    }
+
     let {
       small_boxes,
       large_boxes,
       crates,
-      remark,
-      delivery
+      delivery_person_id,
+      remark
     } = order;
-    let {driver_id} = delivery;
     
-    console.log("Received value", small_boxes, large_boxes, crates, remark, driver_id);
+    console.log("Render form", small_boxes, large_boxes, crates, remark, delivery_person_id, order);
+
     
     if(!small_boxes) small_boxes = 0;
     if(!large_boxes) large_boxes = 0;
     if(!crates) crates = 0;
     if(remark === null) remark = "";
-    if(!driver_id) driver_id = null;
-    
-    console.log("Forwarded value", small_boxes, large_boxes, crates, remark, driver_id);
+    if(!delivery_person_id) delivery_person_id = null;
 
     this.setState({
       small_boxes,
       large_boxes,
       crates,
       remark,
-      driver_id
+      delivery_person_id
     })
 
   }
@@ -58,13 +66,14 @@ class PackOrderForm extends Component {
       small_boxes = 0,
       large_boxes = 0,
       crates = 0,
+      delivery_person_id,
       remark
     } = this.state;
 
     const {onSubmit, order} = this.props;
 
     onSubmit({
-      small_boxes, large_boxes, crates, remark, id: order.order_id
+      small_boxes, large_boxes, crates, remark, delivery_person_id, id: order.order_id
     });
   }
   
@@ -94,15 +103,15 @@ class PackOrderForm extends Component {
       large_boxes = 0,
       crates = 0,
       remark = null,
-      driver_id
+      delivery_person_id
     } = this.state;
 
     let disabled = true;
-    if((small_boxes || large_boxes || crates || remark) && driver_id) {
+    if((small_boxes || large_boxes || crates || remark) && delivery_person_id) {
       disabled = false;
     }
 
-    console.log("Render form", small_boxes, large_boxes, crates, remark, driver_id);
+    console.log("Render form", small_boxes, large_boxes, crates, remark, delivery_person_id);
 
     return (
       <div>
@@ -117,10 +126,10 @@ class PackOrderForm extends Component {
               <Select
                 labelId="driver-filter"
                 style={{width: 200}}
-                value={driver_id}
+                value={String(delivery_person_id)}
                 onChange={(e) => {
                   this.setState({
-                    driver_id: e.target.value
+                    delivery_person_id: e.target.value
                   })
                 }}
               >
@@ -139,7 +148,8 @@ class PackOrderForm extends Component {
               <Grid item xs={12}>
                 <Box className="flex middle space-bw">
                   <Typography variant="h6">No of Crates</Typography>
-                  <LeftRightSwitch 
+                  <LeftRightSwitch
+                    size="small" 
                     style={{flexGrow: 0.2}}
                     center={
                       <Typography variant="h6">
@@ -165,7 +175,8 @@ class PackOrderForm extends Component {
               <Grid item xs={12}>
                 <Box className="flex middle space-bw">
                 <Typography variant="h6">Small Boxes</Typography>
-                <LeftRightSwitch 
+                <LeftRightSwitch
+                  size="small" 
                   style={{flexGrow: 0.2}}
                   center={
                     <Typography variant="h6">
@@ -191,7 +202,8 @@ class PackOrderForm extends Component {
               <Grid item xs={12}>
                 <Box className="flex middle space-bw">
                 <Typography variant="h6">Large Boxes</Typography>
-                <LeftRightSwitch 
+                <LeftRightSwitch
+                  size="small" 
                   style={{flexGrow: 0.2}}
                   center={
                     <Typography variant="h6">
