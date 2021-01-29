@@ -60,7 +60,7 @@ $lightpurple: #d0cec9;
     
     @include sm {
       width: 300px;
-      margin-left: 10%;
+      margin-left: 7%;
       margin-top: 20%;
       font-size: 12px;
     }
@@ -79,7 +79,7 @@ $lightpurple: #d0cec9;
       margin-left: -48%;
     }
     @include sm {
-      margin-left: 18%;
+      margin-left: 16%;
       margin-top: 20%;
     }
   }
@@ -103,10 +103,15 @@ $lightpurple: #d0cec9;
       }
       h1 {
       
-        font-size: clamp(1.1rem, 3vw, 1.8rem);
+        font-size:  1.8rem;
         margin-top: 40px;
+
+        @include md {
+          font-size: 2.8vw;
+        }
         @include sm {
           margin-top: 20%;
+          font-size: 1rem;
         }
       }
       p {
@@ -115,6 +120,7 @@ $lightpurple: #d0cec9;
         margin-top: 40px;
         @include sm {
           margin-top: 18%;
+          font-size: 0.8rem;
         }
       }
     }
@@ -133,10 +139,14 @@ $lightpurple: #d0cec9;
       }
       h1 {
         
-        font-size: clamp(1.1rem, 3vw, 1.6rem);
+        font-size:1.6rem;
         margin-top: 45px;
+        @include md {
+          font-size: 2.8vw;
+        }
         @include sm {
           margin-top: 20%;
+          font-size: 1rem;
         }
       }
       p {
@@ -167,10 +177,14 @@ $lightpurple: #d0cec9;
       }
       h1 {
         
-        font-size: clamp(1.1rem, 3vw, 1.6rem);
+        font-size: 1.6rem;
         margin-top: 40px;
+        @include md {
+          font-size: 2.8vw;
+        }
         @include sm {
           margin-top: 20%;
+          font-size: 1rem;
         }
       }
       p {
@@ -197,10 +211,14 @@ $lightpurple: #d0cec9;
       }
       h1 {
         
-        font-size: clamp(1.1rem, 3vw, 1.6rem);
+        font-size: 1.6rem;
         margin-top: 40px;
+        @include md {
+          font-size: 2.8vw;
+        }
         @include sm {
           margin-top: 20%;
+          font-size: 1rem;
         }
       }
       p {
@@ -247,33 +265,6 @@ $lightpurple: #d0cec9;
       }
     }
 
-    .f6 {
-      width: 200px;
-      height: 200px;
-      background: #a8e063;
-      border-radius: 20px;
-      text-align: center;
-      margin-left: 30px;
-      @include sm {
-        width: 100px;
-        height: 100px;
-      }
-      h1 {
-        color: #000;
-        font-size: clamp(0.9rem, 3vw, 1.6rem);
-        margin-top: 30px;
-        @include sm {
-          margin-top: 22%;
-        }
-      }
-      p {
-        font-size: clamp(0.7rem, 2vw, 1.2rem);
-        color: black;
-        margin-top: 30px;
-        @include sm {
-          margin-top: 22%;
-        }
-      }
-    }
+    
   }
 }
