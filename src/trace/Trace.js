@@ -17,6 +17,7 @@ export default function Trace({ location }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    document.title = "Go4Life - Trace Your Milk"
     let {search} = location;
     search = new URLSearchParams(search);
     const date = new Date(search.get('report_date'));
@@ -30,7 +31,7 @@ export default function Trace({ location }) {
     async function getData() {
       try {
         setLoading(true);
-        const response = await getReport(isA2 ? "a2" :"mix" , startDate);
+        const response = await getReport("a2", startDate);
         setData(response.data);
         setLoading(false);
       }

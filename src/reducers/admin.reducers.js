@@ -14,12 +14,31 @@ const initialState = {
   loadingOrderData: true
 }
 
+function updateOrderCrateData(state, action) {
+  const {customers} = state;
+  let {payload} = action;
+  const {id} = payload;
+  if(customers) {
+    for(const customer of customers) {
+      let data = customer[1];
+      if(data.order_id === id) {
+        data.small_boxes = payload.small_boxes;
+        data.large_boxes = payload.large_boxes;
+        data.remark = payload.remark;
+        data.crates = payload.crates;
+      }
+    }
+  }
+  return state;
+}
+
 export const setAdmin = (state = initialState, action = {}) => {
   switch(action.type) {
     case UPDATE_ADMIN:
       let admin = action.payload;
       window.localStorage.setItem('admin', JSON.stringify(admin));
       return { ...state, admin}
+
     case UPDATE_ADMIN_DATA:
       // let {customers, areas, subareas, categories, hubs, orders} = action.payload;
       return { 
@@ -29,11 +48,7 @@ export const setAdmin = (state = initialState, action = {}) => {
 
     case UPDATE_ORDER_CRATE_DATA:
       // let {customers, areas, subareas, categories, hubs, orders} = action.payload;
-      console.log(action.payload);
-      // return { 
-      //   ...state,
-      //   ...action.payload
-      // }
+      return updateOrderCrateData(state, action);
 
     case UPDATE_ORDERS_DATA:
 
@@ -223,39 +238,43 @@ export const setAdmin = (state = initialState, action = {}) => {
         }
       }
 
+      // create productsCollection
       orders.forEach(order => {
         let { 
           customer_id, 
           category, product, quantity,
-          package_size, package_type, product_id
+          package_size, package_type, product_id,
+          crate_id
         } = order;
 
-        // if(category !== 'Dairy') {
-          
-          let crateData = {
-            quantity,
-            total: package_size * quantity,
-            crateId: customers.get(customer_id).crateId,
-            crate_id: customers.get(customer_id).crate_id
-          }
-          if(productsCollection.has(product_id)) {
-            let productValue = productsCollection.get(product_id);
-            let {crates} = productValue;
-            crates.push(crateData);
+        if(alreadyCreatedCratedToday && !crate_id) {
+          return;
+        }
 
-            productValue.crates = crates;
-          } else {
-            let productData = {
-              package_size,
-              product_id,
-              product,
-              category,
-              unit: package_type,
-              crates: [crateData]
-            }
-            productsCollection.set(product_id, productData);
+          
+        let crateData = {
+          quantity,
+          total: package_size * quantity,
+          crateId: customers.get(customer_id).crateId,
+          crate_id: customers.get(customer_id).crate_id
+        }
+        if(productsCollection.has(product_id)) {
+          let productValue = productsCollection.get(product_id);
+          let {crates} = productValue;
+          crates.push(crateData);
+
+          productValue.crates = crates;
+        } else {
+          let productData = {
+            package_size,
+            product_id,
+            product,
+            category,
+            unit: package_type,
+            crates: [crateData]
           }
-        // }
+          productsCollection.set(product_id, productData);
+        }
       })
       
       return {
