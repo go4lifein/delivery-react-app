@@ -78,7 +78,7 @@ function MenuAppBar(props) {
       <AppBar position="static" color="warning">
         <Toolbar style={{padding: 10}}>
           
-          <img src={logo} alt="logo" className="logo" />
+          <img src={logo} alt="logo" className="logo-nav" />
           <Typography variant="h5" className={classes.title}>
             {getTitle(location)}
           </Typography>

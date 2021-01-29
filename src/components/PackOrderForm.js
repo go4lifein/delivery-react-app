@@ -109,11 +109,11 @@ class PackOrderForm extends Component {
         
         <div className="flex space-bw middle p-10">
           <div>
-            <Typography variant="h5">Assigned Rider</Typography>
+            <Typography variant="h6">Rider</Typography>
           </div>
           <div>
-            <FormControl variant="outlined" size="small">
-              <InputLabel id="driver-filter">Select Driver</InputLabel>
+            <FormControl variant="filled" size="small">
+              <InputLabel id="driver-filter">Select Rider</InputLabel>
               <Select
                 labelId="driver-filter"
                 style={{width: 200}}
