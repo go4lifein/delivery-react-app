@@ -111,7 +111,7 @@ label.required::after {
   flex-direction: column;
 }
 
-.logo {
+.logo-nav {
   display: flex;
   margin: 4px;
   width: 20%;

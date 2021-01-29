@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import MobileStepper from '@material-ui/core/MobileStepper';
-import Slider from '@material-ui/core/Slider';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
@@ -16,12 +15,17 @@ import FormControl from '@material-ui/core/FormControl';
 import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
 import Card from '@material-ui/core/Card';
+import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
+import LeftRightSwitch from './LeftRightSwitch';
+import PlusOne from '@material-ui/icons/Add';
+import RemoveCircle from '@material-ui/icons/Remove';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import WebCam from "./WebCam";
 import {submitOrderDelivery} from '../api/driver';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Grid } from '@material-ui/core';
+import {max} from '../helpers/math';
 
 function mapStateToProps(state) {
   let {setDriver} = state;
@@ -41,10 +45,7 @@ const tutorialSteps = [
     label: 'Complete Order Delivered? - क्या आपने पूरा आर्डर डिलीवर किया?',
   },
   {
-    label: 'Boxes - कितने डब्बे डिलीवर करे',
-  },
-  {
-    label: 'Milk Packets - कितने दूध के पैकेट डिलीवर करे',
+    label: 'Boxes, Milk - कितने डब्बे डिलीवर करे',
   },
   {
     label: 'Review - कृपया जांचें'
@@ -82,13 +83,18 @@ function dataURItoBlob(dataURI) {
 
 
 function Review ({state, props}) {
-  const {delivery_type, delivery_img, complete_delivery, boxes, milk_packets} = state;
+  const {delivery_type, delivery_img, complete_delivery, milk_packets, small_boxes, large_boxes, gable_tops, boxes} = state;
 
   const {history, match, driver} = props;
   const {params} = match;
   let order_id = parseInt(params.orderId);
 
   const [loading, setLoading] = useState(false);
+
+  let disabled = true;
+  if(delivery_type && delivery_img && complete_delivery && (milk_packets || small_boxes || large_boxes || gable_tops)) {
+    disabled = false;
+  }
 
   const onSubmit = () => {
     setLoading(true);
@@ -99,7 +105,9 @@ function Review ({state, props}) {
     formData.append("driver_id", driver.id);
     formData.append("delivery_type", delivery_type);
     formData.append("complete_delivery", complete_delivery);
-    formData.append("boxes", boxes);
+    formData.append("small_boxes", small_boxes);
+    formData.append("large_boxes", large_boxes);
+    formData.append("gable_tops", gable_tops);
     formData.append("milk_packets", milk_packets);
     submitOrderDelivery(formData)
     .then(res => {
@@ -171,8 +179,18 @@ function Review ({state, props}) {
         </div>
         <Divider />
         <div className="p-10">
-        <Typography variant="body">Boxes - कितने डब्बे डिलीवर करे</Typography>
-          <Typography variant="h6">{boxes}</Typography>
+        <Typography variant="body">Small Boxes - कितने छोटे डब्बे डिलीवर करे</Typography>
+          <Typography variant="h6">{small_boxes}</Typography>
+        </div>
+        <Divider />
+        <div className="p-10">
+        <Typography variant="body">Large Boxes - कितने बड़े डब्बे डिलीवर करे</Typography>
+          <Typography variant="h6">{large_boxes}</Typography>
+        </div>
+        <Divider />
+        <div className="p-10">
+        <Typography variant="body">Gable Top - कितने दूध के डब्बे डिलीवर करे</Typography>
+          <Typography variant="h6">{gable_tops}</Typography>
         </div>
         <Divider />
         <div className="p-10">
@@ -185,7 +203,7 @@ function Review ({state, props}) {
           color="primary"
           variant="contained"
           onClick={onSubmit}
-          disabled={loading}
+          disabled={loading || disabled}
           startIcon={loading ? <CircularProgress size={12} /> : null}
         >
           Submit
@@ -204,7 +222,10 @@ class OrderDeliveryForm extends React.Component {
       delivery_img: null,
       complete_delivery: null,
       milk_packets: 0,
-      boxes: 0
+      small_boxes: 0,
+      large_boxes: 0,
+      gable_tops: 0,
+      crates: 0,
     }
   }
   handleNext = () => {
@@ -276,14 +297,130 @@ class OrderDeliveryForm extends React.Component {
     )
   }
   BoxNumbers = () => {
-    const onChange = (event, value) => {
-      this.setState({
-        boxes: value
-      })
-    }
+    const {small_boxes, large_boxes, gable_tops, milk_packets} = this.state;
+
     return (
       <div className="pv-10">
-        <Slider
+        
+        <Grid container>
+
+          <Grid item xs={12}>
+            <Box className="flex middle space-bw">
+            <Typography variant="h6">Small Boxes</Typography>
+            <LeftRightSwitch
+              size="small" 
+              style={{flexGrow: 0.2}}
+              center={
+                <Typography variant="h6">
+                  {small_boxes}
+                </Typography>
+              } 
+              leftIcon={<RemoveCircle />} 
+              rightIcon={<PlusOne />} 
+              onRight={() => {
+                this.setState({
+                  small_boxes: small_boxes+1
+                })
+              }} 
+              onLeft={() => {
+                this.setState({
+                  small_boxes: max(0, small_boxes-1)
+                })
+              }} 
+            />
+            </Box>
+          </Grid>
+          
+          <Grid item xs={12}>
+            <Box className="flex middle space-bw">
+            <Typography variant="h6">Large Boxes</Typography>
+            <LeftRightSwitch
+              size="small" 
+              style={{flexGrow: 0.2}}
+              center={
+                <Typography variant="h6">
+                  {large_boxes}
+                </Typography>
+              } 
+              leftIcon={<RemoveCircle />} 
+              rightIcon={<PlusOne />} 
+              onRight={() => {
+                this.setState({
+                  large_boxes: large_boxes+1
+                })
+              }} 
+              onLeft={() => {
+                this.setState({
+                  large_boxes: max(0, large_boxes-1)
+                })
+              }} 
+            />
+            </Box>
+          </Grid>
+          
+          
+          <Grid item xs={12}>
+            <Box className="flex middle space-bw">
+            <Typography variant="h6">Gable Top</Typography>
+            <LeftRightSwitch
+              size="small" 
+              style={{flexGrow: 0.2}}
+              center={
+                <Typography variant="h6">
+                  {gable_tops}
+                </Typography>
+              } 
+              leftIcon={<RemoveCircle />} 
+              rightIcon={<PlusOne />} 
+              onRight={() => {
+                this.setState({
+                  gable_tops: gable_tops+1
+                })
+              }} 
+              onLeft={() => {
+                this.setState({
+                  gable_tops: max(0, gable_tops-1)
+                })
+              }} 
+            />
+            </Box>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Box className="flex middle space-bw">
+            <Typography variant="h6">Milk Packets</Typography>
+            <LeftRightSwitch
+              size="small" 
+              style={{flexGrow: 0.2}}
+              center={
+                <Typography variant="h6">
+                  {milk_packets}
+                </Typography>
+              } 
+              leftIcon={<RemoveCircle />} 
+              rightIcon={<PlusOne />} 
+              onRight={() => {
+                this.setState({
+                  milk_packets: milk_packets+1
+                })
+              }} 
+              onLeft={() => {
+                this.setState({
+                  milk_packets: max(0, milk_packets-1)
+                })
+              }} 
+            />
+            </Box>
+          </Grid>
+        
+        </Grid>
+
+        {/* <LeftRightSwitch
+          center={}
+          leftIcon={<RemoveCircle />} 
+          rightIcon={<PlusOne />} 
+        /> */}
+        {/* <Slider
           valueLabelDisplay="auto"
           step={1}
           marks
@@ -291,28 +428,7 @@ class OrderDeliveryForm extends React.Component {
           max={12}
           value={this.state.boxes}
           onChangeCommitted={onChange}
-        />
-      </div>
-    )
-  }
-  MilkPackets = () => {
-    const onChange = (event, value) => {
-      this.setState({
-        milk_packets: value
-      })
-    }
-    return (
-      <div className="pv-10">
-        <Slider
-          defaultValue={0}
-          valueLabelDisplay="auto"
-          step={1}
-          marks
-          min={0}
-          value={this.state.milk_packets}
-          onChangeCommitted={onChange}
-          max={12}
-        />
+        /> */}
       </div>
     )
   }
@@ -333,7 +449,7 @@ class OrderDeliveryForm extends React.Component {
     }
 
     const {activeStep} = this.state;
-    const maxSteps = 6;
+    const maxSteps = tutorialSteps.length;
     // console.log(this.state);
     return (
       <div >
@@ -362,7 +478,7 @@ class OrderDeliveryForm extends React.Component {
             </Typography>
           </Toolbar>
         </AppBar>
-        <div style={{margin: '60px 10px 20px 10px', padding: '30px 10px'}}>
+        <div style={{margin: '60px 10px 20px 10px', padding: '10px 10px'}}>
           <Typography variant="h4" >
             {tutorialSteps[activeStep].label}
           </Typography>
@@ -386,10 +502,6 @@ class OrderDeliveryForm extends React.Component {
           }
           {
             activeStep === 4 &&
-            <this.MilkPackets />
-          }
-          {
-            activeStep === 5 &&
             <Review 
               state={this.state}
               props={this.props}
@@ -397,19 +509,22 @@ class OrderDeliveryForm extends React.Component {
           }
         </div>
         <MobileStepper
+          style={{
+            borderTop: '1px solid grey'
+          }}
           steps={maxSteps}
           position="bottom"
           variant="progress"
           activeStep={activeStep}
           color="default"
           nextButton={
-            <Button size="small" onClick={this.handleNext} disabled={activeStep === maxSteps - 1}>
+            <Button size="small" color="primary" variant="outlined" onClick={this.handleNext} disabled={activeStep === maxSteps - 1}>
               Next
               <KeyboardArrowRight />
             </Button>
           }
           backButton={
-            <Button size="small" onClick={this.handleBack} disabled={activeStep === 0}>
+            <Button size="small" color="primary" variant="outlined" onClick={this.handleBack} disabled={activeStep === 0}>
               <KeyboardArrowLeft />
               Previous
             </Button>

@@ -4,7 +4,13 @@ import ArrowRight from '@material-ui/icons/ArrowRight';
 import ArrowLeft from '@material-ui/icons/ArrowLeft';
 
 function LeftRightSwitch(props) {
-  const {left, onLeft, right, onRight, center, leftIcon, rightIcon, disabledLeft = false, disabledRight = false, style={}, className = ""} = props;
+  const {
+    left, onLeft, right, onRight, center, 
+    leftIcon, rightIcon, 
+    disabledLeft = false, disabledRight = false, 
+    style={}, className = "",
+    size="large"
+  } = props;
   return (
     <div 
       className={`flex p-10 middle ${className}`}
@@ -18,7 +24,7 @@ function LeftRightSwitch(props) {
           left ?
           left :
           <IconButton 
-            size="small"
+            size={size}
             onClick={onLeft}
             disabled={disabledLeft}
             style={{border: '1px solid rgba(0, 0, 0, 0.23)'}}
@@ -36,7 +42,7 @@ function LeftRightSwitch(props) {
           right ?
           right :
           <IconButton 
-            size="small"
+            size={size}
             onClick={onRight}
             disabled={disabledRight}
             style={{border: '1px solid rgba(0, 0, 0, 0.23)'}} 

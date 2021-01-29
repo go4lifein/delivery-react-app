@@ -53,6 +53,7 @@ class LoginAdmin extends Component {
                 autoFocus
                 variant="outlined"
                 fullWidth
+                autoComplete="true"
                 label="Phone Number"
                 type="number"
                 name="Phone Number"
