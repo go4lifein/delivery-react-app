@@ -3,7 +3,7 @@ import DatePicker , {subDays} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./getdate.scss";
 
-export default function GetDate( {startDate  ,setIsA2 ,isA2}) {
+export default function GetDate( {startDate}) {
   
   return (
     <div className="datepicker">

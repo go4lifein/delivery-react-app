@@ -14,7 +14,8 @@ $lightblack: rgb(54, 60, 76);
     display: flex;
     margin-left: 65%;
     margin-top: 3.5%;
-    font-size: clamp(0.8rem, 1.5vw, 2rem);
+    font-size: 1.6rem;
+  
 
     @include txl {
       margin-left: 60%;
@@ -28,11 +29,13 @@ $lightblack: rgb(54, 60, 76);
     @include md {
       margin-left: 55%;
       margin-top: 5.5%;
+      font-size: 1.4vw;
     }
     @include sm {
       margin-top: 10%;
-      margin-left: 22%;
+      margin-left: 24%;
       width: 100%;
+      font-size: 0.7rem;
     }
   }
 }

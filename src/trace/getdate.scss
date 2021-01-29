@@ -12,6 +12,7 @@ $lightblack: rgb(54, 60, 76);
   justify-content: center;
   align-items: center;
   z-index: 999;
+  pointer-events: none;
   
   .box {
     background: none;
@@ -24,36 +25,5 @@ $lightblack: rgb(54, 60, 76);
     text-align: center;
   }
 
-  .tabs {
-    margin-left: 10%;
-    margin-top: -0.5%;
-
-      
-
-    .a2 {
-      background: white;
-      border: 2px solid $lightblack;
-      transition: all 0.5s;
-      &:focus{
-        outline :none;
-      }
-     
-    }
-    
-    .Mix {
-      background: white;
-      border: 2px solid $lightblack;
-      transition: all 0.5s;
-      
-      &:focus{
-        outline :none;
-      }
-    }
-    .primary{
-      
-      background-color: $lightblack;
-      color: white;
-      transition: all 0.5s;
-    }
-  }
+  
 }

@@ -1,5 +1,5 @@
 import "./header.scss";
-import logo from "./fonts/logo.webp";
+import logo from "./fonts/g4l.svg";
 export default function Header() {
   return (
     <div className="header">
