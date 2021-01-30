@@ -44,17 +44,13 @@ $lightpurple: #d0cec9;
     @include lg {
       display: none;
     }
-
-    @include xl {
-      display: none;
-    }
-    
     @include sm {
       display: none;
     }
     @include md {
       display: none;
     }
+    
   }
 
   .download-btn {
@@ -70,6 +66,10 @@ $lightpurple: #d0cec9;
     color: $lightblack;
     border: 2px solid $lightblack;
     box-shadow: rgb(54, 60, 76) 0px 0px 0px 2px inset;
+
+    @include xl {
+      margin-left: -20%;
+    }
 
     @include lg {
     
