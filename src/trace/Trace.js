@@ -1,12 +1,12 @@
 import React , {useState , useEffect} from "react";
 import "./trace.scss";
-import Header from "./header.js";
+import Header from "./Header.js";
 import Main from "./Main.js";
 import Journey from "./Journey.js";
 import Facts from "./Facts.js";
-import GetDate from "./getDate.js";
+import GetDate from "./Date.js";
 import {getReport} from "../api/misc.js";
-import lottie from "lottie-web";
+import Alert from '@material-ui/lab/Alert';
 import Loading from "../components/Loading.js";
 
 export default function Trace({ location }) {
@@ -53,20 +53,31 @@ export default function Trace({ location }) {
     getData();
   }, [startDate, isA2]);
 
+  console.log(data);
+
   return (
-    <div className="trace">
+    <div className="trace" style={{backgroundColor: '#fdfdfd'}}>
       <Header />
       <GetDate startDate = {startDate} setStartDate ={setStartDate} isA2 = {isA2} setIsA2 = {setIsA2}/>
-      {loading && <Loading />}
-      {!data && !loading && <p className = "not-found">Record Not Found</p>}
-      <Main data= {data} load = {load} setLoad = {setLoad} />
-      {data && load &&
-        <>
-          
-          <Journey data = {data} />
-          <Facts data= {data}  />
-        </>
-      }
+      {loading ? 
+        <Loading /> :
+        <div>
+        {data ? 
+          <>
+            <Main data= {data} load = {load} setLoad = {setLoad} />
+            <Journey data = {data} />
+            <Facts data= {data}  />
+          </>
+          :
+          <div className="flex center">
+            <Alert severity="error" variant="outlined">
+              Sorry, we didn't find any report for that date.
+            </Alert>
+          </div>
+        }
+      </div>
+    }
+      
     </div>
   );
 }
