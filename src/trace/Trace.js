@@ -16,9 +16,7 @@ export default function Trace({ location }) {
   const [loading, setLoading] = useState(false);
   const [load ,setLoad] = useState(false);
 
-  useEffect(() =>{
-    console.log(load);
-  },[load])
+  
   useEffect(() => {
     document.title = "Go4Life - Trace Your Milk"
     let {search} = location;
@@ -28,9 +26,7 @@ export default function Trace({ location }) {
     return
     const date = new Date(reportDate);
     
-    const type = search.get('milk_type');
-    
-    
+    const type = search.get('milk_type');  
     setStartDate(date);
     setIsA2(type === "a2" ? true : false);
   }, [location]);
@@ -51,6 +47,7 @@ export default function Trace({ location }) {
       }
     }
     getData();
+    
   }, [startDate, isA2]);
 
   return (
@@ -58,7 +55,7 @@ export default function Trace({ location }) {
       <Header />
       <GetDate startDate = {startDate} setStartDate ={setStartDate} isA2 = {isA2} setIsA2 = {setIsA2}/>
       {loading && <Loading />}
-      {!data && !loading && <p className = "not-found">Record Not Found</p>}
+      {!data && !loading && !load && <p className = "not-found">Record Not Found</p>}
       <Main data= {data} load = {load} setLoad = {setLoad} />
       {data && load &&
         <>
