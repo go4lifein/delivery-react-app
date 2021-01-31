@@ -20,7 +20,8 @@ $yellow: #cc9600;
       justify-content: center;
       position: relative;
       flex-direction: column;
-      margin-top: -15%;
+      margin-top: -10%;
+      z-index: -1;
       .section1{
         display: flex;
         width: 100%;
@@ -32,19 +33,19 @@ $yellow: #cc9600;
       }
       .BMC{
         position: absolute;
-        margin-top: 30%;
+        margin-top: 20%;
         
-        margin-left: 15%;
+        margin-left: 16%;
         
         @include lg {
-          margin-left: 10%;
+          margin-left: 15%;
         }
         @include md {
-          margin-top: 28%;
-          margin-left: 14%;
+          margin-top: 20%;
+          margin-left: 15%;
         }
         @include sm {
-          margin-top: 32%;
+          margin-top: 22%;
           margin-left: 6%;
         }
 
@@ -52,11 +53,14 @@ $yellow: #cc9600;
           font-size: 1.2rem;
           min-height: 0vw;
           font-weight: 600;
+          @include lg{
+            font-size: 1.5vw;
+          }
           @include md {
-            font-size: 2vw;
+            font-size: 1.5vw;
           }
           @include sm {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
           }
           
         }
@@ -65,6 +69,9 @@ $yellow: #cc9600;
           min-height: 0vw;
           font-weight: 800;
           margin-top: -5%;
+          @include lg{
+            font-size: 2vw;
+          }
           @include md {
             font-size: 2vw;
           }
@@ -82,19 +89,19 @@ $yellow: #cc9600;
         z-index: 1;
         .plant-receive{
           position: absolute;
-          margin-top: 44%;
+          margin-top: 38%;
           margin-left: 47%;
           
           @include lg {
-            margin-left: 43%;
+            margin-left: 45%;
           }
           
           @include md {
-            margin-top: 42%;
+            margin-top: 36%;
             margin-left: 45%;
           }
           @include sm {
-            margin-top: 53%;
+            margin-top: 45%;
             margin-left: 39%;
           }
   
@@ -102,11 +109,14 @@ $yellow: #cc9600;
             font-size: 1.2rem;
             min-height: 0vw;
             font-weight: 600;
+            @include lg{
+              font-size: 1.5vw;
+            }
             @include md {
-              font-size: 2vw;
+              font-size: 1.5vw;
             }
             @include sm {
-              font-size: 0.7rem;
+              font-size: 0.6rem;
             }
           }
           p{
@@ -114,6 +124,9 @@ $yellow: #cc9600;
             min-height: 0vw;
             font-weight: 800;
             margin-top: 1%;
+            @include lg{
+              font-size: 2vw;
+            }
             @include md {
               font-size: 2vw;
             }
@@ -126,32 +139,35 @@ $yellow: #cc9600;
           
         .plant-dispatch{
           position: absolute;
-          margin-top: 58%;
-          margin-left: 15%;
+          margin-top: 48%;
+          margin-left: 18%;
 
           
           @include lg {
-            margin-top:57%;
-            margin-left: 10%;
+            margin-top:47%;
+            margin-left: 15%;
           }
           @include md {
-            margin-top: 58%;
-            margin-left: 10%;
+            margin-top: 48%;
+            margin-left: 15%;
           }
          
           @include sm {
-            margin-top: 72%;
-            margin-left: 3%;
+            margin-top: 58%;
+            margin-left: 4%;
           }
           h1{
             font-size: 1.2rem;
             min-height: 0vw;
             font-weight: 600;
+            @include lg{
+              font-size: 1.5vw;
+            }
             @include md {
-              font-size: 2vw;
+              font-size: 1.5vw;
             }
             @include sm {
-              font-size: 0.7rem;
+              font-size: 0.6rem;
             }
           }
           p{
@@ -159,6 +175,9 @@ $yellow: #cc9600;
             min-height: 0vw;
             font-weight: 800;
             margin-top: 1%;
+            @include lg{
+              font-size: 2vw;
+            }
             @include md {
               font-size: 2vw;
             }
@@ -174,18 +193,18 @@ $yellow: #cc9600;
           
           .whs-receive{
             position: absolute;
-            margin-top: 75%;
+            margin-top: 60%;
             margin-left: 70%;
             @include lg {
-              margin-top: 74%;
+              margin-top: 60%;
               margin-left: 72%;
             }
             @include md {
-              margin-top: 75%;
+              margin-top: 60%;
               margin-left: 72%;
             }
             @include sm {
-                margin-top: 92%;
+                margin-top: 74%;
                 margin-left: 75%;
             }
             
@@ -194,11 +213,14 @@ $yellow: #cc9600;
               font-size: 1.2rem;
               min-height: 0vw;
               font-weight: 600;
+              @include lg{
+                font-size: 1.5vw;
+              }
               @include md {
-                font-size: 2vw;
+                font-size: 1.5vw;
               }
               @include sm {
-                font-size: 0.7rem;
+                font-size: 0.6rem;
               }
             }
             p{
@@ -206,6 +228,9 @@ $yellow: #cc9600;
               min-height: 0vw;
               font-weight: 800;
               margin-top: 1%;
+              @include lg{
+                font-size: 2vw;
+              }
               @include md {
                 font-size: 2vw;
               }
@@ -215,35 +240,41 @@ $yellow: #cc9600;
             }}
             .whs-dispatch{
               position: absolute;
-              margin-top: 102%;
-              margin-left: 43%;
+              margin-top: 88%;
+              margin-left: 45%;
               @include lg{
-                margin-top: 104%;
+                margin-top: 88%;
               }
               @include md {
-                margin-top: 105%;
+                margin-top: 88%;
               }
               @include sm {
-                margin-top: 130%;
+                margin-top: 110%;
                 margin-left:40%;
               }
              
       
               h1{
-                font-size: 1.2rem ;
+                font-size: 1.2rem;
                 min-height: 0vw;
                 font-weight: 600;
+                @include lg{
+                  font-size: 1.5vw;
+                }
                 @include md {
-                  font-size: 2vw;
+                  font-size: 1.5vw;
                 }
                 @include sm {
-                  font-size: 0.7rem;
+                  font-size: 0.6rem;
                 }
               }
               p{
                 font-size: 1.8rem;
                 min-height:  0vw;
                 font-weight: 800;
+                @include lg{
+                  font-size: 2vw;
+                }
                 margin-top: 1%;
                 @include md {
                   font-size: 2vw;
@@ -271,6 +302,7 @@ $yellow: #cc9600;
     }
   
 
+    
  
  
 }

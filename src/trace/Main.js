@@ -3,7 +3,7 @@ import React from 'react'
 
 
 import "./main.scss";
-import board from "./icons/board.svg";
+import board from "./icons/boards.svg";
 import moment from "moment";
 //{moment(data.plant_receive).format('DD MM YYYY')}
 //{moment(data.plant_receive).format('hh:mm A')}
