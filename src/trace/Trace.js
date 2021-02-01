@@ -4,9 +4,9 @@ import Header from "./header.js";
 import Main from "./Main.js";
 import Journey from "./Journey.js";
 import Facts from "./Facts.js";
-import GetDate from "./Date.js";
+import GetDate from "./getDate.js";
 import {getReport} from "../api/misc.js";
-import Alert from '@material-ui/lab/Alert';
+import lottie from "lottie-web";
 import Loading from "../components/Loading.js";
 
 export default function Trace({ location }) {
@@ -16,9 +16,7 @@ export default function Trace({ location }) {
   const [loading, setLoading] = useState(false);
   const [load ,setLoad] = useState(false);
 
-  useEffect(() =>{
-    console.log(load);
-  },[load])
+  
   useEffect(() => {
     document.title = "Go4Life - Trace Your Milk"
     let {search} = location;
@@ -28,9 +26,7 @@ export default function Trace({ location }) {
     return
     const date = new Date(reportDate);
     
-    const type = search.get('milk_type');
-    
-    
+    const type = search.get('milk_type');  
     setStartDate(date);
     setIsA2(type === "a2" ? true : false);
   }, [location]);
@@ -51,33 +47,23 @@ export default function Trace({ location }) {
       }
     }
     getData();
+    
   }, [startDate, isA2]);
 
-  console.log(data);
-
   return (
-    <div className="trace" style={{backgroundColor: '#fdfdfd'}}>
+    <div className="trace">
       <Header />
       <GetDate startDate = {startDate} setStartDate ={setStartDate} isA2 = {isA2} setIsA2 = {setIsA2}/>
-      {loading ? 
-        <Loading /> :
-        <div>
-        {data ? 
-          <>
-            <Main data= {data} load = {load} setLoad = {setLoad} />
-            <Journey data = {data} />
-            <Facts data= {data}  />
-          </>
-          :
-          <div className="flex center">
-            <Alert severity="error" variant="outlined">
-              Sorry, we didn't find any report for that date.
-            </Alert>
-          </div>
-        }
-      </div>
-    }
-      
+      {loading && <Loading />}
+      {!data && !loading && !load && <p className = "not-found">Record Not Found</p>}
+      <Main data= {data} load = {load} setLoad = {setLoad} />
+      {data && load &&
+        <>
+          
+          <Journey data = {data} />
+          <Facts data= {data}  />
+        </>
+      }
     </div>
   );
 }

@@ -1,7 +1,8 @@
-import logo from "./../images/logo.png";
+import "./header.scss";
+import logo from "./fonts/g4l.svg";
 export default function Header() {
   return (
-    <div className="flex space-bw middle header p-10">
+    <div className="header">
       <img src={logo} alt="logo" className="logo" />
 
       <h1 className="heading">Trace your milk's journey.</h1>
