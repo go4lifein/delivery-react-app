@@ -61,8 +61,10 @@ function getTitle(location) {
       return 'Pack Orders';
     case '/admin/addReport':
       return 'Add Milk Report'
+    case '/admin/customer-density':
+      return 'Customer Density'
     default:
-      return 'Customer Sheet';
+      return 'Go4Life';
   }
 }
 
@@ -75,7 +77,7 @@ function MenuAppBar(props) {
   }
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="warning">
+      <AppBar position="static" style={{backgroundColor: "#fff"}} color="default">
         <Toolbar style={{padding: 10}}>
           
           <img src={logo} alt="logo" className="logo-nav" />
@@ -124,6 +126,14 @@ function SideNav({logOut}) {
               </ListItemIcon>
               <ListItemText primary="Reload" />
             </ListItem>
+            <Link to="/admin/customer-density" >
+              <ListItem button key="customer-density">
+                <ListItemIcon>
+                  <InfoIcon />
+                </ListItemIcon>
+                <ListItemText primary="Customer Density" />
+              </ListItem>
+            </Link>
             <Link to="/admin/customer">
               <ListItem button key="Customer Sheet">
                 <ListItemIcon>

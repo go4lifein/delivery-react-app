@@ -1,6 +1,6 @@
 import React , {useState , useEffect} from "react";
 import "./trace.scss";
-import Header from "./header.js";
+import Header from "./Header.js";
 import Main from "./Main.js";
 import Journey from "./Journey.js";
 import Facts from "./Facts.js";
