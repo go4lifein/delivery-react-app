@@ -25,6 +25,7 @@ import logo from '../images/logo.png';
 
 import {updateAdmin} from '../actions/admin.actions';
 import Box from '@material-ui/core/Box';
+import {setCookie} from '../helpers/utils';
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -73,7 +74,9 @@ function MenuAppBar(props) {
   const { location} = props;
   const logOut = () => {
     const {onUpdateAdmin} = props;
+    setCookie('x-admin-token', '', 0);
     onUpdateAdmin(null);
+
   }
   return (
     <div className={classes.root}>

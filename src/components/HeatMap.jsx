@@ -1,8 +1,14 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import MapGL, {NavigationControl, Source, Layer, MapContext} from 'react-map-gl';
-
+import MapGL, {Source, Layer} from 'react-map-gl';
 import {getLocationCustomerDensity} from '../api/admin';
+
+// eslint-disable-next-line import/no-webpack-loader-syntax
+// import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+// mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
+
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN;
 const navControlStyle= {
@@ -47,12 +53,6 @@ function HeatMap() {
     })
   })
 
-  function CurrentZoomLevel() {
-    const context = React.useContext(MapContext);
-  
-    return <div>{context.viewport.zoom}</div>;
-  }
-
   return (
     <div>
       <MapGL
@@ -64,7 +64,7 @@ function HeatMap() {
         height="calc(100vh - 70px)"
         mapboxApiAccessToken={MAPBOX_TOKEN}
       >
-        <NavigationControl style={navControlStyle} />
+        {/* <NavigationControl style={navControlStyle} /> */}
         <Source type='geojson' data={geojson}>
           <Layer {...{
             type: 'heatmap',
@@ -76,9 +76,6 @@ function HeatMap() {
             },
           }} />
         </Source>
-        <div style={{position: 'absolute', left: 10, top: 10}}>
-          <CurrentZoomLevel />
-        </div>
       </MapGL>
     </div>
   );
