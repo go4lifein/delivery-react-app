@@ -5,6 +5,7 @@ import { Button, Card, CardContent, CardHeader, Divider, TextField } from '@mate
 
 import {login} from '../api/admin';
 import {updateAdmin} from '../actions/admin.actions';
+import {initRequestAuthHeader, setCookie} from '../helpers/utils';
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -29,9 +30,13 @@ class LoginAdmin extends Component {
     let {onUpdateAdmin} = this.props;
     login({username, password})
     .then(res => {
-      onUpdateAdmin(res.data);
+      let token = res.data['token'];
+      initRequestAuthHeader(token);
+      setCookie("x-admin-token", token, 5);
+      onUpdateAdmin(res.data.username);
+      document.location.reload();
     })
-    // .catch(err => alert("Please check username and password"));
+    .catch(err => alert("Please check username and password"));
   }
   render() {
     let {username, password} = this.state;

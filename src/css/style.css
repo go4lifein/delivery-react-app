@@ -115,7 +115,7 @@ label.required::after {
   display: flex;
   margin: 4px;
   width: 20%;
-  max-width: 120px;
+  max-width: 60px;
 }
 
 .css-692fgp, .css-vcfpfv, .css-1b3lipl:before {
