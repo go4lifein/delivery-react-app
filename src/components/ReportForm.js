@@ -27,12 +27,12 @@ class ReportForm extends Component {
       // whs_receive: null,
       // whs_dispatch: null,
       pdf: null,
-      bmc_receive: moment().subtract(2, 'day').format('YYYY-MM-DDTHH:MM'),
-      bmc_dispatch: moment().subtract(2, 'day').add(4, 'hour').format('YYYY-MM-DDTHH:MM'),
-      plant_receive: moment().subtract(1, 'day').format('YYYY-MM-DDTHH:MM'),
-      plant_dispatch: moment().subtract(1, 'day').add(2, 'hour').format('YYYY-MM-DDTHH:MM'),
-      whs_receive: moment().subtract(10, 'hour').format('YYYY-MM-DDTHH:MM'),
-      whs_dispatch: moment().subtract(8, 'hour').format('YYYY-MM-DDTHH:MM'),
+      bmc_receive: moment().subtract(7, 'hour').format('YYYY-MM-DDTHH:MM'),
+      bmc_dispatch: moment().subtract(5, 'hour').format('YYYY-MM-DDTHH:MM'),
+      plant_receive: moment().subtract(4, 'hour').format('YYYY-MM-DDTHH:MM'),
+      plant_dispatch: moment().subtract(3, 'hour').format('YYYY-MM-DDTHH:MM'),
+      whs_receive: moment().subtract(1, 'hour').format('YYYY-MM-DDTHH:MM'),
+      whs_dispatch: moment().format('YYYY-MM-DDTHH:MM'),
     }
   }
   onSubmit = (e) => {
@@ -122,8 +122,13 @@ class ReportForm extends Component {
                   })
                 }}
               >
-                <MenuItem value="a2">A2</MenuItem>
-                <MenuItem value="mix">Mix</MenuItem>
+                <MenuItem value="a2">A2 Gable Top</MenuItem>
+                {/* <MenuItem value="mix">Mix</MenuItem> */}
+                <MenuItem value="a2-cow-toned">A2 Cow Toned</MenuItem>
+                <MenuItem value="buffalo-full">Buffalo Full</MenuItem>
+                <MenuItem value="toned">Toned</MenuItem>
+                <MenuItem value="double-toned">Double Toned</MenuItem>
+                {/* 'a2-cow-toned', 'buffalo-full', 'toned', 'double-toned' */}
               </Select>
             </FormControl>
           </Grid>

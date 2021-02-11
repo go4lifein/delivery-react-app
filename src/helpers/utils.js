@@ -19,15 +19,26 @@ export function getCookies() {
   return data;
 }
 
-function setRequestAuthHeader(accessToken) {
-  axios.defaults.headers.common["x-auth-token"] = accessToken;
+export function setCookie(name, value, days) {
+  var expires = "";
+  if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days*24*60*60*1000));
+      expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "")  + expires + "; path=/";
 }
 
-export const userAccessToken = getCookies()["x-auth-token"];
+function setRequestAuthHeader(accessToken) {
+  axios.defaults.headers.common["x-admin-token"] = accessToken;
+}
+
+export const userAccessToken = getCookies()["x-admin-token"];
 
 export function initRequestAuthHeader() {
-  let userAccessToken = getCookies()["x-auth-token"];
-  if (userAccessToken) setRequestAuthHeader(userAccessToken);
+  let userAccessToken = getCookies()["x-admin-token"];
+  console.log(userAccessToken)
+  if(userAccessToken) setRequestAuthHeader(userAccessToken);
 }
 initRequestAuthHeader();
 

@@ -80,3 +80,14 @@ export function addReport(formData) {
   }
   return post(url, formData, config);
 }
+
+export function getLocationCustomerDensity() {
+  let url = `${API_URL}/admin/getLocationCustomerDensity`;
+  return request({
+    url: url,
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+}
