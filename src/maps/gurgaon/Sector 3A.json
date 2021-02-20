@@ -1,0 +1,47 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sector 3A"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.00913906097412,
+          28.481781381605906
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sector 3A"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.99965476989746,
+              28.475500607010773
+            ],
+            [
+              77.0145034790039,
+              28.480762902990307
+            ],
+            [
+              77.01092004776001,
+              28.488759581964526
+            ],
+            [
+              76.99965476989746,
+              28.475500607010773
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
