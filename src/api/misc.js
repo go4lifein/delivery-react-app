@@ -5,7 +5,7 @@ export async function getReport(type = 'a2', report_date = moment().format('YYYY
 
   let date = moment(report_date).format('YYYY-MM-DD');
     
-  let url = `${API_URL}/misc/getReport?report_date=${date}&type=${type}`;
+  let url = `${API_URL}/misc/getReport?report_date=${date}&milk_type=${type}`;
   let result =  await request({
 
     url: url,
