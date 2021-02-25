@@ -65,7 +65,7 @@ function getTitle(location) {
     case '/admin/customer-density':
       return 'Customer Density'
     default:
-      return 'Go4Life';
+      return '';
   }
 }
 

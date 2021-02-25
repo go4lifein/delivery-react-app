@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const API_URL = 'https://api.deliver.go4life.in/api';
+// export const API_URL = 'https://api.deliver.go4life.in/api';
 // export const API_URL = 'https://go4life-deliver.herokuapp.com/api';
-// export const API_URL = 'http://localhost:5000/api';
+export const API_URL = 'http://localhost:5000/api';
 // export const API_URL = 'http://192.168.40.14:5000/api';
 // export const API_URL = 'http://192.168.0.103:5000/api';
 
@@ -37,7 +37,6 @@ export const userAccessToken = getCookies()["x-admin-token"];
 
 export function initRequestAuthHeader() {
   let userAccessToken = getCookies()["x-admin-token"];
-  console.log(userAccessToken)
   if(userAccessToken) setRequestAuthHeader(userAccessToken);
 }
 initRequestAuthHeader();

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Switch, Route } from "react-router-dom";
 
 import Loading from '../components/Loading';
-import {getAllOrders, getDeliveryBoysData} from '../api/admin';
+import {getAllOrders, getDeliveryBoysData} from '../api/v2/admin';
 import {updateOrdersData, updateAdminData} from '../actions/admin.actions';
 import AdminNavbar from "../components/AdminNavbar";
 import LoginAdmin from '../components/AdminLogin';
@@ -52,7 +52,6 @@ class AdminRouter extends Component {
     })
   }
   render() {
-    console.log("Render admin");
     const {admin} = this.props;
     return (
       <div>
@@ -92,7 +91,7 @@ class AdminRouter extends Component {
                   />
                   <Route 
                     path="/admin"
-                    component={CustomerSheet} 
+                    component={OrderManagement} 
                   />
                 </Switch>
               </Suspense>

@@ -7,9 +7,11 @@ import { CssBaseline } from "@material-ui/core";
 import "./css/style.css";
 
 import Loading from "./components/Loading";
-const Admin = lazy(() => import("./containers/Admin.jsx"));
-const Driver = lazy(() => import("./containers/Driver.jsx"));
-const Trace = lazy(() => import("./trace/Trace.js"));
+const Admin = lazy(() => import(/* webpackChunkName: "Admin" */ "./containers/Admin.jsx"));
+const Driver = lazy(() => import(/* webpackChunkName: "Driver" */ "./containers/Driver.jsx"));
+const Trace = lazy(() => import(/* webpackChunkName: "Trace" */ "./trace/Trace.js"));
+const TraceProduce = lazy(() => import(/* webpackChunkName: "TraceProduce" */ "./containers/TraceProduce"));
+const Visual = lazy(() => import(/* webpackChunkName: "Visual" */ "./containers/Visual"));
 // const Trace = lazy(() => import("./components/Traceability.js"));
 
 function App() {
@@ -40,7 +42,9 @@ function App() {
           <main>
             <Suspense fallback={<Loading />}>
               <Switch>
+                <Route path="/trace/produce" exact component={TraceProduce} />
                 <Route path="/trace" exact component={Trace} />
+                <Route path="/visual" component={Visual} />
                 <Route path="/admin" component={Admin} />
                 <Route path="/" component={Driver} />
               </Switch>

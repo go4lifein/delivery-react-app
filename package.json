@@ -10,6 +10,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
+    "deck.gl": "^8.4.6",
     "lottie-web": "^5.7.6",
     "mapbox-gl": "^1.13.0",
     "moment-timezone": "^0.5.32",
@@ -30,6 +31,7 @@
     "redux": "^4.0.5",
     "socket.io-client": "^3.0.3",
     "styled-components": "^5.2.1",
+    "three": "^0.125.2",
     "web-vitals": "^0.2.4",
     "worker-loader": "^3.0.7"
   },
