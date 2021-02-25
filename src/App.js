@@ -12,7 +12,7 @@ const Driver = lazy(() => import(/* webpackChunkName: "Driver" */ "./containers/
 const Trace = lazy(() => import(/* webpackChunkName: "Trace" */ "./trace/Trace.js"));
 const TraceProduce = lazy(() => import(/* webpackChunkName: "TraceProduce" */ "./containers/TraceProduce"));
 const Visual = lazy(() => import(/* webpackChunkName: "Visual" */ "./containers/Visual"));
-const Tracemilk = lazy(() => import("./trace/Tracemilk.js"))
+const Tracemilk = lazy(() => import(/* webpackChunkName: "Tracemilk" */ "./trace/Tracemilk.js"))
 // const Trace = lazy(() => import("./components/Traceability.js"));
 
 function App() {
@@ -46,7 +46,7 @@ function App() {
                 <Route path="/trace/produce" exact component={TraceProduce} />
                 <Route path="/trace" exact component={Trace} />
                 <Route path="/visual" component={Visual} />
-                <Route path = "/trace-milk" exact component = {Tracemilk} />
+                <Route path="/trace-milk" exact component={Tracemilk} />
                 <Route path="/admin" component={Admin} />
                 <Route path="/" component={Driver} />
            
