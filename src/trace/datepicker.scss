@@ -1,0 +1,32 @@
+@import "./fonts/fonts.css";
+@import "./abstracts/_mixins.scss";
+@import "./abstracts/variables.scss";
+
+$font2: "Corsica";
+$font1: "Circular";
+$font3: "HK-Grotesk";
+
+.datepicker{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+
+    input{
+
+        border:none;
+        width: 250px;
+        border : 2px solid orange;
+        border-radius: 5px;
+        padding: 10px 10px 10px 10px;
+        margin-top: 5px;
+        outline: none;
+        @include sm {
+            width: 150px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            font-size: 0.8rem;
+        }
+    }
+}
+

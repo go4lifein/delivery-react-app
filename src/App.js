@@ -10,6 +10,7 @@ import Loading from "./components/Loading";
 const Admin = lazy(() => import("./containers/Admin.jsx"));
 const Driver = lazy(() => import("./containers/Driver.jsx"));
 const Trace = lazy(() => import("./trace/Trace.js"));
+const Tracemilk = lazy(() => import("./trace/Tracemilk.js"))
 // const Trace = lazy(() => import("./components/Traceability.js"));
 
 function App() {
@@ -41,8 +42,10 @@ function App() {
             <Suspense fallback={<Loading />}>
               <Switch>
                 <Route path="/trace" exact component={Trace} />
+                <Route path = "/trace-milk" exact component = {Tracemilk} />
                 <Route path="/admin" component={Admin} />
                 <Route path="/" component={Driver} />
+           
               </Switch>
             </Suspense>
           </main>
