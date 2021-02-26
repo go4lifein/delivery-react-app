@@ -10,7 +10,7 @@ export default function Facts( {data} ) {
   return (
     <div className="facts">
       <img src={milkbox} className="Milk" alt="milkboxs" />
-    {data &&<button className="download-btn" onClick = {() => window.open(data.pdf_url)}> Download Full Report</button>}
+    {data &&<button className="download-btn" onClick = {() => window.open(data.pdf_url)}> Download Test Report</button>}
     { data&& 
       <div className="cards">
         <div className="section1">
