@@ -27,7 +27,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function AssignOrders(props) {
-  const {data, deliveryBoys, onUpdateOrdersData} = props;
+  const {data, deliveryBoys, onUpdateOrdersData, orderBoxData} = props;
 
   let deliveryBoysData = Array.from(deliveryBoys.values());
   deliveryBoysData = deliveryBoysData.sort((a, b) => (a.name.localeCompare(b.name)));
@@ -104,6 +104,7 @@ function AssignOrders(props) {
       </div>
       <OrderDataTable
         data={data}
+        orderBoxData={orderBoxData}
         onSelectionChange={changeSelection}
         onRowSelect={onSelectCustomer}
         deliveryBoys={deliveryBoys}

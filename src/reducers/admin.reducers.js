@@ -1,4 +1,11 @@
-import { UPDATE_ADMIN, UPDATE_ORDERS_DATA, UPDATE_ADMIN_DATA } from '../constants/index';
+import { 
+  UPDATE_ADMIN, 
+  UPDATE_ORDERS_DATA, 
+  UPDATE_ADMIN_DATA,
+  ADD_PRODUCTS,
+  ADD_ORDER_PRODUCTS,
+  ADD_ORDER_BOX
+} from '../constants/index';
 
 
 let admin = window.localStorage.getItem('admin');
@@ -10,7 +17,35 @@ if(admin) {
 
 const initialState = {
   admin,
+  products : new Map(),
   loadingOrderData: true
+}
+
+function processProducts(data, products) {
+  data.forEach(item => {
+    const {id, name, thumbnail: image} = item;
+    products.set(id, {
+      id, name, image
+    })
+  })
+}
+
+function processOrderProducts(data, orderProducts) {
+  data.forEach(item => {
+    const {orderId, productId} = item;
+    if(orderProducts.has(orderId)) {
+      orderProducts.get(orderId).push(item);
+    } else {
+      orderProducts.set(orderId, [item]);
+    }
+  });
+}
+
+function processOrderBoxData(data, orderBox) {
+  data.forEach(item => {
+    const {orderId} = item;
+    orderBox.set(orderId, item);
+  });
 }
 
 export const setAdmin = (state = initialState, action = {}) => {
@@ -30,12 +65,15 @@ export const setAdmin = (state = initialState, action = {}) => {
     case UPDATE_ORDERS_DATA:
 
       let orders = action.payload;
-      let customers = new Map();
       let locations = new Map();
-      let alreadyCreatedCratedToday = false;
+
+      let hubs = [];
 
       orders.forEach(order => {
         let { subarea, area, region } = order;
+        if(!hubs.includes(region)) {
+          hubs.push(region)
+        }
         
         if(locations.has(region)) {
           let hubAreas = locations.get(region);
@@ -57,20 +95,6 @@ export const setAdmin = (state = initialState, action = {}) => {
           locations.set(region, hubAreas)
         }
       });
-
-      // console.log(locations);
-
-      let categories = [];
-      let hubs = [];
-
-      console.log("Total Orders", orders.length);
-
-      // accumulate customer data
-      orders.forEach(order => {
-
-      })
-
-      console.log(locations);
       
       return {
         ...state,
@@ -78,6 +102,34 @@ export const setAdmin = (state = initialState, action = {}) => {
         locations,
         hubs
       };
+    
+    case ADD_PRODUCTS:
+
+      let products = new Map();
+      processProducts(action.payload, products);
+
+      return {
+        ...state,
+        products
+      }
+    case ADD_ORDER_PRODUCTS:
+      let orderProducts = new Map();
+      processOrderProducts(action.payload, orderProducts);
+
+      return {
+        ...state,
+        orderProducts
+      }
+    
+    case ADD_ORDER_BOX:
+      let orderBoxData = new Map();
+      processOrderBoxData(action.payload, orderBoxData);
+
+      return {
+        ...state,
+        orderBoxData
+      }
+
     default:
       return state;
   }

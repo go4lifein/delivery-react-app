@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Switch, Route } from "react-router-dom";
 
 import Loading from '../components/Loading';
-import {getAllOrders, getDeliveryBoysData} from '../api/v2/admin';
-import {updateOrdersData, updateAdminData} from '../actions/admin.actions';
+import {getAllOrders, getDeliveryBoysData, getOrderBoxData, getOrderProducts, getOrderedProducts} from '../api/v2/admin';
+import {updateOrdersData, updateAdminData, addProducts, addOrderProducts, addOrderBox} from '../actions/admin.actions';
 import AdminNavbar from "../components/AdminNavbar";
 import LoginAdmin from '../components/AdminLogin';
 
@@ -25,7 +25,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onUpdateOrdersData: (data) => dispatch(updateOrdersData(data)),
-    onUpdateAdminData: (data) => dispatch(updateAdminData(data))
+    onUpdateAdminData: (data) => dispatch(updateAdminData(data)),
+    onAddProducts: (data) => dispatch(addProducts(data)),
+    onAddOrderProducts: (data) => dispatch(addOrderProducts(data)),
+    onAddOrderBox: (data) => dispatch(addOrderBox(data))
   };
 }
 
@@ -49,6 +52,21 @@ class AdminRouter extends Component {
     .then(res => {
       let orders = res.data;
       onUpdateOrdersData(orders);
+    })
+
+    getOrderProducts()
+    .then(res => {
+      this.props.onAddOrderProducts(res.data)
+    })
+    
+    getOrderedProducts()
+    .then(res => {
+      this.props.onAddProducts(res.data)
+    })
+    
+    getOrderBoxData()
+    .then(res => {
+      this.props.onAddOrderBox(res.data)
     })
   }
   render() {

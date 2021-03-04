@@ -29,6 +29,7 @@
     "react-timeline-scribble": "^1.0.14",
     "react-webcam": "^5.2.2",
     "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
     "socket.io-client": "^3.0.3",
     "styled-components": "^5.2.1",
     "three": "^0.125.2",

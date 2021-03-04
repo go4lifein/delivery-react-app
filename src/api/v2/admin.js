@@ -1,5 +1,6 @@
-import {API_URL , request} from '../../helpers/utils';
+import {API_URL , request, getRequest} from '../../helpers/utils';
 import { post } from 'axios';
+import moment from 'moment-timezone';
 
 export function getAllOrders() {
   let url = `${API_URL}/v2/order/getAllOrders`;
@@ -33,4 +34,28 @@ export function assignDrivers(data) {
       'Content-Type': 'application/json',
     }
   });
+}
+
+export function getOrderedProducts(
+  fromDate = moment().format('YYYY-MM-DD'), 
+  endDate = moment().format('YYYY-MM-DD')
+) {
+  let url = `${API_URL}/v2/order/getOrderedProducts?fromDate=${fromDate}&endDate=${endDate}`;
+  return getRequest(url);
+}
+
+export function getOrderProducts(
+  fromDate = moment().format('YYYY-MM-DD'), 
+  endDate = moment().format('YYYY-MM-DD')
+) {
+  let url = `${API_URL}/v2/order/getOrderProducts?fromDate=${fromDate}&endDate=${endDate}`;
+  return getRequest(url);
+}
+
+export function getOrderBoxData(
+  fromDate = moment().format('YYYY-MM-DD'), 
+  endDate = moment().format('YYYY-MM-DD')
+) {
+  let url = `${API_URL}/v2/order/getOrderBoxData?fromDate=${fromDate}&endDate=${endDate}`;
+  return getRequest(url);
 }

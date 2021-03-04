@@ -29,17 +29,22 @@ export function setCookie(name, value, days) {
   document.cookie = name + "=" + (value || "")  + expires + "; path=/";
 }
 
-function setRequestAuthHeader(accessToken) {
-  axios.defaults.headers.common["x-admin-token"] = accessToken;
+function setRequestAuthHeader(key = "x-admin-token", accessToken) {
+  // alert(key + " " + accessToken)
+  axios.defaults.headers.common[key] = accessToken;
 }
 
 export const userAccessToken = getCookies()["x-admin-token"];
 
-export function initRequestAuthHeader() {
-  let userAccessToken = getCookies()["x-admin-token"];
-  if(userAccessToken) setRequestAuthHeader(userAccessToken);
+export function initRequestAuthHeader(key = "x-admin-token") {
+  let userAccessToken = getCookies()[key];
+  if(userAccessToken) setRequestAuthHeader(key, userAccessToken);
 }
-initRequestAuthHeader();
+if(getCookies()["x-admin-token"]) {
+  initRequestAuthHeader("x-admin-token");
+} else {
+  initRequestAuthHeader("x-driver-token");
+}
 
 export function request(config) {
   return axios.request(config);
@@ -71,3 +76,47 @@ export function hasNoDairy(products) {
   }
   return false;
 }
+
+export function postRequest(url, data) {
+  return axios.request({
+    url: url,
+    method: 'post',
+    data,
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+}
+
+export function getRequest(url) {
+  return axios.request({
+    url: url,
+    method: 'get'
+  });
+}
+
+export function dataURItoBlob(dataURI) {
+  // convert base64 to raw binary data held in a string
+  // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+  var byteString = atob(dataURI.split(',')[1]);
+
+  // separate out the mime component
+  var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+  // write the bytes of the string to an ArrayBuffer
+  var ab = new ArrayBuffer(byteString.length);
+  var ia = new Uint8Array(ab);
+  for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+  }
+
+  //Old Code
+  //write the ArrayBuffer to a blob, and you're done
+  //var bb = new BlobBuilder();
+  //bb.append(ab);
+  //return bb.getBlob(mimeString);
+
+  //New Code
+  return new Blob([ab], {type: mimeString});
+}
+

@@ -4,15 +4,16 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import exportCSV from '../helpers/exportCSV';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import Switch from '@material-ui/core/Switch';
 
 import Loading from './Loading';
 import AssignOrders from './AssignOrders'
+import {POUCH_MILK_PRODUCTS, BOX_MILK_PRODUCTS} from '../constants/config';
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -28,9 +29,9 @@ class OrderManagement extends Component {
       loading: true,
       phone: "",
       selectedArea: [],
-      selectedSubarea: 'all',
-      selectedHub: 'all',
-      selectedDriver: 'all',
+      selectedSubarea: [],
+      selectedHub: [],
+      selectedDriver: "all",
       showWithoutDairy: false,
       hiddenAddress: false,
       selectedRow: []
@@ -40,22 +41,29 @@ class OrderManagement extends Component {
   
   exportData = () => {
     
-    const { deliveryBoys } = this.props;
+    const { deliveryBoys, orderBoxData, orderProducts } = this.props;
     let rows = [
-      ['Order Id', 'Name', 'Phone', 'Hub', 'Area', 'Locality', 'House', 'Driver']
+      ['S.No.', 'Order Id', 'Crate Id', 'Customer Id', 'Name', 'Phone', 'Region', 'Area', 'Locality', 'House', 'Driver', 'Type', 'Qty']
     ];
     let data = this.filterData();
-    data.forEach(item => {
+
+    for (let index = 0; index < data.length; index++) {
+      const item = data[index];
       
       let {driverId} = item;
       let driverName = '';
       if(driverId) {
         driverName = deliveryBoys.get(driverId).name;
       }
-      const {orderId, name, phone, region, area, subarea, address} = item;
+      const {customerID, orderId, name, phone, region, area, subarea, address} = item;
+      const boxData = orderBoxData.get(parseInt(orderId));
+      const orderProductsData = orderProducts.get(parseInt(orderId));
       
-      rows.push([
+      const commonFields = [
+        index+1,
         orderId,
+        boxData?.crateId,
+        customerID,
         `"${name}"`,
         phone,
         `"${region}"`,
@@ -63,22 +71,102 @@ class OrderManagement extends Component {
         `"${subarea}"`,
         `"${address.replace(/[^0-9a-zA-Z:/ ]/g, "")}"`,
         `"${driverName}"`
-      ])
-    })
+      ]
+
+      let pouchMilkQty = 0;
+      let gableTopQty = 0;
+
+      if(orderProductsData) {
+        // console.log(orderProductsData)
+        orderProductsData.forEach(item => {
+          const {productId, qty} = item;
+          if(POUCH_MILK_PRODUCTS.includes(productId)) {
+            pouchMilkQty += qty;
+          } else if(BOX_MILK_PRODUCTS.includes(productId)) {
+            gableTopQty += qty;
+          }
+        })
+
+        if(pouchMilkQty) {
+          rows.push([
+            ...commonFields,
+            'Pouch Milk',
+            pouchMilkQty
+          ])
+        }
+        
+        if(gableTopQty) {
+          rows.push([
+            ...commonFields,
+            'Gable Top',
+            gableTopQty
+          ])
+        } 
+      } else {
+        alert("Something wrong with data uploaded for order", orderId);
+      }
+
+      // Handle LargeBox, MediumBox, Packet
+      const {largeBox, mediumBox, packet } = boxData || {};
+      if(largeBox) {
+        rows.push([
+          ...commonFields,
+          `Large Box`,
+          largeBox
+        ]);
+      }
+
+      if(mediumBox) {
+        rows.push([
+          ...commonFields,
+          `Large Box`,
+          mediumBox
+        ]);
+      }
+      
+      if(packet) {
+        rows.push([
+          ...commonFields,
+          `Large Box`,
+          packet
+        ]);
+      }
+
+      if(gableTopQty || pouchMilkQty || largeBox || mediumBox || packet ) {
+        console.log("Already Loaded Customer in the sheet");
+      } else {
+        console.log(`This is not ideal. Maybe the packing is not over yet.\nAn order should have atleast one of gableTopQty || pouchMilkQty || largeBox || mediumBox || packet `)
+        // alert(`This is not ideal. Maybe the packing is not over yet.\nAn order should have atleast one of gableTopQty || pouchMilkQty || largeBox || mediumBox || packet `);
+        
+        rows.push([
+          ...commonFields,
+          'Complete', 
+          ''
+        ]);
+        // return;
+      }  
+    }
+
     exportCSV(rows, `Delivery Sheet - ${new Date().toLocaleDateString()}.csv`);
   }
   filterData() {
-    let {selectedArea, selectedHub, selectedDriver, phone } = this.state;
+    let {selectedSubarea, selectedArea, selectedHub, selectedDriver, phone } = this.state;
     let { orders} = this.props;
+
+    console.log("STATE", this.state);
     
     let data = [];
+    
     if(orders) {
       data = orders.filter((item) => {
-        if(selectedHub !== 'all') {
-          if(item.address.hub !== selectedHub) return false;
+        if(selectedHub.length) {
+          if(item.region !== selectedHub) return false;
         }
         if(selectedArea.length) {
           if(!selectedArea.includes(item.area)) return false;
+        }
+        if(selectedSubarea.length) {
+          if(!selectedSubarea.includes(item.subarea)) return false;
         }
         if(selectedDriver !== 'all') {
           if(selectedDriver === 'none') {
@@ -94,6 +182,7 @@ class OrderManagement extends Component {
         return true;
       })
     }
+    
     return data;
   }
   render() {
@@ -108,11 +197,11 @@ class OrderManagement extends Component {
     
     if(locations) locations.forEach((hub, hubName) => {
       hub.forEach((area, areaName) => {
-        if( (hubName === selectedHub) || (selectedHub === 'all') ) {
+        if( (hubName === selectedHub) || (selectedHub.length === 0) ) {
           areas.push(areaName);
         }
         if( selectedArea.includes(areaName) || selectedArea.length === 0 ) {
-          subareas.concat(area);
+          subareas = subareas.concat(area);
         }
       });
     });
@@ -153,10 +242,10 @@ class OrderManagement extends Component {
                     value={selectedHub}
                     onChange={(e) => {
                       let selectedHub = e.target.value;
-                      this.setState({selectedHub, selectedArea: 'all', selectedSubarea: 'all'})
+                      this.setState({selectedHub, selectedArea: [], selectedSubarea: []})
                     }}
                   >
-                    <MenuItem value="all">All</MenuItem>
+                    {/* <MenuItem value="all">All</MenuItem> */}
                     {hubs.map(item => (
                       <MenuItem value={item} key={item}>{item}</MenuItem>
                     ))}
@@ -164,17 +253,27 @@ class OrderManagement extends Component {
                   </FormControl>
               </div>
               
-              <div style={{marginRight: 20, width: 450}}>
+              <div style={{marginRight: 20, width: 300}}>
                 <FormControl style={{width: '100%'}}>
                   <Autocomplete
-                    labelId="area-filter"
                     options={areas}
-                    // getOptionLabel={partner => partner.name}
                     multiple={true}
                     renderInput={(params) => <TextField {...params} label="Area" />}
                     onChange={(e, selectedArea) => {
-                      console.log(selectedArea);
-                      this.setState({selectedArea, selectedSubarea: 'all'})
+                      this.setState({selectedArea, selectedSubarea: []})
+                    }}
+                  />
+                </FormControl>
+              </div>
+
+              <div style={{marginRight: 20, width: 400}}>
+                <FormControl style={{width: '100%'}}>
+                  <Autocomplete
+                    options={subareas}
+                    multiple={true}
+                    renderInput={(params) => <TextField {...params} label="Locality" />}
+                    onChange={(e, selectedSubarea) => {
+                      this.setState({selectedSubarea})
                     }}
                   />
                 </FormControl>

@@ -6,9 +6,7 @@ import ArrowDownward from '@material-ui/icons/ArrowDownward';
 const sortIcon = <ArrowDownward />;
 
 function OrderDataTable(props) {
-  const {data, onRowSelect, onSelectionChange, deliveryBoys} = props;
-
-  console.log(deliveryBoys);
+  const {data, onRowSelect, onSelectionChange, deliveryBoys, orderBoxData} = props;
 
   const columns = [
     // {
@@ -22,6 +20,16 @@ function OrderDataTable(props) {
       selector: 'orderId',
       sortable: true,
       width: '130px'
+    },
+    {
+      name: 'Crate Id',
+      selector: 'orderId',
+      sortable: true,
+      cell: (row) => {
+        const {orderId} = row;
+        const boxData = orderBoxData.get(parseInt(orderId));
+        return boxData?.crateId;
+      }
     },
     {
       name: 'Name',

@@ -9,7 +9,7 @@ import Switch from '@material-ui/core/Switch';
 import { Button, TextField, Grid } from '@material-ui/core';
 
 import Loading from '../components/Loading';
-import {getMyOrders} from '../api/driver';
+import {getMyOrders} from '../api/v2/driver';
 import {updateOrders} from '../actions/driver.actions';
 import DriverOrderTable from './DriverOrderTable';
 
@@ -29,9 +29,9 @@ function mapDispatchToProps(dispatch) {
 class ChooseOrder extends Component {
   state = {
     phone: "",
-    selectedArea: 'all',
-    selectedSubarea: 'all',
-    selectedHub: 'all',
+    selectedArea: [],
+    selectedSubarea: [],
+    selectedHub: [],
     showDelivered: false
   }
   componentDidMount() {
@@ -40,72 +40,67 @@ class ChooseOrder extends Component {
     .then(res => {
       onUpdateOrdersData(res.data);
     })
-  }
-  render() {
-    let loading = true, data = [];
-    let {selectedArea, selectedHub, selectedSubarea, phone, showDelivered } = this.state;
-    let {customers, locations, areas, subareas, hubs} = this.props;
-
+  }  
+  filterData() {
+    let {selectedSubarea, selectedArea, selectedHub, phone } = this.state;
+    let { orders } = this.props;
     
-    if(selectedHub !== 'all') {
-      let filteredAreas = locations.get(selectedHub);
-      areas = Array.from(filteredAreas.keys());
-
-      areas = areas.sort((a, b) => a.localeCompare(b));
-      
-      let subareasCollection = selectedArea !== 'all' ? [filteredAreas.get(selectedArea)] : Array.from(filteredAreas.values());
-      subareas = [];
-      subareasCollection.forEach(areaSubareas => {
-        areaSubareas.forEach(subarea => subareas.push(subarea));
-      });
-      subareas = subareas.sort((a, b) => a.localeCompare(b));
-    }
-
-    if(selectedArea !== 'all') {
-      
-      let filteredAreas = new Map();
-      Array.from(locations.keys()).forEach(hub => {
-        if(locations.get(hub).has(selectedArea)) {
-          filteredAreas = locations.get(hub);
+    let data = [];
+    
+    if(orders) {
+      data = orders.filter((item) => {
+        if(selectedArea.length) {
+          if(item.region !== selectedHub) return false;
         }
-      })
-
-      let subareasCollection = [filteredAreas.get(selectedArea)]
-      subareas = [];
-      subareasCollection.forEach(areaSubareas => {
-        areaSubareas.forEach(subarea => subareas.push(subarea));
-      });
-      subareas = subareas.sort((a, b) => a.localeCompare(b));
-    }
-
-    if(customers) {
-      loading = false;
-      data = Array.from(customers.values());
-      
-
-      data = data.filter((item) => {
-        if(selectedHub !== 'all') {
-          if(item.address.hub !== selectedHub) return false;
+        if(selectedArea.length) {
+          if(!selectedArea.includes(item.area)) return false;
         }
-        if(selectedArea !== 'all') {
-          if(item.address.area !== selectedArea) return false;
-        }
-        if(selectedSubarea !== 'all') {
-          if(item.address.subarea !== selectedSubarea) return false;
+        if(selectedSubarea.length) {
+          if(!selectedSubarea.includes(item.subarea)) return false;
         }
         if(phone) {
           if(item.phone.indexOf(phone) !== -1) return true;
           if(item.name.toLowerCase().indexOf(phone.toLowerCase()) !== -1) return true;
+          if(item.orderId.toString().indexOf(phone.toLowerCase()) !== -1) return true;
           return false;
         }
         return true;
+      })
+    }
+    return data;
+  }
+  render() {
+    let loading = true, data = [];
+    let {selectedArea, selectedHub, selectedSubarea, phone, showDelivered } = this.state;
+    let {orders, locations, hubs} = this.props;
+
+    
+    let areas = [], subareas = [];
+    
+    if(locations) locations.forEach((hub, hubName) => {
+      hub.forEach((area, areaName) => {
+        console.log(selectedArea, areaName, area);
+        if( (selectedHub.includes(hubName)) || (selectedHub.length === 0) ) {
+          areas.push(areaName);
+        }
+        if( selectedArea.includes(areaName) || selectedArea.length === 0) {
+          subareas = subareas.concat(area);
+        }
       });
+    });
+
+    areas = areas.sort((a, b) => a.localeCompare(b));
+    subareas = subareas.sort((a, b) => a.localeCompare(b));
+
+    if(orders) {
+      loading = false;
+      data = this.filterData();
       data = data.filter((item) => {
         if(showDelivered) {
-          if(item.delivery.deliver_date) return true;
+          if(item.deliveryId) return true;
           return false;
         } else {
-          if(item.delivery.deliver_date) return false;
+          if(item.deliveryId) return false;
           return true;
         }
       })
@@ -141,10 +136,10 @@ class ChooseOrder extends Component {
                     value={selectedHub}
                     onChange={(e) => {
                       let selectedHub = e.target.value;
-                      this.setState({selectedHub, selectedArea: 'all', selectedSubarea: 'all'})
+                      this.setState({selectedHub, selectedArea: [], selectedSubarea: []})
                     }}
                   >
-                    <MenuItem value="all">All</MenuItem>
+                    {/* <MenuItem value="all">All</MenuItem> */}
                     {hubs.map(item => (
                       <MenuItem value={item} key={item}>{item}</MenuItem>
                     ))}
@@ -170,10 +165,10 @@ class ChooseOrder extends Component {
                     value={selectedArea}
                     onChange={(e) => {
                       let selectedArea = e.target.value;
-                      this.setState({selectedArea, selectedSubarea: 'all'})
+                      this.setState({selectedArea, selectedSubarea: []})
                     }}
                   >
-                    <MenuItem value="all">All</MenuItem>
+                    {/* <MenuItem value="all">All</MenuItem> */}
                     {areas.map(item => (
                       <MenuItem value={item} key={item}>{item}</MenuItem>
                     ))}
@@ -193,7 +188,7 @@ class ChooseOrder extends Component {
                       this.setState({selectedSubarea});
                     }}
                   >
-                    <MenuItem value="all">All</MenuItem>
+                    {/* <MenuItem value="all">All</MenuItem> */}
                     {subareas.map(item => (
                       <MenuItem value={item} key={item}>{item}</MenuItem>
                     ))}
