@@ -324,7 +324,8 @@ class DeliveryDashboard extends Component {
 
               <div style={{marginRight: 20}}>
                 <Button
-                  color="primary"
+                  color="default"
+                  variant="outlined"
                   onClick={() => {
                     window.location.reload();
                   }}
