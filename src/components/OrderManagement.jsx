@@ -168,7 +168,7 @@ class OrderManagement extends Component {
       if(mediumBox) {
         rows.push([
           ...commonFields,
-          `Large Box`,
+          `Medium Box`,
           mediumBox
         ]);
       }
@@ -176,7 +176,7 @@ class OrderManagement extends Component {
       if(packet) {
         rows.push([
           ...commonFields,
-          `Large Box`,
+          `Packet`,
           packet
         ]);
       }
