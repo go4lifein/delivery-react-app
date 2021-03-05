@@ -8,14 +8,16 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import exportCSV from '../helpers/exportCSV';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import moment from 'moment-timezone';
 
 import Loading from './Loading';
-import AssignOrders from './AssignOrders'
-import {updateOrdersData, updateAdminData, addProducts, addOrderProducts, addOrderBox} from '../actions/admin.actions';
-import {getAllOrders, getDeliveryBoysData, getOrderBoxData, getOrderProducts, getOrderedProducts} from '../api/v2/admin';
-import {POUCH_MILK_PRODUCTS, BOX_MILK_PRODUCTS} from '../constants/config';
+import OrderDataTable from './OrderTableDelivery';
+import DeliveryInfo from './DeliveryInfo';
+
+import {updateDeliveryReport, updateAdminData, addProducts, addOrderProducts, addOrderBox} from '../actions/admin.actions';
+import {getDeliveryBoysData, getDeliveryReport, getOrderBoxData, getOrderProducts, getOrderedProducts} from '../api/v2/admin';
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -26,7 +28,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onUpdateOrdersData: (data) => dispatch(updateOrdersData(data)),
+    onUpdateDeliveryReport: (data) => dispatch(updateDeliveryReport(data)),
     onUpdateAdminData: (data) => dispatch(updateAdminData(data)),
     onAddProducts: (data) => dispatch(addProducts(data)),
     onAddOrderProducts: (data) => dispatch(addOrderProducts(data)),
@@ -34,12 +36,14 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-class OrderManagement extends Component {
+class DeliveryDashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
       phone: "",
+      startDate: moment().format('YYYY-MM-DD'),
+      endDate: moment().format('YYYY-MM-DD'),
       selectedArea: [],
       selectedSubarea: [],
       selectedHub: [],
@@ -53,7 +57,12 @@ class OrderManagement extends Component {
 
     try {
       this.setState({loading: true});
-      let {onUpdateOrdersData, onUpdateAdminData} = this.props;
+
+      let {startDate, endDate} = this.state;
+      startDate = moment(startDate).format('YYYY-MM-DD');
+      endDate = moment(endDate).format('YYYY-MM-DD');
+
+      const {onUpdateDeliveryReport, onUpdateAdminData} = this.props;
 
       let deliveryBoysData = await getDeliveryBoysData().then(res => res.data);
       let deliveryBoys = new Map();
@@ -62,150 +71,52 @@ class OrderManagement extends Component {
         deliveryBoys.set(person.id, person);
       })
       onUpdateAdminData({deliveryBoys});
-
-      let orders = await getAllOrders().then(res => res.data);
-      onUpdateOrdersData(orders);
-
-      let orderProducts = await getOrderProducts().then(res => res.data);
+      
+      let orderProducts = await getOrderProducts(startDate, endDate).then(res => res.data);
       this.props.onAddOrderProducts(orderProducts)
       
-      let products = await getOrderedProducts().then(res => res.data);
+      let products = await getOrderedProducts(startDate, endDate).then(res => res.data);
       this.props.onAddProducts(products);
       
-      let orderBoxData = await getOrderBoxData().then(res => res.data)
+      let orderBoxData = await getOrderBoxData(startDate, endDate).then(res => res.data)
       this.props.onAddOrderBox(orderBoxData)
+
+
+      let data = await getDeliveryReport(startDate, endDate).then(res => res.data);
+      onUpdateDeliveryReport(data);
 
       this.setState({loading: false});
 
     } catch(err) {
+      console.log(err)
       this.setState({
         error: err.message
       })
     }
   }
-  componentDidMount = async () => {
-    await this.update();
+  componentDidMount() {
+    this.update();
   }
-  hideAddress = () => this.setState({hiddenAddress: true})
-  
   exportData = () => {
     
-    const { deliveryBoys, orderBoxData, orderProducts } = this.props;
+    // const { deliveryBoys, orderBoxData, orderProducts } = this.props;
     let rows = [
       ['S.No.', 'Order Id', 'Crate Id', 'Customer Id', 'Name', 'Phone', 'Region', 'Area', 'Locality', 'House', 'Driver', 'Type', 'Qty']
     ];
-    let data = this.filterData();
-
-    for (let index = 0; index < data.length; index++) {
-      const item = data[index];
-      
-      let {driverId} = item;
-      let driverName = '';
-      if(driverId) {
-        driverName = deliveryBoys.get(driverId).name;
-      }
-      const {customerID, orderId, name, phone, region, area, subarea, address} = item;
-      const boxData = orderBoxData.get(parseInt(orderId));
-      const orderProductsData = orderProducts.get(parseInt(orderId));
-      
-      const commonFields = [
-        index+1,
-        orderId,
-        boxData?.crateId,
-        customerID,
-        `"${name}"`,
-        phone,
-        `"${region}"`,
-        `"${area}"`,
-        `"${subarea}"`,
-        `"${address.replace(/[^0-9a-zA-Z:/ ]/g, "")}"`,
-        `"${driverName}"`
-      ]
-
-      let pouchMilkQty = 0;
-      let gableTopQty = 0;
-
-      if(orderProductsData) {
-        // console.log(orderProductsData)
-        orderProductsData.forEach(item => {
-          const {productId, qty} = item;
-          if(POUCH_MILK_PRODUCTS.includes(productId)) {
-            pouchMilkQty += qty;
-          } else if(BOX_MILK_PRODUCTS.includes(productId)) {
-            gableTopQty += qty;
-          }
-        })
-
-        if(pouchMilkQty) {
-          rows.push([
-            ...commonFields,
-            'Pouch Milk',
-            pouchMilkQty
-          ])
-        }
-        
-        if(gableTopQty) {
-          rows.push([
-            ...commonFields,
-            'Gable Top',
-            gableTopQty
-          ])
-        } 
-      } else {
-        alert("Something wrong with data uploaded for order", orderId);
-      }
-
-      // Handle LargeBox, MediumBox, Packet
-      const {largeBox, mediumBox, packet } = boxData || {};
-      if(largeBox) {
-        rows.push([
-          ...commonFields,
-          `Large Box`,
-          largeBox
-        ]);
-      }
-
-      if(mediumBox) {
-        rows.push([
-          ...commonFields,
-          `Large Box`,
-          mediumBox
-        ]);
-      }
-      
-      if(packet) {
-        rows.push([
-          ...commonFields,
-          `Large Box`,
-          packet
-        ]);
-      }
-
-      if(gableTopQty || pouchMilkQty || largeBox || mediumBox || packet ) {
-        console.log("Already Loaded Customer in the sheet");
-      } else {
-        console.log(`This is not ideal. Maybe the packing is not over yet.\nAn order should have atleast one of gableTopQty || pouchMilkQty || largeBox || mediumBox || packet `)
-        // alert(`This is not ideal. Maybe the packing is not over yet.\nAn order should have atleast one of gableTopQty || pouchMilkQty || largeBox || mediumBox || packet `);
-        
-        rows.push([
-          ...commonFields,
-          'Complete', 
-          ''
-        ]);
-        // return;
-      }  
-    }
-
     exportCSV(rows, `Delivery Sheet - ${new Date().toLocaleDateString()}.csv`);
   }
   filterData() {
-    let {selectedSubarea, selectedArea, selectedHub, selectedDriver, phone } = this.state;
+    let {selectedSubarea, selectedArea, selectedHub, selectedDriver, phone, onlyDelivered } = this.state;
     let { orders} = this.props;
     
     let data = [];
     
     if(orders) {
       data = orders.filter((item) => {
+        if(onlyDelivered) {
+          if(item.delivery_date) return true;
+          return false;
+        }
         if(selectedHub.length) {
           if(item.region !== selectedHub) return false;
         }
@@ -232,9 +143,22 @@ class OrderManagement extends Component {
     
     return data;
   }
+  onDateChange = (e) => {
+    
+    let value = moment(e.target.value).format('YYYY-MM-DD');
+    this.setState({
+      [e.target.name]: value
+    }, () => this.update());
+  }
+  onOrderSelect = (row) => {
+    this.setState({
+      selectedOrder: row
+    })
+  }
   render() {
-    let {selectedArea, selectedHub, selectedDriver, phone, loading = true } = this.state;
+    let {selectedArea, selectedHub, selectedDriver, phone, onlyDelivered, startDate, endDate, selectedOrder, loading = true } = this.state;
     let {locations, hubs, deliveryBoys, orders, orderBoxData} = this.props;
+    
 
     let deliveryBoysData = deliveryBoys ? Array.from(deliveryBoys.values()) : [];
     deliveryBoysData = deliveryBoysData.sort((a, b) => (a.name.localeCompare(b.name)));
@@ -254,18 +178,52 @@ class OrderManagement extends Component {
 
     areas = areas.sort((a, b) => a.localeCompare(b));
 
-    if(orders && deliveryBoys && orderBoxData) {
+    if(orders) {
       loading = false;
     }
 
     let data = this.filterData();
+    
+    if(orders && deliveryBoys && orderBoxData) {
+      loading = false;
+    }
 
     return (
       <div>
+    
+        {/* Dates - Remote Filters */}
+        <div 
+          className="flex middle"
+          style={{padding: 10}}
+        >
+          <div style={{marginRight: 20, width: 220}}>
+            <TextField
+              type="date"
+              value={startDate}
+              fullWidth
+              label="Start Date"
+              name="startDate"
+              onChange={this.onDateChange}
+            />
+          </div>
+          
+          <div style={{marginRight: 20, width: 220}}>
+            <TextField
+              type="date"
+              value={endDate}
+              fullWidth
+              label="End Date"
+              name="endDate"
+              onChange={this.onDateChange}
+            />
+          </div>
+        </div>
+
         {
           loading?
           <Loading /> :
           <div>
+            {/* Local Filters */}
             <div 
               className="flex middle"
               style={{padding: 10}}
@@ -299,7 +257,7 @@ class OrderManagement extends Component {
                   </FormControl>
               </div>
               
-              <div style={{marginRight: 20, width: 300}}>
+              <div style={{marginRight: 20, width: 200}}>
                 <FormControl style={{width: '100%'}}>
                   <Autocomplete
                     options={areas}
@@ -312,7 +270,7 @@ class OrderManagement extends Component {
                 </FormControl>
               </div>
 
-              <div style={{marginRight: 20, width: 400}}>
+              <div style={{marginRight: 20, width: 300}}>
                 <FormControl style={{width: '100%'}}>
                   <Autocomplete
                     options={subareas}
@@ -345,6 +303,24 @@ class OrderManagement extends Component {
                   </Select>
                 </FormControl>
               </div>
+              
+              <div>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={onlyDelivered}
+                      onChange={(e) => 
+                        this.setState({
+                          [e.target.name]: e.target.checked
+                        })
+                      }
+                      name="onlyDelivered"
+                      color="primary"
+                    />
+                  }
+                  label="Delivered"
+                />
+              </div>
 
               <div style={{marginRight: 20}}>
                 <Button
@@ -353,14 +329,24 @@ class OrderManagement extends Component {
                     window.location.reload();
                   }}
                 >
-                  Clear All Filters
+                  Remove Filters
                 </Button>
               </div>
             </div>
             
-            <AssignOrders 
+            {/* <AssignOrders 
               data={data}
               exportData={this.exportData}
+              deliveryBoys={deliveryBoys}
+            /> */}
+            <DeliveryInfo 
+              customer={selectedOrder}
+              setSelectedCustomer={this.onOrderSelect}
+            />
+            <OrderDataTable
+              data={data}
+              onRowSelect={this.onOrderSelect}
+              orderBoxData={orderBoxData}
               deliveryBoys={deliveryBoys}
             />
           </div>
@@ -374,4 +360,4 @@ class OrderManagement extends Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(OrderManagement);
+)(DeliveryDashboard);

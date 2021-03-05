@@ -1,12 +1,12 @@
 import React from 'react';
 import DataTable from "react-data-table-component";
-import Checkbox from '@material-ui/core/Checkbox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import moment from 'moment-timezone'
 
 const sortIcon = <ArrowDownward />;
 
 function OrderDataTable(props) {
-  const {data, onRowSelect, onSelectionChange, deliveryBoys, orderBoxData} = props;
+  const {data, onRowSelect, deliveryBoys, orderBoxData} = props;
 
   const columns = [
     // {
@@ -20,6 +20,16 @@ function OrderDataTable(props) {
       selector: 'orderId',
       sortable: true,
       width: '130px'
+    },
+    {
+      name: 'Order Date',
+      selector: 'orderDate',
+      sortable: true,
+      width: '120px',
+      cell: (row) => {
+        const {orderDate} = row;
+        return moment(orderDate).format('DD-MM-YYYY')
+      }
     },
     {
       name: 'Crate Id',
@@ -62,11 +72,19 @@ function OrderDataTable(props) {
       selector: 'subarea',
       width: '200px'
     },
-    // {
-    //   name: 'House',
-    //   selector: 'address',
-    //   width: '300px'
-    // },
+    {
+      name: 'Delivered on',
+      selector: 'delivery_date',
+      sortable: true,
+      width: '130px',
+      cell: (row) => {
+        const {delivery_date} = row;
+        if(!delivery_date) {
+          return <span style={{color: 'red'}}>Not delivered</span>
+        }
+        return moment(delivery_date).format('DD-MM-YYYY')
+      }
+    },
     {
       name: 'Driver',
       selector: '_driver',
@@ -83,13 +101,14 @@ function OrderDataTable(props) {
 
   return (
     <div>
+      
       <DataTable
         striped={true}
         noHeader
-        selectableRows
-        onSelectedRowsChange={onSelectionChange}
+        // selectableRows
+        // onSelectedRowsChange={onSelectionChange}
+        // selectableRowsComponent={Checkbox}
         dense={true}
-        selectableRowsComponent={Checkbox}
         sortIcon={sortIcon}
         data={data}
         columns={columns}
@@ -97,9 +116,9 @@ function OrderDataTable(props) {
         pointerOnHover={true}
         pagination={true}
         paginationPerPage={10}
-        // onRowClicked={(row, e) => {
-        //   onRowSelect(row);
-        // }}
+        onRowClicked={(row, e) => {
+          onRowSelect(row);
+        }}
       />
     </div>
   )

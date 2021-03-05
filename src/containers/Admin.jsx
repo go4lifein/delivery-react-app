@@ -3,14 +3,13 @@ import { connect } from 'react-redux';
 import { Switch, Route } from "react-router-dom";
 
 import Loading from '../components/Loading';
-import {getAllOrders, getDeliveryBoysData, getOrderBoxData, getOrderProducts, getOrderedProducts} from '../api/v2/admin';
-import {updateOrdersData, updateAdminData, addProducts, addOrderProducts, addOrderBox} from '../actions/admin.actions';
 import AdminNavbar from "../components/AdminNavbar";
 import LoginAdmin from '../components/AdminLogin';
 
 const CustomerSheet = lazy(() => import(/* webpackChunkName: "CustomerSheet" */ '../components/CustomerSheet'));
 const ProductSheet = lazy(() => import(/* webpackChunkName: "ProductSheet" */ '../components/ProductSheet'));
 const OrderManagement = lazy(() => import(/* webpackChunkName: "OrderManagement" */ '../components/OrderManagement'));
+const DeliveryDashboard = lazy(() => import(/* webpackChunkName: "DeliveryDashboard" */ '../components/DeliveryDashboard'));
 const PackOrders = lazy(() => import(/* webpackChunkName: "PackOrders" */ '../components/PackOrders'));
 const AddReport = lazy(() => import(/* webpackChunkName: "AddReport" */ '../components/AddReport'));
 const HeatMap = lazy(() => import(/* webpackChunkName: "HeatMap" */ '../components/HeatMap'));
@@ -22,53 +21,7 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    onUpdateOrdersData: (data) => dispatch(updateOrdersData(data)),
-    onUpdateAdminData: (data) => dispatch(updateAdminData(data)),
-    onAddProducts: (data) => dispatch(addProducts(data)),
-    onAddOrderProducts: (data) => dispatch(addOrderProducts(data)),
-    onAddOrderBox: (data) => dispatch(addOrderBox(data))
-  };
-}
-
 class AdminRouter extends Component {
-  componentDidMount() {
-
-    let {onUpdateOrdersData, onUpdateAdminData} = this.props;
-
-    getDeliveryBoysData()
-    .then(res => {
-      let deliveryBoysData = res.data;
-      let deliveryBoys = new Map();
-
-      deliveryBoysData.forEach(person => {
-        deliveryBoys.set(person.id, person);
-      })
-      onUpdateAdminData({deliveryBoys});
-    })
-
-    getAllOrders()
-    .then(res => {
-      let orders = res.data;
-      onUpdateOrdersData(orders);
-    })
-
-    getOrderProducts()
-    .then(res => {
-      this.props.onAddOrderProducts(res.data)
-    })
-    
-    getOrderedProducts()
-    .then(res => {
-      this.props.onAddProducts(res.data)
-    })
-    
-    getOrderBoxData()
-    .then(res => {
-      this.props.onAddOrderBox(res.data)
-    })
-  }
   render() {
     const {admin} = this.props;
     return (
@@ -108,6 +61,10 @@ class AdminRouter extends Component {
                     component={HeatMap}
                   />
                   <Route 
+                    path="/admin/delivery"
+                    component={DeliveryDashboard}
+                  />
+                  <Route 
                     path="/admin"
                     component={OrderManagement} 
                   />
@@ -123,6 +80,5 @@ class AdminRouter extends Component {
 }
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(AdminRouter);

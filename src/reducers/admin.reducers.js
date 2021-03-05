@@ -4,7 +4,7 @@ import {
   UPDATE_ADMIN_DATA,
   ADD_PRODUCTS,
   ADD_ORDER_PRODUCTS,
-  ADD_ORDER_BOX
+  ADD_ORDER_BOX, UPDATE_DELIVERY_REPORT
 } from '../constants/index';
 
 
@@ -18,6 +18,7 @@ if(admin) {
 const initialState = {
   admin,
   products : new Map(),
+  orderBoxData: new Map(),
   loadingOrderData: true
 }
 
@@ -48,6 +49,43 @@ function processOrderBoxData(data, orderBox) {
   });
 }
 
+function processLocations(data) {
+
+  let locations = new Map();
+
+  let hubs = [];
+
+  data.forEach(order => {
+    let { subarea, area, region } = order;
+    if(!hubs.includes(region)) {
+      hubs.push(region)
+    }
+    
+    if(locations.has(region)) {
+      let hubAreas = locations.get(region);
+      if(hubAreas.has(area)) {
+        let subareas = hubAreas.get(area);
+        if(!subareas.includes(subarea)) {
+          subareas.push(subarea);
+        }
+        hubAreas.set(area, subareas);
+        locations.set(region, hubAreas);
+      } else {
+        let areaData = [subarea];
+        hubAreas.set(area, areaData);
+        locations.set(region, hubAreas);
+      }
+    } else {
+      let hubAreas = new Map();
+      hubAreas.set(area, [subarea]);
+      locations.set(region, hubAreas)
+    }
+  });
+
+  return [locations, hubs];
+  
+}
+
 export const setAdmin = (state = initialState, action = {}) => {
   switch(action.type) {
     case UPDATE_ADMIN:
@@ -65,37 +103,8 @@ export const setAdmin = (state = initialState, action = {}) => {
     case UPDATE_ORDERS_DATA:
 
       let orders = action.payload;
-      let locations = new Map();
 
-      let hubs = [];
-
-      orders.forEach(order => {
-        let { subarea, area, region } = order;
-        if(!hubs.includes(region)) {
-          hubs.push(region)
-        }
-        
-        if(locations.has(region)) {
-          let hubAreas = locations.get(region);
-          if(hubAreas.has(area)) {
-            let subareas = hubAreas.get(area);
-            if(!subareas.includes(subarea)) {
-              subareas.push(subarea);
-            }
-            hubAreas.set(area, subareas);
-            locations.set(region, hubAreas);
-          } else {
-            let areaData = [subarea];
-            hubAreas.set(area, areaData);
-            locations.set(region, hubAreas);
-          }
-        } else {
-          let hubAreas = new Map();
-          hubAreas.set(area, [subarea]);
-          locations.set(region, hubAreas)
-        }
-      });
-      
+      let [locations, hubs] = processLocations(orders);
       return {
         ...state,
         orders,
@@ -112,6 +121,7 @@ export const setAdmin = (state = initialState, action = {}) => {
         ...state,
         products
       }
+      
     case ADD_ORDER_PRODUCTS:
       let orderProducts = new Map();
       processOrderProducts(action.payload, orderProducts);
@@ -129,6 +139,21 @@ export const setAdmin = (state = initialState, action = {}) => {
         ...state,
         orderBoxData
       }
+
+    case UPDATE_DELIVERY_REPORT:
+      
+      {
+        let orders = action.payload;
+
+        let [locations, hubs] = processLocations(orders);
+        return {
+          ...state,
+          orders,
+          locations,
+          hubs
+        };
+      }
+      
 
     default:
       return state;

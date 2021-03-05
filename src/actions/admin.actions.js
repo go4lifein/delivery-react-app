@@ -5,7 +5,8 @@ import {
   UPDATE_ORDER_CRATE_DATA,
   ADD_PRODUCTS,
   ADD_ORDER_PRODUCTS,
-  ADD_ORDER_BOX
+  ADD_ORDER_BOX,
+  UPDATE_DELIVERY_REPORT
 } from '../constants/index';
 
 export const updateAdmin = (admin) => ({
@@ -40,5 +41,10 @@ export const addOrderProducts = (data) => ({
 
 export const addOrderBox = (data) => ({
   type: ADD_ORDER_BOX,
+  payload: data
+});
+
+export const updateDeliveryReport = (data) => ({
+  type: UPDATE_DELIVERY_REPORT,
   payload: data
 });
