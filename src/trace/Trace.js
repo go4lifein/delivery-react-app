@@ -1,3 +1,4 @@
+
 import React , {useState , useEffect} from "react";
 import "./trace.scss";
 import Header from "./header.js";
@@ -6,7 +7,6 @@ import Journey from "./Journey.js";
 import Facts from "./Facts.js";
 import GetDate from "./getDate.js";
 import {getReport} from "../api/misc.js";
-import lottie from "lottie-web";
 import Loading from "../components/Loading.js";
 
 export default function Trace({ location }) {

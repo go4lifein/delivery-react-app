@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import Loading from '../components/Loading';
 import DriverNavbar from "../components/DriverNavbar";
 import DriverLogin from '../components/DriverLogin';
+import {getCookie} from '../helpers/utils'
 
 const ChooseOrder = lazy(() => import('../components/ChooseOrder'));
 const OrderDeliveryForm = lazy(() => import('../components/OrderDeliveryForm'));
@@ -17,6 +18,9 @@ function mapStateToProps(state) {
 }
 
 class Driver extends Component {
+  componentDidMount() {
+    // if()
+  }
   render() {
     const {driver} = this.props;
     return (

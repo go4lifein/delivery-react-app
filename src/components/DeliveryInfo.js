@@ -8,8 +8,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
-// import moment from 'moment';
+import moment from 'moment-timezone';
 import { connect } from 'react-redux';
+import { Grid } from '@material-ui/core';
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -35,9 +36,9 @@ class OrderDeliveryForm extends React.Component {
     let {customer, deliveryBoys} = this.props;
     console.log(customer);
     const {
-      driver_id, deliver_date, delivery_type, proof_img, complete_delivery, 
+      driver_id, delivery_date, delivery_type, proof_img, complete_delivery, 
       // order_cancel_reason, 
-      boxes, milk_packets} = customer.delivery;
+      small_boxes, large_boxes, gable_tops, milk_packets} = customer;
 
     let driver = deliveryBoys.get(driver_id);
 
@@ -73,56 +74,74 @@ class OrderDeliveryForm extends React.Component {
       <div className="pv-10">
         
         {
-        customer.delivery.deliver_date ?
+        customer.driver_id ?
         <Card variant="outlined">
-          <div className="p-10">
-            <Typography variant="body">Delivered By</Typography>
-            <Typography variant="h6">
-              {driver.name}
-            </Typography>
-          </div>
-          <Divider />
-          <div className="p-10">
-            <Typography variant="body">Delivered On</Typography>
-            <Typography variant="h6">
-              {new Date(deliver_date).toDateString()}
-            </Typography>
-          </div>
-          <Divider />
-          <div className="p-10">
-              <Typography variant="body">Delivery Type - डिलीवरी कहाँ करी</Typography>
-              <Typography variant="h6">
-                {mapDeliveryType(delivery_type)}
-              </Typography>
-          </div>
-          <Divider />
-          <div className="p-10">
-            <Typography variant="body">Delivery Photo</Typography>
-            {
-              proof_img ?
-              <div>
-                <img alt="order" src={proof_img} width={300} /> 
-              </div> :
-              <Typography variant="h6"><span style={{color: 'red'}}>No Picture taken</span></Typography>
-            }
-          </div>
-          <Divider />
-          <div className="p-10">
-          <Typography variant="body">Complete Order Delivered? - क्या पूरा आर्डर डिलीवर किया?</Typography>
-            <Typography variant="h6">
-              {mapCompleteDelivery(complete_delivery)}
-            </Typography>
-          </div>
-          <Divider />
-          <div className="p-10">
-          <Typography variant="body">Boxes - कितने डब्बे डिलीवर करे</Typography>
-            <Typography variant="h6">{boxes}</Typography>
-          </div>
-          <Divider />
-          <div className="p-10">
-          <Typography variant="body">Milk Packets - कितने दूध के पैकेट डिलीवर करे</Typography>
-            <Typography variant="h6">{milk_packets}</Typography>
-          </div>
+          <Grid container>
+            <Grid item md={12} lg={6}>
+              <div className="p-10">
+                <Typography variant="body1">Delivered By</Typography>
+                <Typography variant="h6">
+                  {driver.name} on {moment(delivery_date).format('DD-MMM-YYYY')}
+                </Typography>
+              </div>
+              <Divider />
+              {/* <div className="p-10">
+                <Typography variant="body1">Delivered On</Typography>
+                <Typography variant="h6">
+                  {moment(delivery_date).format('DD-MMM-YYYY')}
+                </Typography>
+              </div> */}
+              <Divider />
+              <div className="p-10">
+              <Typography variant="body1">Complete Order Delivered? - क्या पूरा आर्डर डिलीवर किया?</Typography>
+                <Typography variant="h6">
+                  {mapCompleteDelivery(complete_delivery)}
+                </Typography>
+              </div>
+              <Divider />
+              <div className="p-10">
+                  <Typography variant="body1">Delivery Type - डिलीवरी कहाँ करी</Typography>
+                  <Typography variant="h6">
+                    {mapDeliveryType(delivery_type)}
+                  </Typography>
+              </div>
+              <Divider />
+              <div className="p-10">
+              <Typography variant="body1">Small Boxes - कितने डब्बे डिलीवर करे</Typography>
+                <Typography variant="h6">{small_boxes}</Typography>
+              </div>
+              <Divider />
+              <div className="p-10">
+              <Typography variant="body1">Large Boxes - कितने डब्बे डिलीवर करे</Typography>
+                <Typography variant="h6">{large_boxes}</Typography>
+              </div>
+              <Divider />
+              <div className="p-10">
+              <Typography variant="body1">Gable Top - कितने दूध के डब्बे डिलीवर करे</Typography>
+                <Typography variant="h6">{gable_tops}</Typography>
+              </div>
+              <Divider />
+              <div className="p-10">
+              <Typography variant="body1">Milk Packets - कितने दूध के पैकेट डिलीवर करे</Typography>
+                <Typography variant="h6">{milk_packets}</Typography>
+              </div>
+            </Grid>
+            
+            <Grid item md={12} lg={6}>
+              
+              {/* <Divider orientation="vertical" /> */}
+              <div className="p-10">
+                <Typography variant="body1">Delivery Photo</Typography>
+                {
+                  proof_img ?
+                  <div>
+                    <img alt="order" src={proof_img} height={500} /> 
+                  </div> :
+                  <Typography variant="h6"><span style={{color: 'red'}}>No Picture taken</span></Typography>
+                }
+              </div>
+            </Grid>
+          </Grid>
         </Card> :
         
           <Typography variant="h3" style={{color: 'red'}} >

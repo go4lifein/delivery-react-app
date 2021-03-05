@@ -16,6 +16,19 @@ html {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+
+  .exp {
+    font-family: $font2;
+    font-weight: 600;
+    font-size: 1.2rem;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    @include sm {
+      font-size: 0.8rem;
+    }
+
+  }
   .not-found{
     
     display: flex;

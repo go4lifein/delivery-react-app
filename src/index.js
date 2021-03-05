@@ -1,21 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import "./index.css";
 import App from "./App";
 //import reportWebVitals from './reportWebVitals';
 
-import { Provider } from "react-redux";
-import { createStore, combineReducers } from "redux";
-
-import { setAdmin } from "./reducers/admin.reducers";
-import { setDriver } from "./reducers/driver.reducers";
-
-const store = createStore(
-  combineReducers({
-    setDriver,
-    setAdmin,
-  })
-);
+import store from './store'
 
 ReactDOM.render(
   <React.StrictMode>

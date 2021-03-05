@@ -25,6 +25,7 @@ import logo from '../images/logo.png';
 
 import {updateAdmin} from '../actions/admin.actions';
 import Box from '@material-ui/core/Box';
+import {setCookie} from '../helpers/utils';
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -61,8 +62,12 @@ function getTitle(location) {
       return 'Pack Orders';
     case '/admin/addReport':
       return 'Add Milk Report'
+    case '/admin/customer-density':
+      return 'Customer Density'
+    case '/admin/delivery':
+      return 'Delivery Dashboard'
     default:
-      return 'Customer Sheet';
+      return '';
   }
 }
 
@@ -71,11 +76,13 @@ function MenuAppBar(props) {
   const { location} = props;
   const logOut = () => {
     const {onUpdateAdmin} = props;
+    setCookie('x-admin-token', '', 0);
     onUpdateAdmin(null);
+
   }
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="warning">
+      <AppBar position="static" style={{backgroundColor: "#fff"}} color="default">
         <Toolbar style={{padding: 10}}>
           
           <img src={logo} alt="logo" className="logo-nav" />
@@ -124,7 +131,15 @@ function SideNav({logOut}) {
               </ListItemIcon>
               <ListItemText primary="Reload" />
             </ListItem>
-            <Link to="/admin/customer">
+            <Link to="/admin/customer-density" >
+              <ListItem button key="customer-density">
+                <ListItemIcon>
+                  <InfoIcon />
+                </ListItemIcon>
+                <ListItemText primary="Customer Density" />
+              </ListItem>
+            </Link>
+            {/* <Link to="/admin/customer">
               <ListItem button key="Customer Sheet">
                 <ListItemIcon>
                   <AccountIcon />
@@ -140,7 +155,7 @@ function SideNav({logOut}) {
                 </ListItemIcon>
                 <ListItemText primary="Product Sheet" />
               </ListItem>
-            </Link>
+            </Link> */}
             <Link to="/admin/manageOrders" >
               <ListItem button key="Manage Orders">
                 <ListItemIcon>
@@ -149,14 +164,22 @@ function SideNav({logOut}) {
                 <ListItemText primary="Manage Orders" />
               </ListItem>
             </Link>
-            <Link to="/admin/pack" >
+            <Link to="/admin/delivery" >
+              <ListItem button key="Delvery Dashboard">
+                <ListItemIcon>
+                  <ArchiveIcon />
+                </ListItemIcon>
+                <ListItemText primary="Delvery Dashboard" />
+              </ListItem>
+            </Link>
+            {/* <Link to="/admin/pack" >
               <ListItem button key="Pack Orders">
                 <ListItemIcon>
                   <ArchiveIcon />
                 </ListItemIcon>
                 <ListItemText primary="Pack Orders" />
               </ListItem>
-            </Link>
+            </Link> */}
             <Link to="/admin/addReport" >
               <ListItem button key="Add Report">
                 <ListItemIcon>
