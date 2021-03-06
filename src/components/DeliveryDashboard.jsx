@@ -11,6 +11,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import moment from 'moment-timezone';
+import DownloadIcon from '@material-ui/icons/CloudDownload';
 
 import Loading from './Loading';
 import OrderDataTable from './OrderTableDelivery';
@@ -99,11 +100,31 @@ class DeliveryDashboard extends Component {
   }
   exportData = () => {
     
-    // const { deliveryBoys, orderBoxData, orderProducts } = this.props;
+    const { startDate, endDate } = this.state;
+
     let rows = [
-      ['S.No.', 'Order Id', 'Crate Id', 'Customer Id', 'Name', 'Phone', 'Region', 'Area', 'Locality', 'House', 'Driver', 'Type', 'Qty']
+      [ 'Order Id', 'Name', 'Small Box' , 'Large Box' , 'Gable Top' , 'Milk Packets']
     ];
-    exportCSV(rows, `Delivery Sheet - ${new Date().toLocaleDateString()}.csv`);
+
+    let data = this.filterData();
+
+    for(let index = 0 ; index < data.length ; index ++ ) {
+      const item = data[index];
+      const {orderId, name, large_boxes, gable_tops, milk_packets, small_boxes} = item;
+      
+      rows.push(
+        [
+          orderId,
+          name,
+          small_boxes,
+          large_boxes,
+          gable_tops,
+          milk_packets,
+        ]
+      )  
+    }
+   
+    exportCSV(rows, `Delivery Report - ${startDate} - ${endDate}.csv`);
   }
   filterData() {
     let {selectedSubarea, selectedArea, selectedHub, selectedDriver, phone, onlyDelivered } = this.state;
@@ -216,6 +237,16 @@ class DeliveryDashboard extends Component {
               name="endDate"
               onChange={this.onDateChange}
             />
+          </div>
+          <div className="p-10">
+            <Button 
+              startIcon={<DownloadIcon />}
+              color="secondary"
+              variant="outlined"
+              onClick={this.exportData}
+            >
+              Download Excel
+            </Button>
           </div>
         </div>
 

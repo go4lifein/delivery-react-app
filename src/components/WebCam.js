@@ -1,6 +1,6 @@
 import React from "react";
 import Webcam from "react-webcam";
-import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 import CameraIcon from '@material-ui/icons/Camera';
 import ReplayIcon from '@material-ui/icons/Replay';
 
@@ -30,8 +30,8 @@ const WebcamCapture = ({onCapture, image}) => {
         <div style={{position: 'relative'}}>
           <Webcam
             audio={false}
-            width={282}
-            height={500}
+            width={224}
+            height={400}
             ref={webcamRef}
             screenshotFormat="image/jpeg"
             videoConstraints={videoConstraints}
@@ -43,9 +43,18 @@ const WebcamCapture = ({onCapture, image}) => {
             justifyContent: 'center',
             width: '100%'
           }}>
-            <IconButton onClick={capture}>
-              <CameraIcon style={{color: 'white'}} />
-            </IconButton>
+            <Button 
+              onClick={capture} 
+              variant="contained"
+              style={{
+                borderRadius: 0
+              }}
+              fullWidth 
+              color="primary"
+              startIcon={<CameraIcon style={{color: 'white'}} />}
+            >
+              Capture
+            </Button>
           </div>
         </div>:
         <div style={{
@@ -63,9 +72,18 @@ const WebcamCapture = ({onCapture, image}) => {
             justifyContent: 'center',
             width: '100%'
           }}>
-            <IconButton onClick={() => setTakingPhoto(true)}>
-              <ReplayIcon style={{color: 'white'}} /> 
-            </IconButton>
+            <Button 
+              color="primary"
+              style={{
+                borderRadius: 0
+              }}
+              variant="contained"
+              onClick={() => setTakingPhoto(true)} 
+              fullWidth 
+              startIcon={<ReplayIcon style={{color: 'white'}} /> }
+            >
+              Retake
+            </Button>
           </div>
         </div>
       }
