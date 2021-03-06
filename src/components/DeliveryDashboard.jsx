@@ -125,7 +125,6 @@ class DeliveryDashboard extends Component {
         driverName = deliveryBoys.get(driverId).name;
       }
       
-      
       rows.push(
         [
           orderId,
@@ -146,10 +145,9 @@ class DeliveryDashboard extends Component {
           gable_tops,
           milk_packets,
         ]
-      )  
-    }
-   
-    exportCSV(rows, `Delivery Report - ${new Date().toISOString()}.csv`);
+      )
+    }  
+    exportCSV(rows, `Delivery Report - ${new Date().toDateString()}.csv`);
   }
   filterData() {
     let {selectedSubarea, selectedArea, selectedHub, selectedDriver, phone, onlyDelivered } = this.state;
@@ -285,6 +283,16 @@ class DeliveryDashboard extends Component {
                 Download Excel
               </Button>
             </div>
+          </div>
+          <div className="p-10">
+            <Button 
+              startIcon={<DownloadIcon />}
+              color="secondary"
+              variant="outlined"
+              onClick={this.exportData}
+            >
+              Download Excel
+            </Button>
           </div>
         </div>
 
