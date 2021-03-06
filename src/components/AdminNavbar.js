@@ -165,11 +165,11 @@ function SideNav({logOut}) {
               </ListItem>
             </Link>
             <Link to="/admin/delivery" >
-              <ListItem button key="Delvery Dashboard">
+              <ListItem button key="Delivery Dashboard">
                 <ListItemIcon>
                   <ArchiveIcon />
                 </ListItemIcon>
-                <ListItemText primary="Delvery Dashboard" />
+                <ListItemText primary="Delivery Dashboard" />
               </ListItem>
             </Link>
             {/* <Link to="/admin/pack" >
