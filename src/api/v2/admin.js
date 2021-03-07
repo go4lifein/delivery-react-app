@@ -50,3 +50,15 @@ export function getDeliveryReport(
   let url = `${API_URL}/v2/order/getDeliveryReport?fromDate=${fromDate}&endDate=${endDate}`;
   return getRequest(url);
 }
+
+export function addDriverData(formData) {
+  let url = `${API_URL}/v2/delivery/addDeliveryPerson`;
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data'
+    }
+  }
+  return postRequest(url, formData, config);
+}
+
+

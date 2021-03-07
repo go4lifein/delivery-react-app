@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {FormControl, Grid, Select, TextField, Switch, FormControlLabel, CircularProgress, Button, IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-
+import {addDriverData} from "../api/v2/admin";
 
 class DriverForm extends Component{
     constructor(props){
@@ -20,8 +20,13 @@ class DriverForm extends Component{
         });
     }
 
-    handleSubmit = (e) =>{
+    handleSubmit = async (e) =>{
         e.preventDefault();
+        await addDriverData({
+            name:this.state.name,
+            phone:this.state.phone
+        })
+        this.props.refreshData();
     }
     
     render(){

@@ -84,7 +84,6 @@ export function addReport(formData) {
 
 
 
-
 export function getLocationCustomerDensity() {
   let url = `${API_URL}/admin/getLocationCustomerDensity`;
   return request({

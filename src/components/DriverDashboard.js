@@ -4,7 +4,7 @@ import { Button, Card, TextField } from '@material-ui/core';
 import { drivers } from "../DummyData/drivers";
 import Loading from './Loading';
 import DriverForm from "./DriverForm"
-
+import DriverDataTable from "./DriverDataTable"
 import { getDeliveryBoysData } from "../api/v2/admin";
 
 
@@ -14,21 +14,62 @@ class DriverDashboard extends Component {
         this.state = {
             loading: true,
             addingDriver: false,
-            driver_name: "",
+            name: "",
             phone: "",
-
+            deliveryboys: [],
+            search : "",
         }
     }
-    componentDidMount() {
+     componentDidMount() {
            
         this.setState({
             loading: false,
-            driver_name: this.driver_name,
-            phone: this.phone
-        })
 
+        })
+          this.refreshData()
     }
 
+    refreshData = async () =>
+    {
+        const response = await getDeliveryBoysData();
+        this.setState({
+            deliveryboys:response.data
+        })
+      
+    }
+
+    filterData = () => {
+        let search = this.state.search ;
+        
+        let data = [];
+        
+   
+        if(this.state.deliveryboys) {
+          data = this.state.deliveryboys.filter((item) => 
+          {
+           
+           
+              if(!item.name.includes(search) && !item.phone.includes(search))
+              
+              
+              return false;
+            
+            
+           
+         
+            return true;
+          })
+        }
+        
+        return data;
+    }
+
+    onSearch = (e) =>{
+        this.setState({
+            search : e.target.value
+        })
+        this.filterData()
+    }
     toggleDriverForm = () => {
         this.setState((state) => ({
             addingDriver: !state.addingDriver
@@ -46,7 +87,8 @@ class DriverDashboard extends Component {
         */
 
     render() {
-        const { loading, addingDriver, driver_name, phone } = this.state;
+        const { loading, addingDriver, name, phone } = this.state;
+        let data = this.filterData();
 
         if (loading) {
             return <Loading />
@@ -63,6 +105,9 @@ class DriverDashboard extends Component {
                     <div>
                         <TextField 
                             label="Search by Name or Phone" 
+                            value = {this.state.search}
+                            onChange = {this.onSearch}
+
                         />
                     </div>
                     <div>
@@ -82,10 +127,17 @@ class DriverDashboard extends Component {
                         className="m-10 p-10" 
                     
                     >
-                        <DriverForm toggleDriverForm={this.toggleDriverForm} />
+                        <DriverForm 
+                        toggleDriverForm={this.toggleDriverForm}
+                        refreshData = {this.refreshData}
+                        />
                     </Card>
                 }
                 
+                <DriverDataTable 
+                    data = {data}
+                    
+                />
             </div>
         );
     }
