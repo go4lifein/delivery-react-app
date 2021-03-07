@@ -12,6 +12,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import moment from 'moment-timezone';
 import DownloadIcon from '@material-ui/icons/CloudDownload';
+import ReplayIcon from '@material-ui/icons/Replay';
 
 import Loading from './Loading';
 import OrderDataTable from './OrderTableDelivery';
@@ -19,6 +20,7 @@ import DeliveryInfo from './DeliveryInfo';
 
 import {updateDeliveryReport, updateAdminData, addProducts, addOrderProducts, addOrderBox} from '../actions/admin.actions';
 import {getDeliveryBoysData, getDeliveryReport, getOrderBoxData, getOrderProducts, getOrderedProducts} from '../api/v2/admin';
+import { IconButton } from '@material-ui/core';
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -86,7 +88,11 @@ class DeliveryDashboard extends Component {
       let data = await getDeliveryReport(startDate, endDate).then(res => res.data);
       onUpdateDeliveryReport(data);
 
-      this.setState({loading: false});
+      this.setState({
+        loading: false,
+        lastUpdated: new Date()
+      });
+      // alert(this.state.lastUpdated)
 
     } catch(err) {
       console.log(err)
@@ -100,33 +106,48 @@ class DeliveryDashboard extends Component {
   }
   exportData = () => {
     
-    // const { deliveryBoys, orderBoxData, orderProducts } = this.props;
+    const { startDate, endDate } = this.state;
+    const { deliveryBoys } = this.props;
 
     let rows = [
-      [ 'Order Id', 'Name', 'Small Box' , 'Large Box' , 'Gable Top' , 'Milk Packets']
+      [ 'Order Id', 'Customer ID', 'Name', 'Phone', 'Region', 'Area', 'Locality', 'House', 'Driver', 'Delivered', 'Delivery Type', 'Complete Delivery', 'Delivery Photo', 'Small Box' , 'Large Box' , 'Gable Top' , 'Milk Packets']
     ];
 
     let data = this.filterData();
 
     for(let index = 0 ; index < data.length ; index ++ ) {
       const item = data[index];
-      const {orderId,name,large_boxes, gable_tops, milk_packets, small_boxes} = item ;
+      
+      const { orderId, driverId, customerID, name, phone, region, area, subarea, address, large_boxes, gable_tops, milk_packets, small_boxes, delivery_type, proof_img, delivery_date, complete_delivery } = item;
+      
+      let driverName = '';
+      if(driverId) {
+        driverName = deliveryBoys.get(driverId).name;
+      }
       
       rows.push(
         [
           orderId,
+          customerID,
           name,
+          phone,
+          `"${region}"`,
+          `"${area}"`,
+          `"${subarea}"`,
+          `"${address.replace(/[^0-9a-zA-Z:/ ]/g, "")}"`,
+          `"${driverName}"`,
+          `"${delivery_date ? 'Yes': 'No'}"`,
+          `"${delivery_type ? delivery_type : ''}"`,
+          `"${complete_delivery ? complete_delivery : ''}"`,
+          `"${proof_img ? proof_img : ''}"`,
           small_boxes,
           large_boxes,
           gable_tops,
           milk_packets,
         ]
       )
-
-  
-    }
-   
-    exportCSV(rows, `Delivery Sheet - ${new Date().toLocaleDateString()}.csv`);
+    }  
+    exportCSV(rows, `Delivery Report - ${new Date().toDateString()}.csv`);
   }
   filterData() {
     let {selectedSubarea, selectedArea, selectedHub, selectedDriver, phone, onlyDelivered } = this.state;
@@ -179,8 +200,8 @@ class DeliveryDashboard extends Component {
     })
   }
   render() {
-    let {selectedArea, selectedHub, selectedDriver, phone, onlyDelivered, startDate, endDate, selectedOrder, loading = true } = this.state;
-    let {locations, hubs, deliveryBoys, orders, orderBoxData} = this.props;
+    let {selectedArea, selectedHub, selectedDriver, phone, onlyDelivered, startDate, endDate, selectedOrder, loading = true, lastUpdated } = this.state;
+    let {locations, hubs, deliveryBoys, orderBoxData} = this.props;
     
 
     let deliveryBoysData = deliveryBoys ? Array.from(deliveryBoys.values()) : [];
@@ -201,44 +222,67 @@ class DeliveryDashboard extends Component {
 
     areas = areas.sort((a, b) => a.localeCompare(b));
 
-    if(orders) {
-      loading = false;
-    }
-
     let data = this.filterData();
     
-    if(orders && deliveryBoys && orderBoxData) {
-      loading = false;
-    }
+    // if(orders && deliveryBoys && orderBoxData) {
+    //   loading = false;
+    // }
 
     return (
       <div>
     
         {/* Dates - Remote Filters */}
         <div 
-          className="flex middle"
+          className="flex middle space-bw"
           style={{padding: 10}}
         >
-          <div style={{marginRight: 20, width: 220}}>
-            <TextField
-              type="date"
-              value={startDate}
-              fullWidth
-              label="Start Date"
-              name="startDate"
-              onChange={this.onDateChange}
-            />
+          <div className="flex middle">
+            <div style={{marginRight: 20, width: 220}}>
+              <TextField
+                type="date"
+                value={startDate}
+                fullWidth
+                label="Start Date"
+                name="startDate"
+                onChange={this.onDateChange}
+              />
+            </div>
+            
+            <div style={{marginRight: 20, width: 220}}>
+              <TextField
+                type="date"
+                value={endDate}
+                fullWidth
+                label="End Date"
+                name="endDate"
+                onChange={this.onDateChange}
+              />
+            </div>
           </div>
-          
-          <div style={{marginRight: 20, width: 220}}>
-            <TextField
-              type="date"
-              value={endDate}
-              fullWidth
-              label="End Date"
-              name="endDate"
-              onChange={this.onDateChange}
-            />
+          <div className="flex middle">
+            <div>
+              <IconButton onClick={this.update}>
+                <ReplayIcon /> 
+              </IconButton>
+            </div>
+            <div>
+              {
+                lastUpdated &&
+                <div>
+                  Last Updated: <br />{lastUpdated.toTimeString().substr(0, 5)}
+                </div>
+              }
+            </div>
+            <div className="p-10">
+              <Button 
+                startIcon={<DownloadIcon />}
+                color="secondary"
+                variant="outlined"
+                onClick={this.exportData}
+              >
+                Download Excel
+              </Button>
+            </div>
           </div>
           <div className="p-10">
             <Button 
