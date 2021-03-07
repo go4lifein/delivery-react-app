@@ -66,6 +66,8 @@ function getTitle(location) {
       return 'Customer Density'
     case '/admin/delivery':
       return 'Delivery Dashboard'
+      case '/admin/DriverDashboard':
+        return 'Driver Dashboard'
     default:
       return '';
   }
@@ -139,6 +141,16 @@ function SideNav({logOut}) {
                 <ListItemText primary="Customer Density" />
               </ListItem>
             </Link>
+            <Link to = '/admin/DriverDashboard'>
+              <ListItem button key = "DriverDashboard">
+                <ListItemIcon>
+                <ArchiveIcon />
+                </ListItemIcon>
+              
+                <ListItemText primary = "Driver Dashboard" />
+              </ListItem>
+          
+            </Link>
             {/* <Link to="/admin/customer">
               <ListItem button key="Customer Sheet">
                 <ListItemIcon>
@@ -165,11 +177,11 @@ function SideNav({logOut}) {
               </ListItem>
             </Link>
             <Link to="/admin/delivery" >
-              <ListItem button key="Delvery Dashboard">
+              <ListItem button key="Delivery Dashboard">
                 <ListItemIcon>
                   <ArchiveIcon />
                 </ListItemIcon>
-                <ListItemText primary="Delvery Dashboard" />
+                <ListItemText primary="Delivery Dashboard" />
               </ListItem>
             </Link>
             {/* <Link to="/admin/pack" >

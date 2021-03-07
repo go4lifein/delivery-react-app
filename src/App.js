@@ -4,8 +4,8 @@ import { HashRouter as Router, Switch, Route } from "react-router-dom";
 // import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
-import "./css/style.css";
 
+import "./css/style.css";
 import Loading from "./components/Loading";
 const Admin = lazy(() => import(/* webpackChunkName: "Admin" */ "./containers/Admin.jsx"));
 const Driver = lazy(() => import(/* webpackChunkName: "Driver" */ "./containers/Driver.jsx"));

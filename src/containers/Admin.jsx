@@ -13,6 +13,8 @@ const DeliveryDashboard = lazy(() => import(/* webpackChunkName: "DeliveryDashbo
 const PackOrders = lazy(() => import(/* webpackChunkName: "PackOrders" */ '../components/PackOrders'));
 const AddReport = lazy(() => import(/* webpackChunkName: "AddReport" */ '../components/AddReport'));
 const HeatMap = lazy(() => import(/* webpackChunkName: "HeatMap" */ '../components/HeatMap'));
+const DriverDashboard = lazy(() => import (/*webpackChunkName : "DriverDashboard"*/ '../components/DriverDashboard'));
+
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -64,6 +66,11 @@ class AdminRouter extends Component {
                     path="/admin/delivery"
                     component={DeliveryDashboard}
                   />
+                  <Route
+                    path ="/admin/DriverDashboard"
+                    component = {DriverDashboard}
+                  />
+                  {/* Fallback */}
                   <Route 
                     path="/admin"
                     component={OrderManagement} 
