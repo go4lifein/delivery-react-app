@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Button, Card, TextField } from '@material-ui/core';
-import { drivers } from "../DummyData/drivers";
 import Loading from './Loading';
 import DriverForm from "./DriverForm"
 import DriverDataTable from "./DriverDataTable"
@@ -54,9 +52,6 @@ class DriverDashboard extends Component {
               
               return false;
             
-            
-           
-         
             return true;
           })
         }
@@ -136,7 +131,6 @@ class DriverDashboard extends Component {
                 
                 <DriverDataTable 
                     data = {data}
-                    
                 />
             </div>
         );
