@@ -284,16 +284,7 @@ class DeliveryDashboard extends Component {
               </Button>
             </div>
           </div>
-          <div className="p-10">
-            <Button 
-              startIcon={<DownloadIcon />}
-              color="secondary"
-              variant="outlined"
-              onClick={this.exportData}
-            >
-              Download Excel
-            </Button>
-          </div>
+          
         </div>
 
         {
