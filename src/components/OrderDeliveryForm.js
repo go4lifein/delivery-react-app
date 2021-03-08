@@ -67,7 +67,7 @@ class OrderDeliveryForm extends React.Component {
       small_boxes: 0,
       large_boxes: 0,
       gable_tops: 0,
-      crates: 0,
+      crates: 0
     }
   }
   handleNext = () => {
@@ -276,34 +276,23 @@ class OrderDeliveryForm extends React.Component {
   }
   render() {
     
-    const {history, match, orders, customers} = this.props;
+    const {history, match, orders} = this.props;
     const {params} = match;
     let order_id = parseInt(params.orderId);
     if(!orders) {
       window.location = '/';
     }
-    console.log(orders)
     let order = orders.find((item) => {
       return Number(item.orderId) === order_id
     });
-    console.log(order)
+    // console.log(order)
 
     if(!order) {
       return <Typography variant="h4">No such order</Typography>
     }
     let {
-      address,
-      area,
-      phone,
-      orderId,
-      region,
       name,
-      subarea,
-      region_id,
-      customerID,
-      driverId,
-      location_id,
-      orderDate
+      // address, area, phone, orderId, region, subarea, region_id, customerID, driverId, location_id, orderDate 
     } = order;
 
     const {activeStep} = this.state;
@@ -360,7 +349,8 @@ class OrderDeliveryForm extends React.Component {
           }
           {
             activeStep === 4 &&
-            <Review 
+            <Review
+              order={order}
               state={this.state}
               props={this.props}
             />

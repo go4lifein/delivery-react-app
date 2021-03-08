@@ -8,8 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import {submitOrderDelivery} from '../api/v2/driver';
 import {dataURItoBlob} from '../helpers/utils';
 
-function Review ({state, props}) {
-  const {delivery_type, delivery_img, complete_delivery, milk_packets, small_boxes, large_boxes, gable_tops, boxes} = state;
+function Review ({state, props, order}) {
+  const {delivery_type, delivery_img, complete_delivery, milk_packets, small_boxes, large_boxes, gable_tops} = state;
 
   const {history, match, driver} = props;
   const {params} = match;
@@ -24,6 +24,7 @@ function Review ({state, props}) {
 
   const onSubmit = () => {
     setLoading(true);
+    const {phone} = order;
     const photoBlob = dataURItoBlob(delivery_img);
     const formData = new FormData();
     formData.append("delivery_img", photoBlob);
@@ -35,6 +36,7 @@ function Review ({state, props}) {
     formData.append("large_boxes", large_boxes);
     formData.append("gable_tops", gable_tops);
     formData.append("milk_packets", milk_packets);
+    formData.append("phone", phone);
     submitOrderDelivery(formData)
     .then(res => {
       history.push('/');
@@ -44,7 +46,6 @@ function Review ({state, props}) {
       setLoading(false);
       alert(err.message);
     });
-
   }
 
   function mapDeliveryType(delivery_type) {

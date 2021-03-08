@@ -31,7 +31,7 @@ class ChooseOrder extends Component {
     phone: "",
     selectedArea: [],
     selectedSubarea: [],
-    selectedHub: [],
+    selectedHub: null,
     showDelivered: false
   }
   componentDidMount() {
@@ -49,7 +49,8 @@ class ChooseOrder extends Component {
     
     if(orders) {
       data = orders.filter((item) => {
-        if(selectedArea.length) {
+        if(selectedHub) {
+          // console.log(selectedHub, item.region)
           if(item.region !== selectedHub) return false;
         }
         if(selectedArea.length) {
@@ -73,14 +74,12 @@ class ChooseOrder extends Component {
     let loading = true, data = [];
     let {selectedArea, selectedHub, selectedSubarea, phone, showDelivered } = this.state;
     let {orders, locations, hubs} = this.props;
-
     
     let areas = [], subareas = [];
     
     if(locations) locations.forEach((hub, hubName) => {
       hub.forEach((area, areaName) => {
-        console.log(selectedArea, areaName, area);
-        if( (selectedHub.includes(hubName)) || (selectedHub.length === 0) ) {
+        if( selectedHub === hubName ) {
           areas.push(areaName);
         }
         if( selectedArea.includes(areaName) || selectedArea.length === 0) {
