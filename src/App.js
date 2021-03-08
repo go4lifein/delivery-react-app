@@ -6,6 +6,7 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
 
 import "./css/style.css";
+import "./App.css";
 import Loading from "./components/Loading";
 const Admin = lazy(() => import(/* webpackChunkName: "Admin" */ "./containers/Admin.jsx"));
 const Driver = lazy(() => import(/* webpackChunkName: "Driver" */ "./containers/Driver.jsx"));
@@ -36,26 +37,31 @@ function App() {
   });
 
   return (
-    <div id="app">
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router base={"delivery-react-app"}>
-          <main>
-            <Suspense fallback={<Loading />}>
-              <Switch>
-                <Route path="/trace/produce" exact component={TraceProduce} />
-                <Route path="/trace" exact component={Trace} />
-                <Route path="/visual" component={Visual} />
-                <Route path="/trace-milk" exact component={Tracemilk} />
-                <Route path="/admin" component={Admin} />
-                <Route path="/" component={Driver} />
-           
-              </Switch>
-            </Suspense>
-          </main>
-        </Router>
-      </ThemeProvider>
-    </div>
+    <>
+      <div id="app">
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Router base={"delivery-react-app"}>
+            <main>
+              <Suspense fallback={<Loading />}>
+                <Switch>
+                  <Route path="/trace/produce" exact component={TraceProduce} />
+                  <Route path="/trace" exact component={Trace} />
+                  <Route path="/visual" component={Visual} />
+                  <Route path="/trace-milk" exact component={Tracemilk} />
+                  <Route path="/admin" component={Admin} />
+                  <Route path="/" component={Driver} />
+            
+                </Switch>
+              </Suspense>
+            </main>
+          </Router>
+        </ThemeProvider>
+      </div>
+      <div id="printable">
+        {/*  for print utility */}
+      </div>
+    </>
   );
 }
 

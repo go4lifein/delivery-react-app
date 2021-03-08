@@ -18,6 +18,10 @@ import Loading from './Loading';
 import OrderDataTable from './OrderTableDelivery';
 import DeliveryInfo from './DeliveryInfo';
 
+
+import ReactDOM from "react-dom";
+import DeliveryPrintSheet from './DeliveryPrintSheet';
+
 import {updateDeliveryReport, updateAdminData, addProducts, addOrderProducts, addOrderBox} from '../actions/admin.actions';
 import {getDeliveryBoysData, getDeliveryReport, getOrderBoxData, getOrderProducts, getOrderedProducts} from '../api/v2/admin';
 import { IconButton } from '@material-ui/core';
@@ -101,12 +105,22 @@ class DeliveryDashboard extends Component {
       })
     }
   }
-  componentDidMount() {
-    this.update();
+  async componentDidMount() {
+    await this.update();
+    
+    const { deliveryBoys, orders, orderBoxData, orderProducts } = this.props;
+    ReactDOM.render(
+      <DeliveryPrintSheet
+        deliveryBoys={deliveryBoys}
+        orders={orders}
+        orderBoxData={orderBoxData}
+        orderProducts={orderProducts}
+      />,
+      document.getElementById("printable")
+    );
   }
   exportData = () => {
     
-    const { startDate, endDate } = this.state;
     const { deliveryBoys } = this.props;
 
     let rows = [
@@ -199,6 +213,9 @@ class DeliveryDashboard extends Component {
       selectedOrder: row
     })
   }
+  onPrintDeliverySheets = async () => {    
+    window.print();
+  }
   render() {
     let {selectedArea, selectedHub, selectedDriver, phone, onlyDelivered, startDate, endDate, selectedOrder, loading = true, lastUpdated } = this.state;
     let {locations, hubs, deliveryBoys, orderBoxData} = this.props;
@@ -278,9 +295,22 @@ class DeliveryDashboard extends Component {
                 startIcon={<DownloadIcon />}
                 color="secondary"
                 variant="outlined"
+                disabled={loading}
                 onClick={this.exportData}
               >
                 Download Excel
+              </Button>
+            </div>
+            
+            <div className="p-10">
+              <Button 
+                startIcon={<DownloadIcon />}
+                color="secondary"
+                variant="outlined"
+                disabled={loading}
+                onClick={this.onPrintDeliverySheets}
+              >
+                Print Delivery Sheets
               </Button>
             </div>
           </div>
