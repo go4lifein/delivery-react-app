@@ -68,6 +68,8 @@ function getTitle(location) {
       return 'Delivery Dashboard'
       case '/admin/DriverDashboard':
         return 'Driver Dashboard'
+    case '/admin/FarmerDashboard':
+      return 'Farmer Dashboard'
     default:
       return '';
   }
@@ -148,6 +150,16 @@ function SideNav({logOut}) {
                 </ListItemIcon>
               
                 <ListItemText primary = "Driver Dashboard" />
+              </ListItem>
+          
+            </Link>
+            <Link to = '/admin/FarmerDashboard'>
+              <ListItem button key = "FarmerDashboard">
+                <ListItemIcon>
+                <ArchiveIcon />
+                </ListItemIcon>
+              
+                <ListItemText primary = "Farmer Dashboard" />
               </ListItem>
           
             </Link>

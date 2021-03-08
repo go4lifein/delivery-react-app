@@ -60,5 +60,9 @@ export function addDriverData(data) {
     }
   });
 }
+export function getAllFarmers(){
+  let url = `${API_URL}/farmers/getAllFarmers`;
+  return getRequest(url);
+}
 
 
