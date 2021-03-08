@@ -1,5 +1,6 @@
 import {API_URL, getRequest, postRequest} from '../../helpers/utils';
 import moment from 'moment-timezone';
+import axios from 'axios';
 
 export function getAllOrders(
   fromDate = moment().format('YYYY-MM-DD'), 
@@ -51,14 +52,13 @@ export function getDeliveryReport(
   return getRequest(url);
 }
 
-export function addDriverData(formData) {
-  let url = `${API_URL}/v2/delivery/addDeliveryPerson`;
-  const config = {
+export function addDriverData(data) {
+  let url = `${API_URL}/delivery/addDeliveryPerson`;
+  return axios.put(url, data, {
     headers: {
-      'content-type': 'multipart/form-data'
+      'Content-Type': 'application/json',
     }
-  }
-  return postRequest(url, formData, config);
+  });
 }
 
 
