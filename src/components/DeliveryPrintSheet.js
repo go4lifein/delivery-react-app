@@ -74,7 +74,7 @@ class DeliveryPrintSheet extends Component {
 
 
     return (
-      <div>
+      <div id="delivery-sheet">
         
         {/* <div style={{pageBreakBefore:"always"}}>
           Dog Page 1
@@ -118,47 +118,48 @@ class DeliveryPrintSheet extends Component {
                   {/* left side - total counts */}
                   <div style={{flex: "1"}}>
                     <div style={{fontSize: 30}}>{driver?.name}</div>
-                    <div>
-                    <table style={{width: 200}}>
-                      <tbody>
-                        {
-                          totalPouchMilkQty > 0 &&
-                          <tr>
-                            <td>Pouch Milk</td>
-                            <td>{totalPouchMilkQty}</td>
-                          </tr>
-                        }
-                        {
-                          totalGableTopQty > 0 &&
-                          <tr>
-                            <td>Gable Top Milk</td>
-                            <td>{totalGableTopQty}</td>
-                          </tr>
-                        }
-                        {
-                          totalMediumBox > 0 &&
-                          <tr>
-                            <td>Medium Box</td>
-                            <td>{totalMediumBox}</td>
-                          </tr>
-                        }
-                        {
-                          totalLargeBox > 0 &&
-                          <tr>
-                            <td>Large Boxes</td>
-                            <td>{totalLargeBox}</td>
-                          </tr>
-                        }
-                        {
-                          totalPackets > 0 &&
-                          <tr>
-                            <td>Packets</td>
-                            <td>{totalPackets}</td>
-                          </tr>
-                        }
-                          
-                        </tbody>
-                      </table>
+                    <div style={{fontSize: 24}}>Total Orders: {orders.length}</div>
+                    <div style={{fontSize: 17}}>
+                      <table style={{width: 200}}>
+                        <tbody>
+                          {
+                            totalPouchMilkQty > 0 &&
+                            <tr>
+                              <td>Pouch Milk</td>
+                              <td>{totalPouchMilkQty}</td>
+                            </tr>
+                          }
+                          {
+                            totalGableTopQty > 0 &&
+                            <tr>
+                              <td>Gable Top Milk</td>
+                              <td>{totalGableTopQty}</td>
+                            </tr>
+                          }
+                          {
+                            totalMediumBox > 0 &&
+                            <tr>
+                              <td>Medium Box</td>
+                              <td>{totalMediumBox}</td>
+                            </tr>
+                          }
+                          {
+                            totalLargeBox > 0 &&
+                            <tr>
+                              <td>Large Boxes</td>
+                              <td>{totalLargeBox}</td>
+                            </tr>
+                          }
+                          {
+                            totalPackets > 0 &&
+                            <tr>
+                              <td>Packets</td>
+                              <td>{totalPackets}</td>
+                            </tr>
+                          }
+                            
+                          </tbody>
+                        </table>
                     </div>
                   </div>
                   {/* right side - signature stuff */}
@@ -203,9 +204,9 @@ class DeliveryPrintSheet extends Component {
                   <table className="delivery-order-table">
                     <tbody>
                       <tr>
-                        <th>Location</th>
                         <th>Name</th>
                         <th>Phone</th>
+                        <th>Location</th>
                         <th>Address</th>
                         <th>Product</th>
                         <th>Box Code</th>
@@ -224,9 +225,9 @@ class DeliveryPrintSheet extends Component {
 
                           return (
                             <tr key={orderId}>
-                              <td>{subarea}, {area}, {region}</td>
                               <td>{name}</td>
                               <td>{phone}</td>
+                              <td className="location">{subarea}, {area}, {region}</td>
                               <td className="home-address">{address}</td>
                               <td>
                                 <table className="delivery-sheet-product-type">
