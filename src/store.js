@@ -6,9 +6,11 @@ import { setDriver } from "./reducers/driver.reducers";
 
 const logger = createLogger();
 
-const middlewares = [
-  process.env.NODE_ENV !== "producttion" && logger
-]
+const middlewares = []
+
+if(process.env.NODE_ENV !== "production") {
+  middlewares.push(logger)
+}
 
 const store = createStore(
   combineReducers({
