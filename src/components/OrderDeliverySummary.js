@@ -6,8 +6,11 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
 import Toolbar from '@material-ui/core/Toolbar';
-import AppBar from '@material-ui/core/AppBar';
+// import AppBar from '@material-ui/core/AppBar';
 import Card from '@material-ui/core/Card';
+import '../css/delivery-summary.css';
+import { DialogContent, Divider } from '@material-ui/core';
+import DataTable from 'react-data-table-component';
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -16,10 +19,36 @@ function mapStateToProps(state) {
   };
 }
 
+const columns = [
+  {
+    name: 'Driver',
+    sortable: true,
+    selector: 'driverName'
+  },
+  {
+    name: 'Total',
+    sortable: true,
+    selector: 'total'
+  },
+  {
+    name: 'Delivered',
+    sortable: true,
+    selector: 'delivered'
+  },
+  {
+    name: 'Remaining',
+    sortable: true,
+    selector: 'remaining'
+  }
+
+]
+
 function OrderDeliverySummary(props) {
   const {orders, deliveryBoys, open, toggleDriverSummary} = props;
 
   let deliveryBoysOrders = new Map();
+
+  let totalDelivered = 0;
 
   for (let index = 0; index < orders.length; index++) {
     let item = orders[index];
@@ -31,6 +60,7 @@ function OrderDeliverySummary(props) {
 
       data["total"] += 1;
       if(delivery_date) {
+        totalDelivered += 1;
         data["delivered"] += 1;
       }
 
@@ -43,7 +73,17 @@ function OrderDeliverySummary(props) {
       });
     }
   }
-  console.log(deliveryBoysOrders)
+  
+  deliveryBoysOrders = Array.from(deliveryBoysOrders.entries());
+  let data = deliveryBoysOrders.map(([driverId, summary], index) => {
+    const {driverName, total, delivered} = summary;
+    return {
+      driverName,
+      total,
+      delivered,
+      remaining: total - delivered
+    }
+  })
 
   return (
     <div>
@@ -51,25 +91,41 @@ function OrderDeliverySummary(props) {
         fullScreen
         open={open}
       >
-        <AppBar
-          position="fixed"
-          color="default"
-        >
-          
-          <Toolbar>
-              <IconButton 
-                edge="start" 
-                color="inherit" 
-                onClick={toggleDriverSummary} 
-                aria-label="close"
-              >
-                <CloseIcon />
-              </IconButton>
-              <Typography variant="h6" >
-                Driver Summary
-              </Typography>
-            </Toolbar>
-        </AppBar>
+        <Toolbar>
+          <IconButton 
+            edge="start" 
+            color="inherit" 
+            onClick={toggleDriverSummary} 
+            aria-label="close"
+          >
+            <CloseIcon />
+          </IconButton>
+          <Typography variant="h6" >
+            Delivery Summary
+          </Typography>
+        </Toolbar>
+        <Divider />        
+        <DialogContent>
+          <div style={{overflow: 'scroll'}}>
+            <div className="flex" style={{justifyContent: 'space-around'}}>
+              <div className="p-10">
+                Total Orders: <Typography variant="h4">{orders.length}</Typography>
+              </div>
+              <div className="p-10">
+                Total Delivered: <Typography variant="h4">{totalDelivered}</Typography>
+              </div>
+              <div className="p-10">
+                Remaining Orders: <Typography variant="h4">{orders.length - totalDelivered}</Typography>
+              </div>
+            </div>
+            <DataTable
+              data={data}
+              noHeader={true}
+              dense={true}
+              columns={columns}
+            />
+          </div>
+        </DialogContent>
       </Dialog>
     </div>
   )

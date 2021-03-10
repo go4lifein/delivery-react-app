@@ -69,7 +69,7 @@ class DeliveryPrintSheet extends Component {
     return deliveryBoysOrders;
   }
   render() {
-    let { orders, deliveryBoys, orderBoxData} = this.props;
+    let { deliveryBoys } = this.props;
     let deliveryBoysOrders = Array.from(this.groupData().entries());
 
 

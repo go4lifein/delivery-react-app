@@ -327,7 +327,7 @@ class DeliveryDashboard extends Component {
                 disabled={loading}
                 onClick={this.toggleDriverSummary}
               >
-                Driver Summary
+                Summary
               </Button>
             </div>
           </div>

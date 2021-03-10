@@ -1,0 +1,10 @@
+table.delivery-summary-table {
+  padding: 10px;
+  width: '100%';
+  border-collapse: collapse;
+}
+
+table.delivery-summary-table td {
+  padding: 4px 10px;
+  border: 1px solid grey;
+}
