@@ -70,6 +70,7 @@ class OrderDeliveryForm extends React.Component {
           return <span style={{color: 'red'}}>Complete Order Delivered? - क्या आपने पूरा आर्डर डिलीवर किया?</span>;
       }
     }
+    console.log(moment(delivery_date).tz("UTC"), moment(delivery_date).utc().format('hh:mm'))
     return (
       <div className="pv-10">
         
@@ -81,7 +82,7 @@ class OrderDeliveryForm extends React.Component {
               <div className="p-10">
                 <Typography variant="body1">Delivered By</Typography>
                 <Typography variant="h6">
-                  {driver.name} on {moment(delivery_date).format('DD-MMM-YYYY')}
+                  {driver?.name} on {moment(delivery_date).utc().format('DD-MM-YYYY')} {moment(delivery_date).utc().format('HH:mm')}
                 </Typography>
               </div>
               <Divider />

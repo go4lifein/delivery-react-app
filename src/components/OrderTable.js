@@ -96,7 +96,8 @@ function OrderDataTable(props) {
         highlightOnHover={true}
         pointerOnHover={true}
         pagination={true}
-        paginationPerPage={10}
+        paginationPerPage={35}
+        paginationRowsPerPageOptions={[10, 35, 100, data.length]}
         // onRowClicked={(row, e) => {
         //   onRowSelect(row);
         // }}

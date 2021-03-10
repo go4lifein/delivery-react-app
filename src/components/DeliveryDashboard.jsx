@@ -171,10 +171,6 @@ class DeliveryDashboard extends Component {
     
     if(orders) {
       data = orders.filter((item) => {
-        if(onlyDelivered) {
-          if(item.delivery_date) return true;
-          return false;
-        }
         if(selectedHub.length) {
           if(item.region !== selectedHub) return false;
         }
@@ -188,6 +184,10 @@ class DeliveryDashboard extends Component {
           if(selectedDriver === 'none') {
             if(item.driverId !== null) return false;
           } else if(item.driverId !== selectedDriver) return false;
+        }
+        if(onlyDelivered) {
+          if(item.delivery_date) return true;
+          return false;
         }
         if(phone) {
           if(item.phone.indexOf(phone) !== -1) return true;
