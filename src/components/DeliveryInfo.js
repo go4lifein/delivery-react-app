@@ -183,11 +183,7 @@ class OrderDeliveryForm extends React.Component {
               </Typography>
             </Toolbar>
           </AppBar>
-          <div style={{margin: '60px 10px 20px 10px', padding: '30px 10px'}}>
-            <Typography variant="h4" >
-              Delivery Information
-            </Typography>
-            <Divider />
+          <div style={{margin: '60px 10px 20px 10px'}}>
             <this.Review />
           </div>
         </Dialog>}

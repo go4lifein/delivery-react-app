@@ -25,6 +25,7 @@ import DeliveryPrintSheet from './DeliveryPrintSheet';
 import {updateDeliveryReport, updateAdminData, addProducts, addOrderProducts, addOrderBox} from '../actions/admin.actions';
 import {getDeliveryBoysData, getDeliveryReport, getOrderBoxData, getOrderProducts, getOrderedProducts} from '../api/v2/admin';
 import { IconButton } from '@material-ui/core';
+import OrderDeliverySummary from './OrderDeliverySummary';
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -216,8 +217,16 @@ class DeliveryDashboard extends Component {
   onPrintDeliverySheets = async () => {    
     window.print();
   }
+  toggleDriverSummary = async () => {    
+    this.setState((state) => ({
+      driverSummaryOpen: !state.driverSummaryOpen
+    }));
+  }
   render() {
-    let {selectedArea, selectedHub, selectedDriver, phone, onlyDelivered, startDate, endDate, selectedOrder, loading = true, lastUpdated } = this.state;
+    let {
+      selectedArea, selectedHub, selectedDriver, phone, onlyDelivered, startDate, endDate, 
+      selectedOrder, loading = true, lastUpdated, driverSummaryOpen = false
+    } = this.state;
     let {locations, hubs, deliveryBoys, orderBoxData} = this.props;
     
 
@@ -241,10 +250,6 @@ class DeliveryDashboard extends Component {
 
     let data = this.filterData();
     
-    // if(orders && deliveryBoys && orderBoxData) {
-    //   loading = false;
-    // }
-
     return (
       <div>
     
@@ -290,7 +295,7 @@ class DeliveryDashboard extends Component {
                 </div>
               }
             </div>
-            <div className="p-10">
+            <div className="p-4">
               <Button 
                 startIcon={<DownloadIcon />}
                 color="secondary"
@@ -302,7 +307,7 @@ class DeliveryDashboard extends Component {
               </Button>
             </div>
             
-            <div className="p-10">
+            <div className="p-4">
               <Button 
                 startIcon={<DownloadIcon />}
                 color="secondary"
@@ -311,6 +316,18 @@ class DeliveryDashboard extends Component {
                 onClick={this.onPrintDeliverySheets}
               >
                 Print Delivery Sheets
+              </Button>
+            </div>
+
+            
+            <div>
+              <Button
+                color="primary"
+                variant="outlined"
+                disabled={loading}
+                onClick={this.toggleDriverSummary}
+              >
+                Driver Summary
               </Button>
             </div>
           </div>
@@ -441,6 +458,12 @@ class DeliveryDashboard extends Component {
             <DeliveryInfo 
               customer={selectedOrder}
               setSelectedCustomer={this.onOrderSelect}
+            />
+            <OrderDeliverySummary
+              open={driverSummaryOpen}
+              data={data}
+              deliveryBoys={deliveryBoys}
+              toggleDriverSummary={this.toggleDriverSummary}
             />
             <OrderDataTable
               data={data}

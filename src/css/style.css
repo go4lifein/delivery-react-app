@@ -37,6 +37,9 @@ td.fixed-width-column {
 .p-10 {
   padding: 10px;
 }
+.p-4 {
+  padding: 4px;
+}
 .pv-10 {
   padding-top: 10px;
   padding-bottom: 10px;

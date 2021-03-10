@@ -15,6 +15,31 @@ function OrderDataTable(props) {
     //   sortable: true,
     //   width: '70px'
     // },
+    
+    {
+      name: 'Area',
+      sortable: true,
+      selector: 'area',
+      width: '140px'
+    },
+    {
+      name: 'Locality',
+      sortable: true,
+      selector: 'subarea',
+      width: '200px'
+    },
+    {
+      name: 'Driver',
+      selector: '_driver',
+      cell: (row, idx) => {
+        let {driverId} = row;
+        if(driverId) {
+          let driver = deliveryBoys.get(driverId);
+          return driver ? driver.name : '';
+        }
+        return '';
+      }
+    },
     {
       name: 'Order Id',
       selector: 'orderId',
@@ -49,36 +74,12 @@ function OrderDataTable(props) {
       sortable: true,
       selector: 'region',
       width: '100px',
-    },
-    {
-      name: 'Area',
-      sortable: true,
-      selector: 'area',
-      width: '140px'
-    },
-    {
-      name: 'Locality',
-      sortable: true,
-      selector: 'subarea',
-      width: '200px'
-    },
+    }
     // {
     //   name: 'House',
     //   selector: 'address',
     //   width: '300px'
     // },
-    {
-      name: 'Driver',
-      selector: '_driver',
-      cell: (row, idx) => {
-        let {driverId} = row;
-        if(driverId) {
-          let driver = deliveryBoys.get(driverId);
-          return driver ? driver.name : '';
-        }
-        return '';
-      }
-    }
   ];
 
   return (

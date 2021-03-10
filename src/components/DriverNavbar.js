@@ -13,6 +13,7 @@ import { Divider } from '@material-ui/core';
 import { connect } from 'react-redux';
 
 import {updateDriver} from '../actions/driver.actions';
+import {setCookie} from '../helpers/utils';
 
 function mapStateToProps(state) {
   let {setDriver} = state;
@@ -75,6 +76,7 @@ function MenuAppBar(props) {
               color="secondary"
               onClick={() => {
                 let {onUpdateDriver} = props;
+                setCookie('x-driver-token', '', 0);
                 onUpdateDriver(null);
               }}
             >
