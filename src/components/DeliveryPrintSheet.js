@@ -207,6 +207,7 @@ class DeliveryPrintSheet extends Component {
                   <table className="delivery-order-table">
                     <tbody>
                       <tr>
+                        <th>Sr No.</th>
                         <th>Name</th>
                         <th>Phone</th>
                         <th>Location</th>
@@ -216,7 +217,7 @@ class DeliveryPrintSheet extends Component {
                         <th>Check Box</th>
                       </tr>
                       {
-                        orders.map(order => {
+                        orders.map((order, index) => {
                           const {
                             region, area, subarea, name, phone, address, orderId,
                             pouchMilkQty,
@@ -228,6 +229,7 @@ class DeliveryPrintSheet extends Component {
 
                           return (
                             <tr key={orderId}>
+                              <td>{index+1}</td>
                               <td>{name}</td>
                               <td>{phone}</td>
                               <td className="location">{subarea}, {area}, {region}</td>
