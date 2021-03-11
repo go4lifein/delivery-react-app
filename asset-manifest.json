@@ -13,8 +13,8 @@
     "Admin.js": "/static/js/Admin.ba499e32.chunk.js",
     "CustomerSheet.js": "/static/js/CustomerSheet.044a8388.chunk.js",
     "DeckGLExample.js": "/static/js/DeckGLExample.91b94b6a.chunk.js",
-    "DeliveryDashboard.css": "/static/css/DeliveryDashboard.423dd3c7.chunk.css",
-    "DeliveryDashboard.js": "/static/js/DeliveryDashboard.6306536b.chunk.js",
+    "DeliveryDashboard.css": "/static/css/DeliveryDashboard.ab65adf4.chunk.css",
+    "DeliveryDashboard.js": "/static/js/DeliveryDashboard.aac0a81c.chunk.js",
     "Driver.js": "/static/js/Driver.df741dc8.chunk.js",
     "HeatMap.js": "/static/js/HeatMap.83ade0be.chunk.js",
     "OrderManagement.js": "/static/js/OrderManagement.d78dce07.chunk.js",
@@ -29,7 +29,7 @@
     "Visual.js": "/static/js/Visual.42d848b2.chunk.js",
     "main.css": "/static/css/main.1ec5fc92.chunk.css",
     "main.js": "/static/js/main.1be50da7.chunk.js",
-    "runtime-main.js": "/static/js/runtime-main.9ed02734.js",
+    "runtime-main.js": "/static/js/runtime-main.516551c4.js",
     "static/js/25.f235fe35.chunk.js": "/static/js/25.f235fe35.chunk.js",
     "static/css/26.4a1caf61.chunk.css": "/static/css/26.4a1caf61.chunk.css",
     "static/js/26.35733fa2.chunk.js": "/static/js/26.35733fa2.chunk.js",
@@ -63,7 +63,7 @@
     "static/media/milkbox.31a0b475.svg": "/static/media/milkbox.31a0b475.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.9ed02734.js",
+    "static/js/runtime-main.516551c4.js",
     "static/js/27.a7183603.chunk.js",
     "static/css/main.1ec5fc92.chunk.css",
     "static/js/main.1be50da7.chunk.js"
