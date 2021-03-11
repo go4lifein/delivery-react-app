@@ -55,12 +55,15 @@ function OrderDeliverySummary(props) {
     
     let {driverId, delivery_date} = item;
 
+    if(delivery_date) {
+      totalDelivered += 1;
+    }
+
     if(deliveryBoysOrders.get(driverId)) {
       let data = deliveryBoysOrders.get(driverId)
 
       data["total"] += 1;
       if(delivery_date) {
-        totalDelivered += 1;
         data["delivered"] += 1;
       }
 
@@ -90,6 +93,7 @@ function OrderDeliverySummary(props) {
       <Dialog 
         fullScreen
         open={open}
+        onClose={toggleDriverSummary}
       >
         <Toolbar>
           <IconButton 
@@ -106,7 +110,7 @@ function OrderDeliverySummary(props) {
         </Toolbar>
         <Divider />        
         <DialogContent>
-          <div style={{overflow: 'scroll'}}>
+          <div>
             <div className="flex" style={{justifyContent: 'space-around'}}>
               <div className="p-10">
                 Total Orders: <Typography variant="h4">{orders.length}</Typography>

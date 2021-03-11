@@ -162,6 +162,9 @@ class OrderDeliveryForm extends React.Component {
           fullScreen 
           open={true}
           TransitionComponent={Transition}
+          onClose={() => {
+            this.props.setSelectedCustomer(false);
+          }}
         >
           <AppBar
             position="fixed"
