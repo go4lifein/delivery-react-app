@@ -102,12 +102,15 @@ class DeliveryPrintSheet extends Component {
                 packet
               } = order;
               
-              totalPouchMilkQty += pouchMilkQty;
-              totalGableTopQty += gableTopQty;
-              totalMediumBox += mediumBox;
-              totalLargeBox += largeBox;
-              totalPackets += packet;
+              totalPouchMilkQty += pouchMilkQty || 0;
+              totalGableTopQty += gableTopQty || 0;
+              totalMediumBox += mediumBox || 0;
+              totalLargeBox += largeBox || 0;
+              totalPackets += packet || 0;
+
+              // console.log(totalLargeBox, largeBox);
             });
+
 
             return (
               <div style={{pageBreakBefore:"always"}} key={index.toString()}>
@@ -123,35 +126,35 @@ class DeliveryPrintSheet extends Component {
                       <table style={{width: 200}}>
                         <tbody>
                           {
-                            totalPouchMilkQty > 0 &&
+                            // totalPouchMilkQty > 0 &&
                             <tr>
                               <td>Pouch Milk</td>
                               <td>{totalPouchMilkQty}</td>
                             </tr>
                           }
                           {
-                            totalGableTopQty > 0 &&
+                            // totalGableTopQty > 0 &&
                             <tr>
                               <td>Gable Top Milk</td>
                               <td>{totalGableTopQty}</td>
                             </tr>
                           }
                           {
-                            totalMediumBox > 0 &&
+                            // totalMediumBox > 0 &&
                             <tr>
                               <td>Medium Box</td>
                               <td>{totalMediumBox}</td>
                             </tr>
                           }
                           {
-                            totalLargeBox > 0 &&
+                            // totalLargeBox > 0 &&
                             <tr>
                               <td>Large Boxes</td>
                               <td>{totalLargeBox}</td>
                             </tr>
                           }
                           {
-                            totalPackets > 0 &&
+                            // totalPackets > 0 &&
                             <tr>
                               <td>Packets</td>
                               <td>{totalPackets}</td>

@@ -51,8 +51,7 @@ function OrderDeliverySummary(props) {
   useEffect(() => {
     if(refreshData) {
       setInterval(() => {
-        refreshData();
-        // console.info("What a joke")
+        // refreshData();
       }, 15 * 1000);
     }
   }, [])
