@@ -61,10 +61,8 @@ class DeliveryDashboard extends Component {
       selectedRow: []
     }
   }
-  update = async () => {
-
+  fetchData = async () => {
     try {
-      this.setState({loading: true});
 
       let {startDate, endDate} = this.state;
       startDate = moment(startDate).format('YYYY-MM-DD');
@@ -89,14 +87,8 @@ class DeliveryDashboard extends Component {
       let orderBoxData = await getOrderBoxData(startDate, endDate).then(res => res.data)
       this.props.onAddOrderBox(orderBoxData)
 
-
       let data = await getDeliveryReport(startDate, endDate).then(res => res.data);
       onUpdateDeliveryReport(data);
-
-      this.setState({
-        loading: false,
-        lastUpdated: new Date()
-      });
       // alert(this.state.lastUpdated)
 
     } catch(err) {
@@ -106,8 +98,22 @@ class DeliveryDashboard extends Component {
       })
     }
   }
+  update = async () => {
+
+    this.setState({loading: true});
+    await this.fetchData();
+    
+    this.setState({
+      loading: false,
+      lastUpdated: new Date()
+    });
+  }
   async componentDidMount() {
     await this.update();
+
+    // setInterval(async () => {
+    //   await this.update();
+    // }, 3000);
     
     const { deliveryBoys, orders, orderBoxData, orderProducts } = this.props;
     ReactDOM.render(
@@ -251,7 +257,7 @@ class DeliveryDashboard extends Component {
     let data = this.filterData();
     
     return (
-      <div>
+      <div style={{minWidth: 1000}}>
     
         {/* Dates - Remote Filters */}
         <div 
@@ -333,6 +339,15 @@ class DeliveryDashboard extends Component {
           </div>
           
         </div>
+        
+        <OrderDeliverySummary
+          loading={loading}
+          open={driverSummaryOpen}
+          data={data}
+          refreshData={this.fetchData}
+          deliveryBoys={deliveryBoys}
+          toggleDriverSummary={this.toggleDriverSummary}
+        />
 
         {
           loading?
@@ -458,12 +473,6 @@ class DeliveryDashboard extends Component {
             <DeliveryInfo 
               customer={selectedOrder}
               setSelectedCustomer={this.onOrderSelect}
-            />
-            <OrderDeliverySummary
-              open={driverSummaryOpen}
-              data={data}
-              deliveryBoys={deliveryBoys}
-              toggleDriverSummary={this.toggleDriverSummary}
             />
             <OrderDataTable
               data={data}

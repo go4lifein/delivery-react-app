@@ -1,13 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment-timezone';
+// import moment from 'moment-timezone';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
 import Toolbar from '@material-ui/core/Toolbar';
 // import AppBar from '@material-ui/core/AppBar';
-import Card from '@material-ui/core/Card';
+// import Card from '@material-ui/core/Card';
 import '../css/delivery-summary.css';
 import { DialogContent, Divider } from '@material-ui/core';
 import DataTable from 'react-data-table-component';
@@ -44,7 +44,18 @@ const columns = [
 ]
 
 function OrderDeliverySummary(props) {
-  const {orders, deliveryBoys, open, toggleDriverSummary} = props;
+  const {orders = [], deliveryBoys = new Map(), open = true, toggleDriverSummary, refreshData} = props;
+
+
+  /* DO NOT TOUCH THIS CODE */
+  useEffect(() => {
+    if(refreshData) {
+      setInterval(() => {
+        refreshData();
+        // console.info("What a joke")
+      }, 15 * 1000);
+    }
+  }, [])
 
   let deliveryBoysOrders = new Map();
 
