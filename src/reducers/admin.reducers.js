@@ -7,13 +7,9 @@ import {
   ADD_ORDER_BOX, UPDATE_DELIVERY_REPORT
 } from '../constants/index';
 
+import {getCookies} from '../helpers/utils'
 
-let admin = window.localStorage.getItem('admin');
-if(admin) {
-  admin = JSON.parse(admin);
-} else {
-  admin = undefined;
-}
+let admin = getCookies()['x-admin-token'];
 
 const initialState = {
   admin,

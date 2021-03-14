@@ -3,15 +3,23 @@ table.delivery-order-table {
   border-collapse: collapse;
 }
 
+table.delivery-order-table tr {
+  margin-top: 10px;
+  page-break-inside: avoid;
+}
+
 table.delivery-order-table td, table.delivery-order-table th {
   padding: 3px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 table.delivery-order-table td {
-  border: 1px solid grey;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
 }
-table.delivery-order-table tr td.home-address {
-  max-width: 240px;
+table.delivery-order-table tr td.home-address, table.delivery-order-table tr td.location {
+  max-width: 200px;
 }
 
 table.delivery-order-table tr th {

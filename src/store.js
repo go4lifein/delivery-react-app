@@ -6,12 +6,18 @@ import { setDriver } from "./reducers/driver.reducers";
 
 const logger = createLogger();
 
+const middlewares = []
+
+if(process.env.NODE_ENV !== "production") {
+  middlewares.push(logger)
+}
+
 const store = createStore(
   combineReducers({
     setDriver,
     setAdmin,
   }),
-  applyMiddleware(logger)
+  applyMiddleware(...middlewares)
 );
 
 export default store;

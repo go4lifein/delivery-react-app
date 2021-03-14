@@ -34,6 +34,7 @@ function AssignOrders(props) {
   
   let [selectedRows, setSelectedRows] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(false);
+  const [assignedRider, setAssignedRider] = useState('');
 
   const onSelectCustomer = useCallback((selectedCustomer) => {
     setSelectedCustomer(selectedCustomer);
@@ -54,6 +55,7 @@ function AssignOrders(props) {
       getAllOrders()
       .then(res => {
         let orders = res.data;
+        setAssignedRider("");
         onUpdateOrdersData(orders);
       });
       setSelectedRows([]);
@@ -72,9 +74,10 @@ function AssignOrders(props) {
               labelId="driver-filter"
               style={{width: 200}}
               disabled={selectedRows.length < 1}
+              value={assignedRider}
               onChange={updateDriver}
             >
-              <MenuItem value="null">None</MenuItem>
+              <MenuItem value="">None</MenuItem>
               {deliveryBoysData.map(item => (
                 <MenuItem value={item.id} key={`driver-${item.id}`}>{item.name}</MenuItem>
               ))}

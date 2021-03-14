@@ -1,7 +1,7 @@
 
 @media screen {
   div#printable {
-    /* display: none; */
+    display: none;
   }
 }
 

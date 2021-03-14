@@ -30,7 +30,7 @@ class LoginAdmin extends Component {
     login({phone})
     .then(res => {
       setCookie("x-driver-token", phone, 5);
-      initRequestAuthHeader(phone);
+      initRequestAuthHeader("x-driver-token");
       onUpdateDriver(res.data);
     })
     .catch(err => alert("Please check phone number"));

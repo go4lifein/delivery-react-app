@@ -25,6 +25,7 @@ import DeliveryPrintSheet from './DeliveryPrintSheet';
 import {updateDeliveryReport, updateAdminData, addProducts, addOrderProducts, addOrderBox} from '../actions/admin.actions';
 import {getDeliveryBoysData, getDeliveryReport, getOrderBoxData, getOrderProducts, getOrderedProducts} from '../api/v2/admin';
 import { IconButton } from '@material-ui/core';
+import OrderDeliverySummary from './OrderDeliverySummary';
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -60,10 +61,8 @@ class DeliveryDashboard extends Component {
       selectedRow: []
     }
   }
-  update = async () => {
-
+  fetchData = async () => {
     try {
-      this.setState({loading: true});
 
       let {startDate, endDate} = this.state;
       startDate = moment(startDate).format('YYYY-MM-DD');
@@ -88,14 +87,8 @@ class DeliveryDashboard extends Component {
       let orderBoxData = await getOrderBoxData(startDate, endDate).then(res => res.data)
       this.props.onAddOrderBox(orderBoxData)
 
-
       let data = await getDeliveryReport(startDate, endDate).then(res => res.data);
       onUpdateDeliveryReport(data);
-
-      this.setState({
-        loading: false,
-        lastUpdated: new Date()
-      });
       // alert(this.state.lastUpdated)
 
     } catch(err) {
@@ -105,8 +98,22 @@ class DeliveryDashboard extends Component {
       })
     }
   }
+  update = async () => {
+
+    this.setState({loading: true});
+    await this.fetchData();
+    
+    this.setState({
+      loading: false,
+      lastUpdated: new Date()
+    });
+  }
   async componentDidMount() {
     await this.update();
+
+    // setInterval(async () => {
+    //   await this.update();
+    // }, 3000);
     
     const { deliveryBoys, orders, orderBoxData, orderProducts } = this.props;
     ReactDOM.render(
@@ -171,10 +178,6 @@ class DeliveryDashboard extends Component {
     
     if(orders) {
       data = orders.filter((item) => {
-        if(onlyDelivered) {
-          if(item.delivery_date) return true;
-          return false;
-        }
         if(selectedHub.length) {
           if(item.region !== selectedHub) return false;
         }
@@ -188,6 +191,10 @@ class DeliveryDashboard extends Component {
           if(selectedDriver === 'none') {
             if(item.driverId !== null) return false;
           } else if(item.driverId !== selectedDriver) return false;
+        }
+        if(onlyDelivered) {
+          if(item.delivery_date) return true;
+          return false;
         }
         if(phone) {
           if(item.phone.indexOf(phone) !== -1) return true;
@@ -216,8 +223,16 @@ class DeliveryDashboard extends Component {
   onPrintDeliverySheets = async () => {    
     window.print();
   }
+  toggleDriverSummary = async () => {    
+    this.setState((state) => ({
+      driverSummaryOpen: !state.driverSummaryOpen
+    }));
+  }
   render() {
-    let {selectedArea, selectedHub, selectedDriver, phone, onlyDelivered, startDate, endDate, selectedOrder, loading = true, lastUpdated } = this.state;
+    let {
+      selectedArea, selectedHub, selectedDriver, phone, onlyDelivered, startDate, endDate, 
+      selectedOrder, loading = true, lastUpdated, driverSummaryOpen = false
+    } = this.state;
     let {locations, hubs, deliveryBoys, orderBoxData} = this.props;
     
 
@@ -241,12 +256,8 @@ class DeliveryDashboard extends Component {
 
     let data = this.filterData();
     
-    // if(orders && deliveryBoys && orderBoxData) {
-    //   loading = false;
-    // }
-
     return (
-      <div>
+      <div style={{minWidth: 1000}}>
     
         {/* Dates - Remote Filters */}
         <div 
@@ -290,7 +301,7 @@ class DeliveryDashboard extends Component {
                 </div>
               }
             </div>
-            <div className="p-10">
+            <div className="p-4">
               <Button 
                 startIcon={<DownloadIcon />}
                 color="secondary"
@@ -302,7 +313,7 @@ class DeliveryDashboard extends Component {
               </Button>
             </div>
             
-            <div className="p-10">
+            <div className="p-4">
               <Button 
                 startIcon={<DownloadIcon />}
                 color="secondary"
@@ -313,9 +324,30 @@ class DeliveryDashboard extends Component {
                 Print Delivery Sheets
               </Button>
             </div>
+
+            
+            <div>
+              <Button
+                color="primary"
+                variant="outlined"
+                disabled={loading}
+                onClick={this.toggleDriverSummary}
+              >
+                Summary
+              </Button>
+            </div>
           </div>
           
         </div>
+        
+        <OrderDeliverySummary
+          loading={loading}
+          open={driverSummaryOpen}
+          data={data}
+          refreshData={this.fetchData}
+          deliveryBoys={deliveryBoys}
+          toggleDriverSummary={this.toggleDriverSummary}
+        />
 
         {
           loading?
