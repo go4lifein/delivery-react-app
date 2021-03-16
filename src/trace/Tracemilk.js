@@ -48,7 +48,7 @@ export default function Tracemilk({ location }) {
 
             <Header />
 
-                <p className = "exp">Enter Expiry Date</p>
+                <p className = "exp">Enter Expiry Date of Milk</p>
             <Datepicker
                 startDate={startDate}
                 onChange={onChange}

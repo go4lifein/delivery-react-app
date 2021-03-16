@@ -15,7 +15,7 @@ export default function Main({ data, setLoad, load }) {
             <div className="section1">
               <div className="BMC">
                 <h1>
-                  Recieved at<br></br> BMC (Tijara)
+                  Received at<br></br> BMC (Tijara)
                 </h1>
                 <p>{moment.utc(data.bmc_receive).format("hh:mm A")}</p>
               </div>
@@ -30,7 +30,7 @@ export default function Main({ data, setLoad, load }) {
               </div>
               <div className="plant-dispatch">
                 <h1>
-                  Packed in a 3-Layer<br></br>Tamper-Proof<br></br> Packaging
+                  Packed in a Triple-Layered<br></br>Tamper-Proof<br></br> Packaging
                 </h1>
                 <p>{moment.utc(data.plant_dispatch).format("hh:mm A")}</p>
               </div>
