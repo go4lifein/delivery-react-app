@@ -31,8 +31,8 @@ class LoginAdmin extends Component {
     login({username, password})
     .then(res => {
       let token = res.data['token'];
-      initRequestAuthHeader(token);
       setCookie("x-admin-token", token, 5);
+      initRequestAuthHeader("x-admin-token", token);
       onUpdateAdmin(res.data.username);
       document.location.reload();
     })

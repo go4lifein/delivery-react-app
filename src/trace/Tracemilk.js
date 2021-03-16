@@ -23,7 +23,7 @@ export default function Tracemilk({ location }) {
 
     const onChange = (e) => {
         console.log(e.target.value)
-        setStartDate(moment(e.target.value).subtract(3, 'days').format('YYYY-MM-DD'));
+        setStartDate(moment(e.target.value).format('YYYY-MM-DD'));
     }
     console.log(startDate);
 
@@ -31,7 +31,7 @@ export default function Tracemilk({ location }) {
         async function getData() {
             try {
                 setLoading(true);
-                const response = await getReport(pack, startDate);
+                const response = await getReport(pack, moment(startDate).subtract(3, 'days').format('YYYY-MM-DD'));
                 setData(response.data);
                 setLoading(false);
             } catch (err) {

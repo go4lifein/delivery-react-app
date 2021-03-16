@@ -64,8 +64,10 @@ function getTitle(location) {
       return 'Add Milk Report'
     case '/admin/customer-density':
       return 'Customer Density'
+    case '/admin/delivery':
+      return 'Delivery Dashboard'
     default:
-      return 'Go4Life';
+      return '';
   }
 }
 
@@ -137,7 +139,7 @@ function SideNav({logOut}) {
                 <ListItemText primary="Customer Density" />
               </ListItem>
             </Link>
-            <Link to="/admin/customer">
+            {/* <Link to="/admin/customer">
               <ListItem button key="Customer Sheet">
                 <ListItemIcon>
                   <AccountIcon />
@@ -153,7 +155,7 @@ function SideNav({logOut}) {
                 </ListItemIcon>
                 <ListItemText primary="Product Sheet" />
               </ListItem>
-            </Link>
+            </Link> */}
             <Link to="/admin/manageOrders" >
               <ListItem button key="Manage Orders">
                 <ListItemIcon>
@@ -162,14 +164,22 @@ function SideNav({logOut}) {
                 <ListItemText primary="Manage Orders" />
               </ListItem>
             </Link>
-            <Link to="/admin/pack" >
+            <Link to="/admin/delivery" >
+              <ListItem button key="Delivery Dashboard">
+                <ListItemIcon>
+                  <ArchiveIcon />
+                </ListItemIcon>
+                <ListItemText primary="Delivery Dashboard" />
+              </ListItem>
+            </Link>
+            {/* <Link to="/admin/pack" >
               <ListItem button key="Pack Orders">
                 <ListItemIcon>
                   <ArchiveIcon />
                 </ListItemIcon>
                 <ListItemText primary="Pack Orders" />
               </ListItem>
-            </Link>
+            </Link> */}
             <Link to="/admin/addReport" >
               <ListItem button key="Add Report">
                 <ListItemIcon>

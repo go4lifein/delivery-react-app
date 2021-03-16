@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import { Button, Card, CardContent, CardHeader, Divider, TextField } from '@material-ui/core';
 
-import {login} from '../api/driver';
+import {login} from '../api/v2/driver';
 import {updateDriver} from '../actions/driver.actions';
+import {initRequestAuthHeader, setCookie} from '../helpers/utils';
 
 function mapStateToProps(state) {
   let {setDriver} = state;
@@ -28,6 +29,8 @@ class LoginAdmin extends Component {
     let {phone } = this.state;
     login({phone})
     .then(res => {
+      setCookie("x-driver-token", phone, 5);
+      initRequestAuthHeader(phone);
       onUpdateDriver(res.data);
     })
     .catch(err => alert("Please check phone number"));

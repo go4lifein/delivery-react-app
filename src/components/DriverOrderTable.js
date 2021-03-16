@@ -16,28 +16,42 @@ function DriverOrderTable(props) {
   return (
     <div id="order cards">
       {data.map(item => {
-        const {order_id, crate_id, name, phone, address} = item;
-        const {hub, area, subarea, house_number} = address;
+        const {
+          address,
+          area,
+          phone,
+          orderId,
+          region,
+          name,
+          subarea,
+          region_id,
+          customerID,
+          driverId,
+          location_id,
+          orderDate
+        } = item;
+
         return (
           <Card
+            key={orderId.toString()}
             style={{
               margin: 10
             }}
           >
             <CardHeader
               onClick={() => {
-                if(item.delivered) {
+                if(item.deliveryId) {
                   alert('Already delivered');
                   return;
                 }
-                history.push(`/${order_id}/deliver`)
+                history.push(`/${orderId}/deliver`)
               }}
               title={ 
                 <div>
                   <div className="flex middle">
-                    <Avatar style={{background: 'red'}}>
-                      {crate_id}
-                    </Avatar>
+                    {/* <Avatar style={{background: 'red'}}>
+                      {"10"}
+                    </Avatar> */}
                     <div style={{marginLeft: 10}}>
                       {name}
                     </div>
@@ -55,7 +69,7 @@ function DriverOrderTable(props) {
               <div>
                 <span style={{fontWeight: 'bold'}}>
                   Address
-                </span> {house_number}, {subarea}, {area}, {hub}
+                </span> {address}, {subarea}, {area}, {region}
               </div>
             </CardContent>
           </Card>
