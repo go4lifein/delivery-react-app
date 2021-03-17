@@ -15,6 +15,7 @@ const AddReport = lazy(() => import(/* webpackChunkName: "AddReport" */ '../comp
 const HeatMap = lazy(() => import(/* webpackChunkName: "HeatMap" */ '../components/HeatMap'));
 const DriverDashboard = lazy(() => import (/*webpackChunkName : "DriverDashboard"*/ '../components/DriverDashboard'));
 const FarmerDashboard = lazy(() => import (/*webpackChunkName : "FarmerDashboard"*/ '../components/FarmerDashboard'));
+const Traceability = lazy(() => import (/*webpackChunkName : "Traceability"*/ '../components/TraceabilityDashboard'));
 
 
 function mapStateToProps(state) {
@@ -74,6 +75,11 @@ class AdminRouter extends Component {
                   <Route 
                     path = "/admin/FarmerDashboard"
                     component = {FarmerDashboard}
+                  />
+                  
+                  <Route 
+                    path = "/admin/traceability"
+                    component = {Traceability}
                   />
                   {/* Fallback */}
                   <Route 
