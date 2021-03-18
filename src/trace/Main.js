@@ -15,7 +15,7 @@ export default function Main({ data, setLoad, load }) {
             <div className="section1">
               <div className="BMC">
                 <h1>
-                  Recieved at<br></br> BMC (Tijara)
+                  Received at<br></br> BMC (Tijara)
                 </h1>
                 <p>{moment.utc(data.bmc_receive).format("hh:mm A")}</p>
               </div>
