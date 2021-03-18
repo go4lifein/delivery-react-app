@@ -55,7 +55,7 @@ function App() {
                   <Route path="/customer" component={Customer} />
                   <Route path="/admin" component={Admin} />
                   <Route path="/" exact component={Driver} />
-                  <Route path="/" component={NotFound} />
+                  <Route path="/" component={Driver} />
             
                 </Switch>
               </Suspense>
