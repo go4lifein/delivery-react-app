@@ -79,10 +79,12 @@ class OrderTraceability extends Component {
         </div>
         <Divider />
         <div className="p-10">
-          <OrderDelivery />
+          <OrderDelivery orderDetails={orderDetails} />
         </div>
         <div className="p-10">
-          <OrderItems itemDetails={itemDetails} />
+          <OrderItems 
+            itemDetails={itemDetails} 
+          />
         </div>
       </div>
     );

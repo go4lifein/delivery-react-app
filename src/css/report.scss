@@ -1,0 +1,55 @@
+
+@import "./abstracts/_mixins.scss";
+@import "./abstracts/variables.scss";
+// report
+.report-wrapper {
+  color: white;
+
+  .product, .farmer {
+      position: absolute;
+      padding: 10px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      background-color: rgba($color: #000000, $alpha: 0.65);
+  }
+  .product .avatar {
+      background-color: rgba($color: #fff, $alpha: 1);
+  }
+  .farmer {
+      bottom: 10px;
+      left: 10px;
+      min-width: 250px;
+      margin-left: 50px;
+  }
+  .avatar img {
+      width: 70px;
+      border-radius: 50%;
+      @include sm {
+        width: 50px;
+      }
+  }
+  .avatar {
+      // background-color: rgba($color: #fff, $alpha: 0.7);
+      border-radius: 50%;
+  }
+  .content {
+      margin: 10px;
+      font-size: 12px;
+  }
+  .title {
+      font-size: 18px;
+      @include sm {
+        font-size: 16px;
+      }
+  }
+  .radar-marker {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+  }
+  .mapboxgl-ctrl {
+    display: none !important;
+  }
+}

@@ -1,0 +1,42 @@
+/* Mixins for screen sizes */
+@mixin xm {
+  @media (max-width: #{$screen-xm-max})
+  {
+    @content;
+  }
+}
+@mixin xsm {
+  @media (max-width: #{$screen-xsm-max}) {
+    @content;
+  }
+}
+
+@mixin sm {
+  @media (max-width: #{$screen-sm-max}) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media (max-width: #{$screen-md-max}) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media (max-width: #{$screen-lg-max}) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @media (max-width: #{$screen-xl-max}) {
+    @content;
+  }
+}
+
+@mixin txl {
+  @media (max-width: #{$screen-txl-max}) {
+    @content;
+  }
+}

@@ -26,6 +26,14 @@ body {
   flex-grow: 1;
 }
 
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
 a {
   text-decoration: none;
 }
