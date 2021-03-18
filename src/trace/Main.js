@@ -30,7 +30,7 @@ export default function Main({ data, setLoad, load }) {
               </div>
               <div className="plant-dispatch">
                 <h1>
-                  Packed in a 3-Layer<br></br>Tamper-Proof<br></br> Packaging
+                  Packed in a Triple-Layered<br></br>Tamper-Proof<br></br> Packaging
                 </h1>
                 <p>{moment.utc(data.plant_dispatch).format("hh:mm A")}</p>
               </div>
