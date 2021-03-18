@@ -18,7 +18,6 @@ import Loading from './Loading';
 import OrderDataTable from './OrderTableDelivery';
 import DeliveryInfo from './DeliveryInfo';
 
-
 import ReactDOM from "react-dom";
 import DeliveryPrintSheet from './DeliveryPrintSheet';
 
@@ -26,6 +25,7 @@ import {updateDeliveryReport, updateAdminData, addProducts, addOrderProducts, ad
 import {getDeliveryBoysData, getDeliveryReport, getOrderBoxData, getOrderProducts, getOrderedProducts} from '../api/v2/admin';
 import { IconButton } from '@material-ui/core';
 import OrderDeliverySummary from './OrderDeliverySummary';
+import {POUCH_MILK_PRODUCTS, BOX_MILK_PRODUCTS} from '../constants/config';
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -128,10 +128,10 @@ class DeliveryDashboard extends Component {
   }
   exportData = () => {
     
-    const { deliveryBoys } = this.props;
+    const { deliveryBoys, orderProducts, orderBoxData } = this.props;
 
     let rows = [
-      [ 'Order Id', 'Customer ID', 'Name', 'Phone', 'Region', 'Area', 'Locality', 'House', 'Driver', 'Delivered', 'Delivery Type', 'Complete Delivery', 'Delivery Photo', 'Small Box' , 'Large Box' , 'Gable Top' , 'Milk Packets']
+      [ 'Order Id', 'Customer ID', 'Name', 'Phone', 'Region', 'Area', 'Locality', 'House', 'Driver', 'Delivered', 'Delivery Type', 'Complete Delivery', 'Delivery Photo', 'Small Box', 'Large Box', 'Packets', 'Gable Top' , 'Milk Packets']
     ];
 
     let data = this.filterData();
@@ -139,12 +139,35 @@ class DeliveryDashboard extends Component {
     for(let index = 0 ; index < data.length ; index ++ ) {
       const item = data[index];
       
-      const { orderId, driverId, customerID, name, phone, region, area, subarea, address, large_boxes, gable_tops, milk_packets, small_boxes, delivery_type, proof_img, delivery_date, complete_delivery } = item;
+      const { orderId, driverId, customerID, name, phone, region, area, subarea, address, delivery_type, proof_img, delivery_date, complete_delivery } = item;
       
       let driverName = '';
       if(driverId) {
         driverName = deliveryBoys.get(driverId).name;
       }
+      
+      const boxData = orderBoxData.get(parseInt(orderId));
+      const orderProductsData = orderProducts.get(parseInt(orderId));
+      let pouchMilkQty = 0;
+      let gableTopQty = 0;
+
+      if(orderProductsData) {
+        // console.log(orderProductsData)
+        orderProductsData.forEach(item => {
+          const {productId, qty} = item;
+          if(POUCH_MILK_PRODUCTS.includes(productId)) {
+            pouchMilkQty += qty;
+          } else if(BOX_MILK_PRODUCTS.includes(productId)) {
+            gableTopQty += qty;
+          }
+        })
+      } else {
+        // No order product data
+        alert("Something wrong with data uploaded for order", orderId);
+      }
+      
+      // Handle LargeBox, MediumBox, Packet
+      const {largeBox, mediumBox, packet } = boxData || {};
       
       rows.push(
         [
@@ -161,10 +184,11 @@ class DeliveryDashboard extends Component {
           `"${delivery_type ? delivery_type : ''}"`,
           `"${complete_delivery ? complete_delivery : ''}"`,
           `"${proof_img ? proof_img : ''}"`,
-          small_boxes,
-          large_boxes,
-          gable_tops,
-          milk_packets,
+          mediumBox,
+          largeBox,
+          packet,
+          gableTopQty,
+          pouchMilkQty,
         ]
       )
     }  

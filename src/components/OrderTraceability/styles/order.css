@@ -1,0 +1,8 @@
+.item-carousel {
+  display: flex;
+  overflow: auto;
+}
+
+.avatar {
+  /* border-radius: 10; */
+}

@@ -11,9 +11,10 @@ import Loading from "./components/Loading";
 const Admin = lazy(() => import(/* webpackChunkName: "Admin" */ "./containers/Admin.jsx"));
 const Driver = lazy(() => import(/* webpackChunkName: "Driver" */ "./containers/Driver.jsx"));
 const Trace = lazy(() => import(/* webpackChunkName: "Trace" */ "./trace/Trace.js"));
-const TraceProduce = lazy(() => import(/* webpackChunkName: "TraceProduce" */ "./containers/TraceProduce"));
+const TraceProduce = lazy(() => import(/* webpackChunkName: "TraceProduce" */ "./containers/TraceOrder"));
 const Visual = lazy(() => import(/* webpackChunkName: "Visual" */ "./containers/Visual"));
 const Tracemilk = lazy(() => import(/* webpackChunkName: "Tracemilk" */ "./trace/Tracemilk.js"))
+const TraceOrder = lazy(() => import(/* webpackChunkName: "TraceOrder" */ "./containers/TraceOrder"))
 // const Trace = lazy(() => import("./components/Traceability.js"));
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
                   <Route path="/trace" exact component={Trace} />
                   <Route path="/visual" component={Visual} />
                   <Route path="/trace-milk" exact component={Tracemilk} />
+                  <Route path="/customer" component={TraceOrder} />
                   <Route path="/admin" component={Admin} />
                   <Route path="/" component={Driver} />
             
