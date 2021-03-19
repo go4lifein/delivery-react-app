@@ -166,10 +166,6 @@ class OrderDeliveryForm extends React.Component {
             this.props.setSelectedCustomer(false);
           }}
         >
-          <AppBar
-            position="fixed"
-            color="default"
-          >
             <Toolbar>
               <IconButton 
                 edge="start" 
@@ -185,10 +181,10 @@ class OrderDeliveryForm extends React.Component {
                 {customer.name}
               </Typography>
             </Toolbar>
-          </AppBar>
-          <div style={{margin: '60px 10px 20px 10px'}}>
-            <this.Review />
-          </div>
+            <Divider />
+            <div style={{margin: 20}}>
+              <this.Review />
+            </div>
         </Dialog>}
       </div>
     );

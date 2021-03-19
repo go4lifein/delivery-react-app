@@ -14,7 +14,7 @@ import ReactToPrint from "react-to-print";
 
 
 import '../css/delivery-sheet.css';
-import { Button, DialogContent } from '@material-ui/core';
+import { Button, DialogContent, Divider } from '@material-ui/core';
 
 class DeliveryPrintSheet extends Component {
   state = {
@@ -123,7 +123,7 @@ class DeliveryPrintSheet extends Component {
         fullScreen
         onClose={onClose}
       >
-        <AppBar color="default" position="static">
+        {/* <AppBar color="default" position="static"> */}
           <Toolbar>
             <div className="flex middle stretch">
               <IconButton 
@@ -174,7 +174,8 @@ class DeliveryPrintSheet extends Component {
               </div>
             </div>
           </Toolbar>
-        </AppBar>
+        {/* </AppBar> */}
+        <Divider />
         <DialogContent>
         <div id="delivery-sheet" style={{margin: 30}}>
         
