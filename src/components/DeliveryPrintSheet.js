@@ -1,12 +1,50 @@
 import React, { Component } from 'react';
 import {POUCH_MILK_PRODUCTS, BOX_MILK_PRODUCTS} from '../constants/config';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
+import Toolbar from '@material-ui/core/Toolbar';
+import AppBar from '@material-ui/core/AppBar';
+import Dialog from '@material-ui/core/Dialog';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import ReactToPrint from "react-to-print";
+
 
 import '../css/delivery-sheet.css';
+import { Button, DialogContent } from '@material-ui/core';
 
 class DeliveryPrintSheet extends Component {
+  state = {
+    selectedDriver: 'all'
+  }
+  filterData = () => {
+    let { selectedDriver } = this.state;
+    let { orders} = this.props;
+    
+    let data = [];
+    
+    if(orders) {
+      data = orders.filter((item) => {
+        
+        if(selectedDriver !== 'all') {
+          if(selectedDriver === 'none') {
+            if(item.driverId !== null) return false;
+          } else if(item.driverId !== selectedDriver) return false;
+        }
+        return true;
+      })
+    }
+    
+    return data;
+    
+  }
   groupData = () => {
     
-    const { deliveryBoys, orderBoxData, orderProducts, orders } = this.props;
+    const { deliveryBoys, orderBoxData, orderProducts } = this.props;
+    const orders = this.filterData();
 
     let deliveryBoysOrders = new Map();
 
@@ -39,7 +77,8 @@ class DeliveryPrintSheet extends Component {
 
       } else {
         // No order product data
-        alert("Something wrong with data uploaded for order", orderId);
+        console.log(item)
+        alert("No items found for order " + orderId);
       }
 
       // Handle LargeBox, MediumBox, Packet
@@ -69,12 +108,75 @@ class DeliveryPrintSheet extends Component {
     return deliveryBoysOrders;
   }
   render() {
-    let { deliveryBoys } = this.props;
+    const {selectedDriver} = this.state;
+    let { deliveryBoys, open, onClose } = this.props;
+    
+    let deliveryBoysData = deliveryBoys ? Array.from(deliveryBoys.values()) : [];
+    deliveryBoysData = deliveryBoysData.sort((a, b) => (a.name.localeCompare(b.name)));
+
     let deliveryBoysOrders = Array.from(this.groupData().entries());
 
 
     return (
-      <div id="delivery-sheet">
+      <Dialog 
+        open={open}
+        fullScreen
+        onClose={onClose}
+      >
+        <AppBar color="default" position="static">
+          <Toolbar>
+            <div className="flex middle stretch">
+              <IconButton 
+                edge="start" 
+                color="inherit" 
+                onClick={onClose} 
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+              <Typography variant="h6" >
+                Delivery Sheet
+              </Typography>
+            </div>
+            
+            <div className="flex middle">
+              <div style={{marginRight: 20}}>
+                <FormControl>
+                  <InputLabel id="driver-filter">Assigned Driver</InputLabel>
+                  <Select
+                    labelId="driver-filter"
+                    style={{width: 200}}
+                    value={selectedDriver || 'all'}
+                    onChange={(e, b) => {
+                      let selectedDriver = e.target.value;
+                      this.setState({selectedDriver});
+                    }}
+                  >
+                    <MenuItem value="all">All</MenuItem>
+                    <MenuItem value="none">None</MenuItem>
+                    {deliveryBoysData.map(item => (
+                      <MenuItem value={item.id} key={`driver-${item.id}`}>{item.name}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
+              
+              <div style={{marginRight: 20}}>
+                <ReactToPrint
+                  trigger={() => <Button
+                    color="secondary"
+                    variant="outlined"
+                  >
+                    Print Sheet
+                  </Button>}
+                  content={() => document.getElementById('delivery-sheet')}
+                />
+              </div>
+            </div>
+          </Toolbar>
+        </AppBar>
+        <DialogContent>
+        <div id="delivery-sheet" style={{margin: 30}}>
         
         {/* <div style={{pageBreakBefore:"always"}}>
           Dog Page 1
@@ -290,7 +392,10 @@ class DeliveryPrintSheet extends Component {
             
           })
         }
-      </div>
+        
+        </div>
+        </DialogContent>
+      </Dialog>
     );
   }
 }

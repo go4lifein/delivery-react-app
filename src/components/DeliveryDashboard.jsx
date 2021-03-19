@@ -115,7 +115,7 @@ class DeliveryDashboard extends Component {
     //   await this.update();
     // }, 3000);
     
-    const { deliveryBoys, orders, orderBoxData, orderProducts } = this.props;
+    /* const { deliveryBoys, orders, orderBoxData, orderProducts } = this.props;
     ReactDOM.render(
       <DeliveryPrintSheet
         deliveryBoys={deliveryBoys}
@@ -124,7 +124,7 @@ class DeliveryDashboard extends Component {
         orderProducts={orderProducts}
       />,
       document.getElementById("printable")
-    );
+    ); */
   }
   exportData = () => {
     
@@ -245,7 +245,9 @@ class DeliveryDashboard extends Component {
     })
   }
   onPrintDeliverySheets = async () => {    
-    window.print();
+    this.setState({
+      showDeliverySheet: true
+    })
   }
   toggleDriverSummary = async () => {    
     this.setState((state) => ({
@@ -255,9 +257,10 @@ class DeliveryDashboard extends Component {
   render() {
     let {
       selectedArea, selectedHub, selectedDriver, phone, onlyDelivered, startDate, endDate, 
-      selectedOrder, loading = true, lastUpdated, driverSummaryOpen = false
+      selectedOrder, loading = true, lastUpdated, driverSummaryOpen = false,
+      showDeliverySheet = false
     } = this.state;
-    let {locations, hubs, deliveryBoys, orderBoxData} = this.props;
+    let {locations, hubs, deliveryBoys, orderBoxData,  orders, orderProducts} = this.props;
     
 
     let deliveryBoysData = deliveryBoys ? Array.from(deliveryBoys.values()) : [];
@@ -282,7 +285,7 @@ class DeliveryDashboard extends Component {
     
     return (
       <div style={{minWidth: 1000}}>
-    
+        
         {/* Dates - Remote Filters */}
         <div 
           className="flex middle space-bw"
@@ -494,6 +497,18 @@ class DeliveryDashboard extends Component {
               exportData={this.exportData}
               deliveryBoys={deliveryBoys}
             /> */}
+            
+            <DeliveryPrintSheet
+              open={showDeliverySheet}
+              onClose={() => this.setState({
+                showDeliverySheet: false
+              })}
+              deliveryBoys={deliveryBoys}
+              orders={orders}
+              orderBoxData={orderBoxData}
+              orderProducts={orderProducts}
+            />
+    
             <DeliveryInfo 
               customer={selectedOrder}
               setSelectedCustomer={this.onOrderSelect}
