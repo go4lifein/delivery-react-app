@@ -16,6 +16,7 @@ const HeatMap = lazy(() => import(/* webpackChunkName: "HeatMap" */ '../componen
 const DriverDashboard = lazy(() => import (/*webpackChunkName : "DriverDashboard"*/ '../components/DriverDashboard'));
 const FarmerDashboard = lazy(() => import (/*webpackChunkName : "FarmerDashboard"*/ '../components/FarmerDashboard'));
 const Traceability = lazy(() => import (/*webpackChunkName : "Traceability"*/ '../components/TraceabilityDashboard'));
+const CustomerInactivityTrend = lazy(() => import (/*webpackChunkName : "CustomerInactivityTrend"*/ '../components/Analytics/CustomerInactivityTrend'));
 
 
 function mapStateToProps(state) {
@@ -81,6 +82,11 @@ class AdminRouter extends Component {
                     path = "/admin/traceability"
                     component = {Traceability}
                   />
+                  <Route 
+                    path = "/admin/trends/inactive"
+                    component = {CustomerInactivityTrend}
+                  />
+                  
                   {/* Fallback */}
                   <Route 
                     path="/admin"

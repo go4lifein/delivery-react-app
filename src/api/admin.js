@@ -1,4 +1,4 @@
-import {API_URL , request} from '../helpers/utils';
+import {API_URL , request, getRequest} from '../helpers/utils';
 import { post } from 'axios';
 
 export function getAllOrders() {
@@ -81,9 +81,6 @@ export function addReport(formData) {
   return post(url, formData, config);
 }
 
-
-
-
 export function getLocationCustomerDensity() {
   let url = `${API_URL}/admin/getLocationCustomerDensity`;
   return request({
@@ -93,4 +90,9 @@ export function getLocationCustomerDensity() {
       'Content-Type': 'application/json',
     }
   });
+}
+
+export function getCustomersOrderHistory() {
+  let url = `${API_URL}/analytics/getCustomersOrderHistory`;
+  return getRequest(url);
 }
