@@ -4,7 +4,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Toolbar from '@material-ui/core/Toolbar';
-import AppBar from '@material-ui/core/AppBar';
+// import AppBar from '@material-ui/core/AppBar';
+import moment from 'moment-timezone';
 import Dialog from '@material-ui/core/Dialog';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -220,11 +221,12 @@ class DeliveryPrintSheet extends Component {
                 {/* Driver data Starts here */}
 
                 {/* Summary*/}
-                <div className="flex space-bw"> 
+                <div className="flex space-bw" style={{paddingTop: 30}}> 
                   {/* left side - total counts */}
                   <div style={{flex: "1"}}>
                     <div style={{fontSize: 30}}>{driver?.name}</div>
                     <div style={{fontSize: 24}}>Total Orders: {orders.length}</div>
+                    <div style={{fontSize: 20}}>Date: {moment().format('DD-MM-YYYY')}</div>
                     <div style={{fontSize: 17}}>
                       <table style={{width: 200}}>
                         <tbody>
@@ -293,11 +295,11 @@ class DeliveryPrintSheet extends Component {
                         </tr>
                         <tr>
                           <td>Entry Time</td>
-                          <td>__________________</td>
+                        <td>{moment().format('DD-MM-YYYY')} _______</td>
                         </tr>
                         <tr>
                           <td>Exit Time</td>
-                          <td>__________________</td>
+                        <td>{moment().format('DD-MM-YYYY')} _______</td>
                         </tr>
                       </tbody>
                     </table>
