@@ -16,7 +16,7 @@
     "CustomerSheet.js": "/static/js/CustomerSheet.abe978d0.chunk.js",
     "DeckGLExample.js": "/static/js/DeckGLExample.7fab6240.chunk.js",
     "DeliveryDashboard.css": "/static/css/DeliveryDashboard.ab65adf4.chunk.css",
-    "DeliveryDashboard.js": "/static/js/DeliveryDashboard.61d64208.chunk.js",
+    "DeliveryDashboard.js": "/static/js/DeliveryDashboard.4554f34e.chunk.js",
     "Driver.js": "/static/js/Driver.4194e0f0.chunk.js",
     "HeatMap.js": "/static/js/HeatMap.7054937b.chunk.js",
     "OrderManagement.js": "/static/js/OrderManagement.fcefcfe8.chunk.js",
@@ -32,7 +32,7 @@
     "Visual.js": "/static/js/Visual.6b4eb430.chunk.js",
     "main.css": "/static/css/main.bc060c13.chunk.css",
     "main.js": "/static/js/main.ac2cef6b.chunk.js",
-    "runtime-main.js": "/static/js/runtime-main.f7870ab5.js",
+    "runtime-main.js": "/static/js/runtime-main.73cefa48.js",
     "static/js/27.e80be574.chunk.js": "/static/js/27.e80be574.chunk.js",
     "static/css/28.4a1caf61.chunk.css": "/static/css/28.4a1caf61.chunk.css",
     "static/js/28.bf4fc642.chunk.js": "/static/js/28.bf4fc642.chunk.js",
@@ -70,7 +70,7 @@
     "static/media/milkbox.31a0b475.svg": "/static/media/milkbox.31a0b475.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.f7870ab5.js",
+    "static/js/runtime-main.73cefa48.js",
     "static/js/27.e80be574.chunk.js",
     "static/css/main.bc060c13.chunk.css",
     "static/js/main.ac2cef6b.chunk.js"
