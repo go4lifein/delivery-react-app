@@ -15,6 +15,7 @@ const Trace = lazy(() => import(/* webpackChunkName: "Trace" */ "./trace/Trace.j
 // const TraceProduce = lazy(() => import(/* webpackChunkName: "TraceProduce" */ "./containers/TraceOrder"));
 const Visual = lazy(() => import(/* webpackChunkName: "Visual" */ "./containers/Visual"));
 const Tracemilk = lazy(() => import(/* webpackChunkName: "Tracemilk" */ "./trace/Tracemilk.js"))
+const TraceMilkBatch = lazy(() => import(/* webpackChunkName: "Tracemilk" */ "./trace/TraceMilkBatch.js"))
 const Customer = lazy(() => import(/* webpackChunkName: "Customer" */ "./containers/Customer"))
 
 // const Trace = lazy(() => import("./components/Traceability.js"));
@@ -52,6 +53,7 @@ function App() {
                   <Route path="/trace" exact component={Trace} />
                   <Route path="/visual" component={Visual} />
                   <Route path="/trace-milk" exact component={Tracemilk} />
+                  <Route path="/trace-batch-milk" exact component={TraceMilkBatch} />
                   <Route path="/customer" component={Customer} />
                   <Route path="/admin" component={Admin} />
                   <Route path="/" exact component={Driver} />

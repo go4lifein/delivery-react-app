@@ -1,0 +1,13 @@
+.custom-hover-card-container {
+  position: relative;
+}
+
+.custom-hover-card-container .custom-hover-card {
+  visibility: hidden;
+  position: absolute;
+  z-index: 10;
+  max-height: 200px;
+}
+.custom-hover-card-container .custom-hover-card.visible {
+  visibility: visible;
+}

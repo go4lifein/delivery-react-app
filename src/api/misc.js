@@ -19,6 +19,11 @@ export async function getReport(type = 'a2', report_date = moment().format('YYYY
   return result ;
 }
 
+export async function getBatchMilkReport(batchNo) {
+  let url = `${API_URL}/misc/getBatchMilkReport?batchNo=${batchNo}`;
+  return getRequest(url);
+}
+
 export function getOrderDetails(orderId = '') {
   orderId = parseInt(orderId)
   orderId = btoa(orderId);

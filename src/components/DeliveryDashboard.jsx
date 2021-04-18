@@ -131,7 +131,7 @@ class DeliveryDashboard extends Component {
     const { deliveryBoys, orderProducts, orderBoxData } = this.props;
 
     let rows = [
-      [ 'Order Id', 'Customer ID', 'Name', 'Phone', 'Region', 'Area', 'Locality', 'House', 'Driver', 'Delivered', 'Delivery Type', 'Complete Delivery', 'Delivery Photo', 'Small Box', 'Large Box', 'Packets', 'Gable Top' , 'Milk Packets']
+      [ 'Order Id', 'Customer ID', 'Name', 'Phone', 'Region', 'Area', 'Locality', 'House', 'Driver', 'Delivered', 'Delivered On', 'Delivery Type', 'Complete Delivery', 'Delivery Photo', 'Small Box', 'Large Box', 'Packets', 'Gable Top' , 'Milk Packets']
     ];
 
     let data = this.filterData();
@@ -181,6 +181,8 @@ class DeliveryDashboard extends Component {
           `"${address.replace(/[^0-9a-zA-Z:/ ]/g, "")}"`,
           `"${driverName}"`,
           `"${delivery_date ? 'Yes': 'No'}"`,
+          // `"${delivery_date}"`,
+          `"${delivery_date ? moment(delivery_date).utc().format('DD-MM-YYYY HH:mm:ss') : ''}"`,
           `"${delivery_type ? delivery_type : ''}"`,
           `"${complete_delivery ? complete_delivery : ''}"`,
           `"${proof_img ? proof_img : ''}"`,

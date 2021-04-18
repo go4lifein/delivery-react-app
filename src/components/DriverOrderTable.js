@@ -7,7 +7,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
 
 function DriverOrderTable(props) {
   
@@ -28,7 +28,8 @@ function DriverOrderTable(props) {
           customerID,
           driverId,
           location_id,
-          orderDate
+          orderDate,
+          delivery_instruction,
         } = item;
 
         return (
@@ -59,6 +60,15 @@ function DriverOrderTable(props) {
                 </div>
               }
             />
+            {
+              delivery_instruction && <>
+                <Divider />
+                <CardContent style={{backgroundColor: 'blue'}}>
+                  <Typography variant="body1" style={{color:"#fff"}}>Delivery Instructions</Typography>
+                  <Typography variant="h5" style={{color:"#fff"}}>{delivery_instruction}</Typography>
+                </CardContent>
+              </>
+            }
             <Divider />
             <CardContent>
               <div style={{paddingTop: 10, paddingBottom: 10}}>

@@ -1,0 +1,50 @@
+/* .upload__image-wrapper {
+  height: 0;
+  width: 0;
+} */
+
+.upload__image-button, .remove__image-button, .upload__image-submit {
+  padding: 8px 10px;
+  outline: none;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+  margin: 8px 8px 8px 0px;
+  border-radius: 6px;
+  
+}
+.upload__image-button {
+  background-color: rgb(176, 228, 176);
+}
+.remove__image-button {
+  background-color: rgb(228, 176, 176);
+}
+.upload__image-submit {
+  background-color: rgb(95, 104, 230);
+  color: white;
+}
+
+.upload__image-button:hover, .upload__image-button.dragging, .upload__image-button:hover {
+  background-color: rgb(137, 180, 137);
+  box-shadow: 0 0 0 4px rgba(176, 228, 176,0.45);
+}
+
+.remove__image-button:hover, .remove__image-button.dragging, .remove__image-button:hover {
+  background-color: rgb(228, 176, 176);
+  box-shadow: 0 0 0 4px rgba(228, 176, 176,0.45);
+}
+.upload__image-submit:hover, .upload__image-submit.dragging, .upload__image-submit:hover {
+  background-color: rgb(64, 75, 230);
+  box-shadow: 0 0 0 4px rgba(64, 75, 230,0.45);
+}
+
+
+.upload__image-button ::before {
+  content: '';
+  height: 70px;
+  width: 70px;
+}
+
+.upload__image-preview {
+  box-shadow: 0 0 0 4px rgba(133, 133, 133, 0.45);
+}

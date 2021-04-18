@@ -50,17 +50,17 @@ class DeliveryPrintSheet extends Component {
     let deliveryBoysOrders = new Map();
 
     for (let index = 0; index < orders.length; index++) {
-      let item = orders[index];
+      let customerOrder = orders[index];
       
-      let {driverId} = item;
+      let {driverId} = customerOrder;
       let driverName = deliveryBoys.get(driverId)?.name;
       
-      const {orderId} = item;
+      const {orderId} = customerOrder;
       const boxData = orderBoxData.get(parseInt(orderId));
       const orderProductsData = orderProducts.get(parseInt(orderId));
       
-      item.crateId = boxData?.crateId;
-      item.driverName = driverName;
+      customerOrder.crateId = boxData?.crateId;
+      customerOrder.driverName = driverName;
 
       let pouchMilkQty = 0;
       let gableTopQty = 0;
@@ -78,15 +78,15 @@ class DeliveryPrintSheet extends Component {
 
       } else {
         // No order product data
-        console.log(item)
+        console.log(customerOrder)
         alert("No items found for order " + orderId);
       }
 
       // Handle LargeBox, MediumBox, Packet
       const {largeBox, mediumBox, packet } = boxData || {};
 
-      item = {
-        ...item,
+      customerOrder = {
+        ...customerOrder,
         pouchMilkQty,
         gableTopQty,
         mediumBox,
@@ -101,9 +101,9 @@ class DeliveryPrintSheet extends Component {
       }
 
       if(deliveryBoysOrders.get(driverId)) {
-        deliveryBoysOrders.get(driverId).push(item);
+        deliveryBoysOrders.get(driverId).push(customerOrder);
       } else {
-        deliveryBoysOrders.set(driverId, [item]);
+        deliveryBoysOrders.set(driverId, [customerOrder]);
       }
     }
     return deliveryBoysOrders;
@@ -315,6 +315,7 @@ class DeliveryPrintSheet extends Component {
                         <th>Sr No.</th>
                         <th>Name</th>
                         <th>Phone</th>
+                        <th>Delivery Instructions</th>
                         <th>Location</th>
                         <th>Address</th>
                         <th>Product</th>
@@ -329,7 +330,7 @@ class DeliveryPrintSheet extends Component {
                             gableTopQty,
                             mediumBox,
                             largeBox,
-                            packet, crateId
+                            packet, crateId, delivery_instruction
                           } = order;
 
                           return (
@@ -337,6 +338,11 @@ class DeliveryPrintSheet extends Component {
                               <td>{index+1}</td>
                               <td>{name}</td>
                               <td>{phone}</td>
+                              <td>
+                                {delivery_instruction &&
+                                  <div style={{backgroundColor: 'grey', color: 'white', padding: 10}}>{delivery_instruction}</div>
+                                }
+                              </td>
                               <td className="location">{subarea}, {area}, {region}</td>
                               <td className="home-address">{address}</td>
                               <td>
@@ -381,7 +387,18 @@ class DeliveryPrintSheet extends Component {
                                   </tbody>
                                 </table>
                               </td>
-                              <td>{crateId}</td>
+                              <td>
+                                {crateId &&
+                                  <div 
+                                    className="flex center middle"
+                                    style={{border: '1px solid grey', borderRadius: '50%', height: 60, width: 60}}
+                                  >
+                                    <div >
+                                      {crateId}
+                                    </div>
+                                  </div>
+                                }
+                              </td>
                               <td></td>
                             </tr>
                           )

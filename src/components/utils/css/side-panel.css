@@ -1,0 +1,44 @@
+.side-panel-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100vh;
+  --background: white;
+  background-color: rgba(0, 0, 0, 0.1);
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.side-panel {
+  z-index: 11;
+  position: absolute;
+  width: 400px;
+  height: calc(100vh);
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  background: var(--background);
+  box-shadow: 0 10px 10px;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.side-panel-container.hidden .side-panel {
+  right: -400px;
+}
+
+.side-panel-container.hidden {
+  display: none;
+}
+
+.side-panel .side-panel-header {
+  z-index: 11;
+  position: sticky;
+  top: 0;
+  background: var(--background);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.side-panel .content {
+  flex-grow: 1;
+}
