@@ -338,7 +338,7 @@ class DeliveryPrintSheet extends Component {
                               <td>{index+1}</td>
                               <td>{name}</td>
                               <td>{phone}</td>
-                              <td>
+                              <td style={{maxWidth: 120}}>
                                 {delivery_instruction &&
                                   <div style={{backgroundColor: 'grey', color: 'white', padding: 10}}>{delivery_instruction}</div>
                                 }

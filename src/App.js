@@ -4,6 +4,7 @@ import { HashRouter as Router, Switch, Route } from "react-router-dom";
 // import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
+import Notifier from "./components/UI/Notifier";
 
 import "./css/style.css";
 import "./App.css";
@@ -44,6 +45,7 @@ function App() {
     <>
       <div id="app">
         <ThemeProvider theme={theme}>
+          <Notifier />
           <CssBaseline />
           <Router base={"delivery-react-app"}>
             <main>

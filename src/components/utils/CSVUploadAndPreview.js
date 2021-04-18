@@ -30,6 +30,7 @@ function CSVUploadAndPreview({
 	papaparseOptions = parseOptions,
 	validator,
 	maxLength,
+	filterDataCallback,
 	mapDataCallback,
 	tableProps = {
 		pagination: true
@@ -45,6 +46,8 @@ function CSVUploadAndPreview({
 	const [error, setError] = useState(null)
 
 	const updateCSV = (data) => {
+
+		if(filterDataCallback) data = data.filter(filterDataCallback);
 
 		if(mapDataCallback) {
 			data = data.map(mapDataCallback);
@@ -104,7 +107,7 @@ function CSVUploadAndPreview({
 			<div className="flex middle">
 				<CSVReader
 					cssClass="csv-reader-input"
-					label={<div className="flex center middle"> <UploadIcon style={{marginRight: 8}} /> {label}</div>}
+					label={<div className="flex center middle" style={{fontSize: 16}}> <UploadIcon style={{marginRight: 8}} /> {label}</div>}
 					onFileLoaded={handleFileUpload}
 					cssLabelClass="csv-input-label"
 					cssInputClass="csv-input"
@@ -144,7 +147,7 @@ function CSVUploadAndPreview({
 						noHeader={true}
 						columns={columns}
 						data={csvData}
-						{...tableProps}
+						pagination={true}
 					/>
 				</DialogContent>
 			</Dialog>}

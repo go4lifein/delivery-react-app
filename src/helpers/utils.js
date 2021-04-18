@@ -115,3 +115,17 @@ export function dataURItoBlob(dataURI) {
   return new Blob([ab], {type: mimeString});
 }
 
+export function handleApiErrorMessage(err) {
+  console.error("API ERROR DATA", err.response)
+  if(!err) {
+    throw new Error("No error object provided");
+  } else if(err.response && err.response.data) {
+    return err.response.data;
+  } else if(err.response && err.response.status) {
+    return err.response.status + ' ' + err.response.statusText ;
+  } else if(err.message) {
+    return err.message;
+  }
+  console.error(err);
+  return "Some error occured.";
+}

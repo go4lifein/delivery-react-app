@@ -18,7 +18,7 @@ class DriverDashboard extends Component {
             search : "",
         }
     }
-     componentDidMount() {
+    componentDidMount() {
            
         this.setState({
             loading: false,
