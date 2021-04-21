@@ -26,11 +26,11 @@
     "Trace.css": "/static/css/Trace.32834120.chunk.css",
     "Trace.js": "/static/js/Trace.a722916a.chunk.js",
     "Tracemilk.css": "/static/css/Tracemilk.29c6ce80.chunk.css",
-    "Tracemilk.js": "/static/js/Tracemilk.b81a71a1.chunk.js",
+    "Tracemilk.js": "/static/js/Tracemilk.66eb97a5.chunk.js",
     "Visual.js": "/static/js/Visual.021bee42.chunk.js",
     "main.css": "/static/css/main.bc060c13.chunk.css",
     "main.js": "/static/js/main.a6e5d561.chunk.js",
-    "runtime-main.js": "/static/js/runtime-main.7342d962.js",
+    "runtime-main.js": "/static/js/runtime-main.5ab997f5.js",
     "static/js/26.e50938d3.chunk.js": "/static/js/26.e50938d3.chunk.js",
     "static/css/27.4a1caf61.chunk.css": "/static/css/27.4a1caf61.chunk.css",
     "static/js/27.6ca9b82c.chunk.js": "/static/js/27.6ca9b82c.chunk.js",
@@ -72,7 +72,7 @@
     "static/media/milkbox.31a0b475.svg": "/static/media/milkbox.31a0b475.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.7342d962.js",
+    "static/js/runtime-main.5ab997f5.js",
     "static/js/26.e50938d3.chunk.js",
     "static/css/main.bc060c13.chunk.css",
     "static/js/main.a6e5d561.chunk.js"
