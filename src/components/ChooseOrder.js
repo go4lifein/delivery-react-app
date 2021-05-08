@@ -31,7 +31,7 @@ class ChooseOrder extends Component {
     phone: "",
     selectedArea: [],
     selectedSubarea: [],
-    selectedHub: null,
+    selectedHub: "",
     showDelivered: false
   }
   componentDidMount() {
@@ -104,6 +104,8 @@ class ChooseOrder extends Component {
         }
       })
     }
+
+    data = data.sort((a, b) => a.location_id - b.location_id);
 
     return (
       <div>
@@ -231,6 +233,7 @@ class ChooseOrder extends Component {
                 </Button>
               </div>
             </div>
+            
             <DriverOrderTable 
               data={data}
             />

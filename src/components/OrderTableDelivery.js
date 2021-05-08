@@ -19,7 +19,7 @@ function OrderDataTable(props) {
       name: 'Order Id',
       selector: 'orderId',
       sortable: true,
-      width: '130px'
+      width: '100px'
     },
     {
       name: 'Order Date',
@@ -35,7 +35,7 @@ function OrderDataTable(props) {
       name: 'Crate Id',
       selector: 'orderId',
       sortable: true,
-      width: '120px',
+      width: '100px',
       cell: (row) => {
         const {orderId} = row;
         const boxData = orderBoxData.get(parseInt(orderId));
@@ -46,13 +46,13 @@ function OrderDataTable(props) {
       name: 'Name',
       selector: 'name',
       sortable: true,
-      width: '200px'
+      width: '180px'
     },
     {
       name: 'Phone',
       selector: 'phone',
       sortable: true,
-      width: '140px'
+      width: '120px'
     },
     {
       name: 'Hub',
@@ -76,18 +76,19 @@ function OrderDataTable(props) {
       name: 'Delivered on',
       selector: 'delivery_date',
       sortable: true,
-      width: '130px',
+      width: '180px',
       cell: (row) => {
         const {delivery_date} = row;
         if(!delivery_date) {
           return <span style={{color: 'red'}}>Not delivered</span>
         }
-        return moment(delivery_date).format('DD-MM-YYYY')
+        return `${moment(delivery_date).utc().format('DD-MM-YYYY')} ${moment(delivery_date).utc().format('HH:mm')}`
       }
     },
     {
       name: 'Driver',
-      selector: '_driver',
+      selector: 'driverId',
+      sortable: true,
       cell: (row, idx) => {
         let {driverId} = row;
         if(driverId) {
@@ -115,7 +116,8 @@ function OrderDataTable(props) {
         highlightOnHover={true}
         pointerOnHover={true}
         pagination={true}
-        paginationPerPage={10}
+        paginationPerPage={35}
+        paginationRowsPerPageOptions={[10, 35, 100, data.length]}
         onRowClicked={(row, e) => {
           onRowSelect(row);
         }}

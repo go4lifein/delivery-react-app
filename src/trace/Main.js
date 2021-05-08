@@ -6,7 +6,7 @@ import moment from "moment";
 //{moment(data.plant_receive).format('DD MM YYYY')}
 //{moment(data.plant_receive).format('hh:mm A')}
 
-export default function Main({ data, setLoad, load }) {
+export default function Main({ data, setLoad, load, bmcLocation = 'Tijara' }) {
   return (
     <div className="hero">
       <div className="board">
@@ -15,7 +15,7 @@ export default function Main({ data, setLoad, load }) {
             <div className="section1">
               <div className="BMC">
                 <h1>
-                  Recieved at<br></br> BMC (Tijara)
+                  Received at<br></br> BMC ({bmcLocation})
                 </h1>
                 <p>{moment.utc(data.bmc_receive).format("hh:mm A")}</p>
               </div>
@@ -24,13 +24,13 @@ export default function Main({ data, setLoad, load }) {
               <div className="plant-receive">
                 <h1>
                   {" "}
-                  Milk Pasteurized<br></br>at 85<span>&#176;</span>C (Manesar)
+                  Milk Pasteurized<br></br>at 85<span>&#176;</span>C (Sonipat)
                 </h1>
                 <p>{moment.utc(data.plant_receive).format("hh:mm A")}</p>
               </div>
               <div className="plant-dispatch">
                 <h1>
-                  Packed in a 3-Layer<br></br>Tamper-Proof<br></br> Packaging
+                  Packed in a Triple-Layered<br></br>Tamper-Proof<br></br> Packaging
                 </h1>
                 <p>{moment.utc(data.plant_dispatch).format("hh:mm A")}</p>
               </div>

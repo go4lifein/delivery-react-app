@@ -1,0 +1,4 @@
+.item-carousel {
+  display: flex;
+  overflow: auto;
+}

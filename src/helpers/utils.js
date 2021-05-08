@@ -1,6 +1,8 @@
 import axios from "axios";
 
-export const API_URL = 'https://api.deliver.go4life.in/api';
+export const BASE_API_URL = 'https://api.deliver.go4life.in';
+// export const BASE_API_URL = 'http://localhost:5000';
+export const API_URL = `${BASE_API_URL}/api`;
 // export const API_URL = 'https://go4life-deliver.herokuapp.com/api';
 // export const API_URL = 'http://localhost:5000/api';
 // export const API_URL = 'http://192.168.40.14:5000/api';
@@ -110,13 +112,20 @@ export function dataURItoBlob(dataURI) {
       ia[i] = byteString.charCodeAt(i);
   }
 
-  //Old Code
-  //write the ArrayBuffer to a blob, and you're done
-  //var bb = new BlobBuilder();
-  //bb.append(ab);
-  //return bb.getBlob(mimeString);
-
-  //New Code
   return new Blob([ab], {type: mimeString});
 }
 
+export function handleApiErrorMessage(err) {
+  console.error("API ERROR DATA", err.response)
+  if(!err) {
+    throw new Error("No error object provided");
+  } else if(err.response && err.response.data) {
+    return err.response.data;
+  } else if(err.response && err.response.status) {
+    return err.response.status + ' ' + err.response.statusText ;
+  } else if(err.message) {
+    return err.message;
+  }
+  console.error(err);
+  return "Some error occured.";
+}

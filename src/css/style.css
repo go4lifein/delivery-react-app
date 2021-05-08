@@ -22,6 +22,18 @@ body {
   align-items: center;
 }
 
+.stretch {
+  flex-grow: 1;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
 a {
   text-decoration: none;
 }
@@ -29,9 +41,16 @@ a {
 td.fixed-width-column {
   width: 100px;
 }
+.add{
+  margin-right: 20px;
+  margin-top: -55px;
+}
 
 .p-10 {
   padding: 10px;
+}
+.p-4 {
+  padding: 4px;
 }
 .pv-10 {
   padding-top: 10px;
@@ -41,7 +60,10 @@ td.fixed-width-column {
   padding-left: 10px;
   padding-right: 10px;
 }
-
+.mh-10 {
+  margin-left: 10px;
+  margin-right: 10px;
+}
 .w-100 {
   width: 100%;
 }

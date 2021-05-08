@@ -14,6 +14,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import CreateIcon from '@material-ui/icons/Create';
 import AccountIcon from '@material-ui/icons/AccountCircle';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import MenuIcon from '@material-ui/icons/MenuOpen';
 import DownloadIcon from '@material-ui/icons/CloudDownload';
 import ExitToApp from '@material-ui/icons/ExitToAppOutlined';
@@ -66,6 +67,12 @@ function getTitle(location) {
       return 'Customer Density'
     case '/admin/delivery':
       return 'Delivery Dashboard'
+      case '/admin/DriverDashboard':
+        return 'Driver Dashboard'
+    case '/admin/FarmerDashboard':
+      return 'Farmer Dashboard'
+    case '/admin/traceability':
+        return 'Traceability'
     default:
       return '';
   }
@@ -139,6 +146,33 @@ function SideNav({logOut}) {
                 <ListItemText primary="Customer Density" />
               </ListItem>
             </Link>
+            <Divider />
+            <Link to = '/admin/traceability'>
+              <ListItem button key = "traceability">
+                <ListItemIcon>
+                <FavoriteBorderIcon />
+                </ListItemIcon>
+                <ListItemText primary = "Traceability" />
+              </ListItem>
+            </Link>
+            <Link to = '/admin/FarmerDashboard'>
+              <ListItem button key = "FarmerDashboard">
+                <ListItemIcon>
+                <ArchiveIcon />
+                </ListItemIcon>
+              
+                <ListItemText primary = "Farmer Dashboard" />
+              </ListItem>
+            </Link>
+            
+            <Link to="/admin/addReport" >
+              <ListItem button key="Add Report">
+                <ListItemIcon>
+                  <InfoIcon />
+                </ListItemIcon>
+                <ListItemText primary="Add Milk Report" />
+              </ListItem>
+            </Link>
             {/* <Link to="/admin/customer">
               <ListItem button key="Customer Sheet">
                 <ListItemIcon>
@@ -156,6 +190,7 @@ function SideNav({logOut}) {
                 <ListItemText primary="Product Sheet" />
               </ListItem>
             </Link> */}
+            <Divider />
             <Link to="/admin/manageOrders" >
               <ListItem button key="Manage Orders">
                 <ListItemIcon>
@@ -172,6 +207,15 @@ function SideNav({logOut}) {
                 <ListItemText primary="Delivery Dashboard" />
               </ListItem>
             </Link>
+            <Link to = '/admin/DriverDashboard'>
+              <ListItem button key = "DriverDashboard">
+                <ListItemIcon>
+                <ArchiveIcon />
+                </ListItemIcon>
+                <ListItemText primary = "Driver Dashboard" />
+              </ListItem>
+            </Link>
+            <Divider />
             {/* <Link to="/admin/pack" >
               <ListItem button key="Pack Orders">
                 <ListItemIcon>
@@ -180,14 +224,6 @@ function SideNav({logOut}) {
                 <ListItemText primary="Pack Orders" />
               </ListItem>
             </Link> */}
-            <Link to="/admin/addReport" >
-              <ListItem button key="Add Report">
-                <ListItemIcon>
-                  <InfoIcon />
-                </ListItemIcon>
-                <ListItemText primary="Add Report" />
-              </ListItem>
-            </Link>
             <ListItem button key="Logout" onClick={logOut}>
               <ListItemIcon>
                 <ExitToApp />

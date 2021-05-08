@@ -1,11 +1,9 @@
 import {UPDATE_DRIVER, UPDATE_ORDERS} from '../constants/index';
 
-let driver = window.localStorage.getItem('driver');
-if(driver) {
-  driver = JSON.parse(driver);
-} else {
-  driver = undefined;
-}
+
+import {getCookies} from '../helpers/utils'
+
+let driver = getCookies()['x-driver-token'];
 const initialState = {
   driver
 }

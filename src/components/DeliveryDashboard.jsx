@@ -18,9 +18,14 @@ import Loading from './Loading';
 import OrderDataTable from './OrderTableDelivery';
 import DeliveryInfo from './DeliveryInfo';
 
+import ReactDOM from "react-dom";
+import DeliveryPrintSheet from './DeliveryPrintSheet';
+
 import {updateDeliveryReport, updateAdminData, addProducts, addOrderProducts, addOrderBox} from '../actions/admin.actions';
 import {getDeliveryBoysData, getDeliveryReport, getOrderBoxData, getOrderProducts, getOrderedProducts} from '../api/v2/admin';
 import { IconButton } from '@material-ui/core';
+import OrderDeliverySummary from './OrderDeliverySummary';
+import {POUCH_MILK_PRODUCTS, BOX_MILK_PRODUCTS} from '../constants/config';
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -56,10 +61,8 @@ class DeliveryDashboard extends Component {
       selectedRow: []
     }
   }
-  update = async () => {
-
+  fetchData = async () => {
     try {
-      this.setState({loading: true});
 
       let {startDate, endDate} = this.state;
       startDate = moment(startDate).format('YYYY-MM-DD');
@@ -84,14 +87,8 @@ class DeliveryDashboard extends Component {
       let orderBoxData = await getOrderBoxData(startDate, endDate).then(res => res.data)
       this.props.onAddOrderBox(orderBoxData)
 
-
       let data = await getDeliveryReport(startDate, endDate).then(res => res.data);
       onUpdateDeliveryReport(data);
-
-      this.setState({
-        loading: false,
-        lastUpdated: new Date()
-      });
       // alert(this.state.lastUpdated)
 
     } catch(err) {
@@ -101,16 +98,40 @@ class DeliveryDashboard extends Component {
       })
     }
   }
-  componentDidMount() {
-    this.update();
+  update = async () => {
+
+    this.setState({loading: true});
+    await this.fetchData();
+    
+    this.setState({
+      loading: false,
+      lastUpdated: new Date()
+    });
+  }
+  async componentDidMount() {
+    await this.update();
+
+    // setInterval(async () => {
+    //   await this.update();
+    // }, 3000);
+    
+    /* const { deliveryBoys, orders, orderBoxData, orderProducts } = this.props;
+    ReactDOM.render(
+      <DeliveryPrintSheet
+        deliveryBoys={deliveryBoys}
+        orders={orders}
+        orderBoxData={orderBoxData}
+        orderProducts={orderProducts}
+      />,
+      document.getElementById("printable")
+    ); */
   }
   exportData = () => {
     
-    const { startDate, endDate } = this.state;
-    const { deliveryBoys } = this.props;
+    const { deliveryBoys, orderProducts, orderBoxData } = this.props;
 
     let rows = [
-      [ 'Order Id', 'Customer ID', 'Name', 'Phone', 'Region', 'Area', 'Locality', 'House', 'Driver', 'Delivered', 'Delivery Type', 'Complete Delivery', 'Delivery Photo', 'Small Box' , 'Large Box' , 'Gable Top' , 'Milk Packets']
+      [ 'Order Id', 'Customer ID', 'Name', 'Phone', 'Region', 'Area', 'Locality', 'House', 'Driver', 'Delivered', 'Delivered On', 'Delivery Type', 'Complete Delivery', 'Delivery Photo', 'Small Box', 'Large Box', 'Packets', 'Gable Top' , 'Milk Packets']
     ];
 
     let data = this.filterData();
@@ -118,12 +139,35 @@ class DeliveryDashboard extends Component {
     for(let index = 0 ; index < data.length ; index ++ ) {
       const item = data[index];
       
-      const { orderId, driverId, customerID, name, phone, region, area, subarea, address, large_boxes, gable_tops, milk_packets, small_boxes, delivery_type, proof_img, delivery_date, complete_delivery } = item;
+      const { orderId, driverId, customerID, name, phone, region, area, subarea, address, delivery_type, proof_img, delivery_date, complete_delivery } = item;
       
       let driverName = '';
       if(driverId) {
         driverName = deliveryBoys.get(driverId).name;
       }
+      
+      const boxData = orderBoxData.get(parseInt(orderId));
+      const orderProductsData = orderProducts.get(parseInt(orderId));
+      let pouchMilkQty = 0;
+      let gableTopQty = 0;
+
+      if(orderProductsData) {
+        // console.log(orderProductsData)
+        orderProductsData.forEach(item => {
+          const {productId, qty} = item;
+          if(POUCH_MILK_PRODUCTS.includes(productId)) {
+            pouchMilkQty += qty;
+          } else if(BOX_MILK_PRODUCTS.includes(productId)) {
+            gableTopQty += qty;
+          }
+        })
+      } else {
+        // No order product data
+        alert("Something wrong with data uploaded for order", orderId);
+      }
+      
+      // Handle LargeBox, MediumBox, Packet
+      const {largeBox, mediumBox, packet } = boxData || {};
       
       rows.push(
         [
@@ -137,13 +181,16 @@ class DeliveryDashboard extends Component {
           `"${address.replace(/[^0-9a-zA-Z:/ ]/g, "")}"`,
           `"${driverName}"`,
           `"${delivery_date ? 'Yes': 'No'}"`,
+          // `"${delivery_date}"`,
+          `"${delivery_date ? moment(delivery_date).utc().format('DD-MM-YYYY HH:mm:ss') : ''}"`,
           `"${delivery_type ? delivery_type : ''}"`,
           `"${complete_delivery ? complete_delivery : ''}"`,
           `"${proof_img ? proof_img : ''}"`,
-          small_boxes,
-          large_boxes,
-          gable_tops,
-          milk_packets,
+          mediumBox,
+          largeBox,
+          packet,
+          gableTopQty,
+          pouchMilkQty,
         ]
       )
     }  
@@ -157,10 +204,6 @@ class DeliveryDashboard extends Component {
     
     if(orders) {
       data = orders.filter((item) => {
-        if(onlyDelivered) {
-          if(item.delivery_date) return true;
-          return false;
-        }
         if(selectedHub.length) {
           if(item.region !== selectedHub) return false;
         }
@@ -174,6 +217,10 @@ class DeliveryDashboard extends Component {
           if(selectedDriver === 'none') {
             if(item.driverId !== null) return false;
           } else if(item.driverId !== selectedDriver) return false;
+        }
+        if(onlyDelivered) {
+          if(item.delivery_date) return true;
+          return false;
         }
         if(phone) {
           if(item.phone.indexOf(phone) !== -1) return true;
@@ -199,9 +246,23 @@ class DeliveryDashboard extends Component {
       selectedOrder: row
     })
   }
+  onPrintDeliverySheets = async () => {    
+    this.setState({
+      showDeliverySheet: true
+    })
+  }
+  toggleDriverSummary = async () => {    
+    this.setState((state) => ({
+      driverSummaryOpen: !state.driverSummaryOpen
+    }));
+  }
   render() {
-    let {selectedArea, selectedHub, selectedDriver, phone, onlyDelivered, startDate, endDate, selectedOrder, loading = true, lastUpdated } = this.state;
-    let {locations, hubs, deliveryBoys, orderBoxData} = this.props;
+    let {
+      selectedArea, selectedHub, selectedDriver, phone, onlyDelivered, startDate, endDate, 
+      selectedOrder, loading = true, lastUpdated, driverSummaryOpen = false,
+      showDeliverySheet = false
+    } = this.state;
+    let {locations, hubs, deliveryBoys, orderBoxData,  orders, orderProducts} = this.props;
     
 
     let deliveryBoysData = deliveryBoys ? Array.from(deliveryBoys.values()) : [];
@@ -224,13 +285,9 @@ class DeliveryDashboard extends Component {
 
     let data = this.filterData();
     
-    // if(orders && deliveryBoys && orderBoxData) {
-    //   loading = false;
-    // }
-
     return (
-      <div>
-    
+      <div style={{minWidth: 1000}}>
+        
         {/* Dates - Remote Filters */}
         <div 
           className="flex middle space-bw"
@@ -273,18 +330,53 @@ class DeliveryDashboard extends Component {
                 </div>
               }
             </div>
-            <div className="p-10">
+            <div className="p-4">
               <Button 
                 startIcon={<DownloadIcon />}
                 color="secondary"
                 variant="outlined"
+                disabled={loading}
                 onClick={this.exportData}
               >
                 Download Excel
               </Button>
             </div>
+            
+            <div className="p-4">
+              <Button 
+                startIcon={<DownloadIcon />}
+                color="secondary"
+                variant="outlined"
+                disabled={loading}
+                onClick={this.onPrintDeliverySheets}
+              >
+                Print Delivery Sheets
+              </Button>
+            </div>
+
+            
+            <div>
+              <Button
+                color="primary"
+                variant="outlined"
+                disabled={loading}
+                onClick={this.toggleDriverSummary}
+              >
+                Summary
+              </Button>
+            </div>
           </div>
+          
         </div>
+        
+        <OrderDeliverySummary
+          loading={loading}
+          open={driverSummaryOpen}
+          data={data}
+          refreshData={this.fetchData}
+          deliveryBoys={deliveryBoys}
+          toggleDriverSummary={this.toggleDriverSummary}
+        />
 
         {
           loading?
@@ -407,6 +499,18 @@ class DeliveryDashboard extends Component {
               exportData={this.exportData}
               deliveryBoys={deliveryBoys}
             /> */}
+            
+            <DeliveryPrintSheet
+              open={showDeliverySheet}
+              onClose={() => this.setState({
+                showDeliverySheet: false
+              })}
+              deliveryBoys={deliveryBoys}
+              orders={orders}
+              orderBoxData={orderBoxData}
+              orderProducts={orderProducts}
+            />
+    
             <DeliveryInfo 
               customer={selectedOrder}
               setSelectedCustomer={this.onOrderSelect}

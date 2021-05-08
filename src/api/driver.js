@@ -30,9 +30,7 @@ export function confirmDelivery(data) {
     url: url,
     method: 'post',
     data,
-    headers: {
-      'Content-Type': 'application/json',
-    }
+    headers: { 'Content-Type': 'application/json' }
   });
 }
 

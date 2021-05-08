@@ -13,6 +13,11 @@ const DeliveryDashboard = lazy(() => import(/* webpackChunkName: "DeliveryDashbo
 const PackOrders = lazy(() => import(/* webpackChunkName: "PackOrders" */ '../components/PackOrders'));
 const AddReport = lazy(() => import(/* webpackChunkName: "AddReport" */ '../components/AddReport'));
 const HeatMap = lazy(() => import(/* webpackChunkName: "HeatMap" */ '../components/HeatMap'));
+const DriverDashboard = lazy(() => import (/*webpackChunkName : "DriverDashboard"*/ '../components/DriverDashboard'));
+const FarmerDashboard = lazy(() => import (/*webpackChunkName : "FarmerDashboard"*/ '../components/FarmerDashboard'));
+const Traceability = lazy(() => import (/*webpackChunkName : "Traceability"*/ '../components/TraceabilityDashboard'));
+const CustomerInactivityTrend = lazy(() => import (/*webpackChunkName : "CustomerInactivityTrend"*/ '../components/Analytics/CustomerInactivityTrend'));
+const DeliveryInstructions = lazy(() => import (/*webpackChunkName : "DeliveryInstructions"*/ '../components/Customer/DeliveryInstructions'));
 
 function mapStateToProps(state) {
   let {setAdmin} = state;
@@ -61,9 +66,32 @@ class AdminRouter extends Component {
                     component={HeatMap}
                   />
                   <Route 
+                    path="/admin/delivery/instructions"
+                    component={DeliveryInstructions}
+                  />
+                  <Route 
                     path="/admin/delivery"
                     component={DeliveryDashboard}
                   />
+                  <Route
+                    path ="/admin/DriverDashboard"
+                    component = {DriverDashboard}
+                  />
+                  <Route 
+                    path = "/admin/FarmerDashboard"
+                    component = {FarmerDashboard}
+                  />
+                  
+                  <Route 
+                    path = "/admin/traceability"
+                    component = {Traceability}
+                  />
+                  <Route 
+                    path = "/admin/trends/inactive"
+                    component = {CustomerInactivityTrend}
+                  />
+                  
+                  {/* Fallback */}
                   <Route 
                     path="/admin"
                     component={OrderManagement} 

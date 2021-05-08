@@ -1,0 +1,24 @@
+.overlay-container {
+  position: relative;
+}
+
+.overlay-container .overlay-content {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.08);
+  visibility: hidden;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+}
+.overlay-container:hover .overlay-content {
+  visibility: visible;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.overlay-container .main-content {
+  height: 100%;
+  width: 100%;
+}

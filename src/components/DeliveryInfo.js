@@ -5,7 +5,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import Toolbar from '@material-ui/core/Toolbar';
-import AppBar from '@material-ui/core/AppBar';
+import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
 import moment from 'moment-timezone';
@@ -36,9 +36,9 @@ class OrderDeliveryForm extends React.Component {
     let {customer, deliveryBoys} = this.props;
     console.log(customer);
     const {
-      driver_id, delivery_date, delivery_type, proof_img, complete_delivery, 
+      driver_id, delivery_date, delivery_type, proof_img, complete_delivery, delivery_instruction,
       // order_cancel_reason, 
-      small_boxes, large_boxes, gable_tops, milk_packets} = customer;
+      small_boxes, large_boxes, gable_tops, milk_packets, } = customer;
 
     let driver = deliveryBoys.get(driver_id);
 
@@ -70,6 +70,7 @@ class OrderDeliveryForm extends React.Component {
           return <span style={{color: 'red'}}>Complete Order Delivered? - क्या आपने पूरा आर्डर डिलीवर किया?</span>;
       }
     }
+    console.log(moment(delivery_date).tz("UTC"), moment(delivery_date).utc().format('hh:mm'))
     return (
       <div className="pv-10">
         
@@ -81,9 +82,19 @@ class OrderDeliveryForm extends React.Component {
               <div className="p-10">
                 <Typography variant="body1">Delivered By</Typography>
                 <Typography variant="h6">
-                  {driver.name} on {moment(delivery_date).format('DD-MMM-YYYY')}
+                  {driver?.name} on {moment(delivery_date).utc().format('DD-MM-YYYY')} {moment(delivery_date).utc().format('HH:mm')}
                 </Typography>
               </div>
+              
+              {
+                delivery_instruction && <>
+                  <Divider />
+                  <CardContent style={{backgroundColor: 'blue'}}>
+                    <Typography variant="body1" style={{color:"#fff"}}>Delivery Instructions</Typography>
+                    <Typography variant="h5" style={{color:"#fff"}}>{delivery_instruction}</Typography>
+                  </CardContent>
+                </>
+              }
               <Divider />
               {/* <div className="p-10">
                 <Typography variant="body1">Delivered On</Typography>
@@ -161,11 +172,10 @@ class OrderDeliveryForm extends React.Component {
           fullScreen 
           open={true}
           TransitionComponent={Transition}
+          onClose={() => {
+            this.props.setSelectedCustomer(false);
+          }}
         >
-          <AppBar
-            position="fixed"
-            color="default"
-          >
             <Toolbar>
               <IconButton 
                 edge="start" 
@@ -181,14 +191,10 @@ class OrderDeliveryForm extends React.Component {
                 {customer.name}
               </Typography>
             </Toolbar>
-          </AppBar>
-          <div style={{margin: '60px 10px 20px 10px', padding: '30px 10px'}}>
-            <Typography variant="h4" >
-              Delivery Information
-            </Typography>
             <Divider />
-            <this.Review />
-          </div>
+            <div style={{margin: 20}}>
+              <this.Review />
+            </div>
         </Dialog>}
       </div>
     );
