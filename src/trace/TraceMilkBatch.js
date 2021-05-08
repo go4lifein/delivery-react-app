@@ -2,7 +2,7 @@
 import React , {useState , useEffect} from "react";
 import "./trace.scss";
 import Header from "./header.js";
-import Main from "./Main_New.js";
+import Main from "./Main_Batch.js";
 import Journey from "./Journey.js";
 import Facts from "./Facts.js";
 import {getBatchMilkReport} from "../api/misc.js";
@@ -53,7 +53,12 @@ export default function Trace({ location }) {
     <div className="trace">
       <Header />
         <div className="p-10 flex center">
-          <input placeholder="Batch number" onChange={e => setBatch(e.target.value)} style={{padding: 10, maxWidth: 200}} />
+          <input 
+            value={batch}
+            placeholder="Batch number" 
+            onChange={e => setBatch(e.target.value)} 
+            style={{padding: 10, maxWidth: 200}} 
+          />
         </div>
       {
         error ?

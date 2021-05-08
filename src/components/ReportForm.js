@@ -122,12 +122,36 @@ class ReportForm extends Component {
                   })
                 }}
               >
-                <MenuItem value="a2">A2 Gable Top</MenuItem>
+                <MenuItem 
+                  value="a2"
+                >A2 Gable Top</MenuItem>
+                <MenuItem 
+                  value="a2-cow-toned"
+                >A2 Cow Toned</MenuItem>
+                <MenuItem 
+                  value="toned-milk" 
+                  style={{backgroundColor: '#2c90cf', color: 'white'}}>
+                    Toned Milk
+                </MenuItem>
+                <MenuItem 
+                  value="full-cream-milk" 
+                  style={{backgroundColor: '#c92029', color: 'white'}}>
+                  Full Cream Milk
+                </MenuItem>
+                <MenuItem 
+                  value="double-toned-milk" 
+                  style={{backgroundColor: '#7650a0', color: 'white'}}>
+                    Double Toned Milk
+                </MenuItem>
+                <MenuItem 
+                  value="cow-milk" 
+                  style={{backgroundColor: '#f277a0', color: 'white'}}>
+                    Cow Milk
+                </MenuItem> 
+                {/* <MenuItem value="buffalo-full">Buffalo Full</MenuItem> */}
+                {/* <MenuItem value="double-toned">Double Toned</MenuItem> */}
+                {/* <MenuItem value="toned">Toned</MenuItem> */}
                 {/* <MenuItem value="mix">Mix</MenuItem> */}
-                <MenuItem value="a2-cow-toned">A2 Cow Toned</MenuItem>
-                <MenuItem value="buffalo-full">Buffalo Full</MenuItem>
-                <MenuItem value="toned">Toned</MenuItem>
-                <MenuItem value="double-toned">Double Toned</MenuItem>
                 {/* 'a2-cow-toned', 'buffalo-full', 'toned', 'double-toned' */}
               </Select>
             </FormControl>
