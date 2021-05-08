@@ -34,9 +34,14 @@ export default function Tracemilk({ location, ...props }) {
         const response = await getReport(pack, moment(startDate).subtract(3, 'days').format('YYYY-MM-DD'));
         setData(response.data);
         setLoading(false);
+        setError(null)
       } catch (err) {
         console.log(err);
-        setError(err.response ? err.response.data : err.message)
+        if(err?.response?.status === 404) {
+          setError(`No report found for expiry date ${moment(startDate).format('DD MMM YYYY')}`)
+        } else {
+          setError(err.response ? err.response.data : err.message)
+        }
         setData(null);
         setLoading(false);
       }
@@ -71,7 +76,7 @@ export default function Tracemilk({ location, ...props }) {
                   {
                     data && startDate ?
                       <>
-                        <Main data={data} load={load} setLoad={setLoad} />
+                        <Main data={data} load={load} setLoad={setLoad} bmcLocation={'Rohtak'} />
                         <Journey data={data} />
                         <Facts data={data} />
                       </>
@@ -89,3 +94,6 @@ export default function Tracemilk({ location, ...props }) {
     </div>
   );
 }
+
+// BMC - Rohtak - For new variants
+// For all - Pasteurized at Sonipat

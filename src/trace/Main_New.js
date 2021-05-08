@@ -21,7 +21,7 @@ export default function Main({ data }) {
               <div className="plant-receive">
                 <h1>
                   {" "}
-                  Milk Pasteurized<br></br>at 85<span>&#176;</span>C (Manesar)
+                  Milk Pasteurized<br></br>at 85<span>&#176;</span>C (Sonipat)
                 </h1>
                 <p>{moment.utc(data.plant_receive).format("hh:mm A")}</p>
               </div>
