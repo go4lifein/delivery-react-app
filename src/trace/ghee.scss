@@ -1,0 +1,85 @@
+@import "../trace/fonts/fonts.css";
+@import "../trace/abstracts/_mixins.scss";
+@import "../trace/abstracts/variables.scss";
+
+
+$font: "American Typewriter";
+$lightblack: rgb(54, 60, 76);
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: $font;
+    overflow-x: hidden;
+    
+
+    .header{
+        display: flex;
+        font-family: $font;
+       flex-direction: row;
+       justify-content: space-between;
+
+       h1{
+           padding-right: 4%;
+           padding-top: 1%;
+       }
+      
+       width: 100%;
+       .logo{
+          padding: 2%;
+       }
+    }
+
+    .graphics{
+        margin-top: 10%;
+        padding:5%;
+        display: flex;
+        flex-direction: row;
+      
+        @include txl {
+            padding-top: 25%;
+        }
+
+        .section1{
+            @include lg {
+                margin-left:  -2%;
+            }
+            @include md {
+                margin-left: 5%;
+            }
+        }
+
+        .section2 { 
+            margin-left: -16%;
+            padding-top: 12%;
+            @include lg {
+                padding-top: 15%;
+            }
+            @include md {
+                justify-content: flex-end;
+                margin-left: 40%;
+                margin-top: -15%;
+            }
+        }
+        .section3 {
+            margin-left: -8%;
+            padding-top: 5%;
+
+            @include md {
+                justify-content: flex-end;
+                margin-right: 45%;
+
+            }
+        }
+        .section4{
+            margin-left: -12%;
+            padding-top: 10%;
+        }
+        .section5{
+            margin-left: -20%;
+            padding-top: 5%;
+        }
+      
+    }
+}
