@@ -27,7 +27,7 @@ export default function Map({r}) {
 
   return (
     <section className="googleMap">
-      <GoogleMap defaultZoom={9} defaultCenter={{ lat: 41.75, lng: 1.8 }}>
+      <GoogleMap defaultZoom={9} defaultCenter={{ lat: 27.9 , lng: 76.5 }}>
         
 
         {directions.map((item,index) =>(

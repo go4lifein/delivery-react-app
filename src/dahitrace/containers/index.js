@@ -24,7 +24,7 @@ export default function Index({location}){
     const [change , setChange] = useState(0);
     
    useEffect(() =>{
-        document.title = "Go4Life - Trace Your Milk";
+        document.title = "Go4Life - Trace Your Dahi";
         console.log(location);
         let {search} = location ; 
         search = new URLSearchParams(search);

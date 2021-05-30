@@ -10,7 +10,7 @@ const center = {
   lng: 76.85305579301976,
 };
 
-export default function MapContainer({r}) {
+export default function MapContainers({r}) {
   const WrappedMap = withScriptjs(withGoogleMap(Map));
 
   return (
@@ -25,8 +25,8 @@ export default function MapContainer({r}) {
 }
 
 const Area = styled.div`
-  width: 95vw;
-  height: 50vh;
+  width: 65vw;
+  height: 30vh;
   position:absolute;
   margin-top:8%;
   @media (max-width:1500px)

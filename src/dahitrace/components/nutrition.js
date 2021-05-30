@@ -12,36 +12,36 @@ export default function Nutrition({data}){
                     </Heading>
                 </Header>
                 <Cards>
-                        <Card background = "#d1d9dc">
+                        <Card background = "#F19440">
                             <Title>
                                 Fat
                             </Title>
                             <Text>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                           Saturated 'Fat' increases 'good' cholesterol levels in our body, which protects our health.
                             </Text>
-                            <Circle back =" #86969c">
+                            <Circle back ="#000">
                                     3.67%
                             </Circle>
                         </Card>
-                        <Card background = "#d1d9dc">
+                        <Card background = "#B4D4BC">
                             <Title>
                                 SNF
                             </Title>
                             <Text>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                             </Text>
-                            <Circle back =" #86969c">
+                            <Circle back =" #000">
                                     8.87%
                             </Circle>
                         </Card>
-                        <Card background = "#d1d9dc">
+                        <Card background = "#FC9C9C">
                             <Title>
                                 Sodium
                             </Title>
                             <Text>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                             </Text>
-                            <Circle back =" #86969c">
+                            <Circle back =" #000">
                                     NA
                             </Circle>
                         </Card>
@@ -52,18 +52,18 @@ export default function Nutrition({data}){
                             <Text>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                             </Text>
-                            <Circle back =" #86969c">
+                            <Circle back =" #000">
                                     6.7
                             </Circle>
                         </Card>
-                        <Card background = "#d1d9dc">
+                        <Card background = "#F4DC8C">
                             <Title>
                                 MBRT
                             </Title>
                             <Text>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                             </Text>
-                            <Circle back =" #86969c">
+                            <Circle back =" #000">
                                     40mins
                             </Circle>
                         </Card>
@@ -198,7 +198,7 @@ const Text = styled.p`
 const Circle = styled.div`
     display:flex;
     position:absolute;
-    background:yellow;
+    color:white;
     justify-content:center;
     align-items:center;
     border-radius:50px;
