@@ -111,6 +111,9 @@ const Heading = styled.div`
     {
         font-size:12px;
     }
+    @media (max-width:600px){
+        padding-left:12%;
+    }
 `;
 
 const Cards = styled.div`
@@ -131,10 +134,8 @@ const Cards = styled.div`
         padding-left:17%;
 
     }
-    @media (max-width:500px)
-    {
-      padding-left:10%;
-
+    @media (max-width:600px){
+        padding-left:13%;
     }
     @media (max-width:400px)
     {
