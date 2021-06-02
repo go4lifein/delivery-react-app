@@ -148,6 +148,11 @@ class ReportForm extends Component {
                   style={{backgroundColor: '#f277a0', color: 'white'}}>
                     Cow Milk
                 </MenuItem> 
+                <MenuItem 
+                  value="dahi-lite" 
+                >
+                  Lite Dahi
+                </MenuItem>
                 {/* <MenuItem value="buffalo-full">Buffalo Full</MenuItem> */}
                 {/* <MenuItem value="double-toned">Double Toned</MenuItem> */}
                 {/* <MenuItem value="toned">Toned</MenuItem> */}

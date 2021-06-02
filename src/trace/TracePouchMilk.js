@@ -11,6 +11,10 @@ import Loading from "../components/Loading"
 import Datepicker from "./Datepicker.js"
 import "./trace.scss"
 
+const daysDifference = {
+  'dahi-lite': 7,
+}
+
 export default function Tracemilk({ location, ...props }) {
   const [startDate, setStartDate] = useState(null);
   const [data, setData] = useState(null);
@@ -31,7 +35,8 @@ export default function Tracemilk({ location, ...props }) {
     async function getData() {
       try {
         setLoading(true);
-        const response = await getReport(pack, moment(startDate).subtract(3, 'days').format('YYYY-MM-DD'));
+        const diff = daysDifference[pack] || 3;
+        const response = await getReport(pack, moment(startDate).subtract(diff, 'days').format('YYYY-MM-DD'));
         setData(response.data);
         setLoading(false);
         setError(null)
