@@ -9,18 +9,20 @@ import { getReport } from "../api/misc"
 import Loading from "../components/Loading"
 import Datepicker from "./Datepicker.js"
 import "./trace.scss"
+import config from '../config'
+const {POUCH_MILK_EXPIRY_DAYS_DIFF} = config
 
 export default function Tracemilk({ location }) {
-    const [startDate, setStartDate] = useState(null);
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [load, setLoad] = useState(false);
-
+    
     let { search } = location;
 
     search = new URLSearchParams(search);
     const pack = search.get('package');
 
+    const [startDate, setStartDate] = useState(null);
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [load, setLoad] = useState(false);
     const onChange = (e) => {
         console.log(e.target.value)
         setStartDate(moment(e.target.value).format('YYYY-MM-DD'));
@@ -31,7 +33,10 @@ export default function Tracemilk({ location }) {
         async function getData() {
             try {
                 setLoading(true);
-                const response = await getReport(pack, moment(startDate).subtract(3, 'days').format('YYYY-MM-DD'));
+                const response = await getReport(
+                    pack, 
+                    moment(startDate).subtract(POUCH_MILK_EXPIRY_DAYS_DIFF, 'days').format('YYYY-MM-DD')
+                );
                 setData(response.data);
                 setLoading(false);
             } catch (err) {
@@ -41,14 +46,13 @@ export default function Tracemilk({ location }) {
             }
         }
         getData();
-    }, [startDate]);
+    }, [startDate, pack]);
 
     return (
         <div className="trace">
 
             <Header />
-
-                <p className = "exp">Enter Expiry Date of Milk</p>
+            <p className = "exp">Enter Expiry Date of Milk</p>
             <Datepicker
                 startDate={startDate}
                 onChange={onChange}
