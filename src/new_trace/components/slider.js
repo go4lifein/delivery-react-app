@@ -31,6 +31,7 @@ const Container = styled.main`
     @media (max-width:800px)
     {
         margin-top:30%;
+        padding-top:15% !important;
     }
     @media (max-width:500px)
     {
@@ -39,6 +40,7 @@ const Container = styled.main`
     @media (max-width:400px)
     {
         margin-top:60%;
+        padding-top:20% !important;
     }
     
 

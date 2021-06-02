@@ -5,9 +5,7 @@ import logo from '../assets/g4l.svg';
 export default function Header({data}){
     return(
         <Container>
-            <Link onClick ={() => window.open(data.pdf_url)}>
-                Download Test Report
-            </Link>
+           
             <Image src = {logo} alt = "logo" />
             <Title>
                 Trace Your Milk

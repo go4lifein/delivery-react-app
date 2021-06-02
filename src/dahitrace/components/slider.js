@@ -28,17 +28,26 @@ const Container = styled.main`
    justify-content:flex-start;
    text-align:left;
    padding-left:10%;
+   @media (max-height:800px){
+            padding-top:5% !important;
+          }
+   
     @media (max-width:800px)
     {
         margin-top:30%;
+        padding-top:15% !important;
     }
     @media (max-width:500px)
     {
         margin-top:55%;
+        
     }
     @media (max-width:400px)
     {
         margin-top:60%;
+        padding-top:20% !important;
+       
+
     }
     
 
