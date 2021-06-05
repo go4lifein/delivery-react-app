@@ -17,55 +17,45 @@ export default function Nutrition({data}){
                                 Fat
                             </Title>
                             <Text>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            {data.fat}%
                             </Text>
-                            <Circle back =" #86969c">
-                                    3.67%
-                            </Circle>
+                           
                         </Card>
-                        <Card background = "#d1d9dc">
+                        <Card background = "#bcd4bd">
                             <Title>
                                 SNF
                             </Title>
                             <Text>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            {data.snf}
                             </Text>
-                            <Circle back =" #86969c">
-                                    8.87%
-                            </Circle>
+                          
                         </Card>
                         <Card background = "#d1d9dc">
                             <Title>
                                 Sodium
                             </Title>
                             <Text>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            {data.sodium_content}
                             </Text>
-                            <Circle back =" #86969c">
-                                    NA
-                            </Circle>
+                           
                         </Card>
                         <Card background = "#d1d9dc">
                             <Title>
                                 pH
                             </Title>
                             <Text>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            {data.ph}
                             </Text>
-                            <Circle back =" #86969c">
-                                    6.7
-                            </Circle>
+                           
                         </Card>
                         <Card background = "#d1d9dc">
                             <Title>
                                 MBRT
                             </Title>
                             <Text>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                                {data.mbrt}
                             </Text>
-                            <Circle back =" #86969c">
-                                    40mins
-                            </Circle>
+                            
                         </Card>
                 </Cards>
             
@@ -152,10 +142,9 @@ const Card = styled.div`
     border-radius:15px;
     align-items:center;
     flex-direction:column;
-    justify-content:flex-start;
-    position:relative;
+    justify-content:center;
     margin:2%;
-    display:block;
+    display:flex;
     padding:3%;
     align-items:center;
     background:${props =>props.background};
@@ -176,45 +165,27 @@ const Card = styled.div`
 
 const Title = styled.div`
     font-weight:600;
-    font-size:22px;
+    font-size:32px;
     display:flex;
     flex-direction:row;
     justify-items:center;
+    align-items:center;
     @media (max-width:500px)
     {
-        font-size:12px;
+        font-size:16px;
+        font-weight:400;
     }
 `;
 
 const Text = styled.p`
-    font-size:14px;
+    font-size:24px;
+    font-weight:800;
     text-align:justify;
     @media (max-width:500px)
     {
-        font-size:8px;
+        font-size:20px;
+        font-weight:600;
     }
 `;
 
-const Circle = styled.div`
-    display:flex;
-    position:absolute;
-    background:yellow;
-    justify-content:center;
-    align-items:center;
-    border-radius:50px;
-    width:60px;
-    height:60px;
-    bottom:0;
-    right:0;
-    margin-right:5%;
-    margin-bottom:5%;
-    background:${props =>props.back};
-    font-weight:600;
-    @media (max-width:500px)
-    {
-        width:35px;
-        height:35px;
-        font-size:8px;
-    }
-   
-`;
+
