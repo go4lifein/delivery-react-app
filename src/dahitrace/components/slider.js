@@ -23,15 +23,17 @@ export default function Slider({setChange , change}){
 
 const Container = styled.main`
    width:100%;
-   margin-top:27%;
+   margin-top:17%;
    display:flex;
    justify-content:flex-start;
    text-align:left;
    padding-left:10%;
-   @media (max-height:800px){
-            padding-top:5% !important;
-          }
-   
+   @media (max-height:850px){
+       padding-top:13%;
+   }
+   @media (height:1024px){
+       padding-top:18%;
+   }
     @media (max-width:800px)
     {
         margin-top:30%;
@@ -53,12 +55,13 @@ const Container = styled.main`
 
 `;
 const Option = styled.p`
-    border-bottom:${props =>props.active ? '4px solid': '0px solid'};
-    border-bottom-color:#1C2C54;
-    margin-left:2%;
+    border-bottom:${props =>props.active ? '2px solid': '0px solid'};
+    border-bottom-color:darkgrey;
+    margin-left:4%;
     cursor:pointer;
     @media (max-width:500px){
-        font-size:10px;
+        font-size:14px;
+        margin-left:6%;
     }
 
 `;

@@ -32,7 +32,7 @@ export default function Map({r}) {
 
         {directions.map((item,index) =>(
                       <>
-                          <Marker position={r[index].origin} icon = {{url:"https://img.icons8.com/android/24/000000/cow.png"}} />
+                          <Marker position={r[index].origin} icon = {{url:"https://maps.google.com/mapfiles/ms/icons/blue.png"}} />
                           <Marker position={r[index].destination} icon = {{url:"https://maps.google.com/mapfiles/ms/icons/blue.png"}} />
                           <DirectionsRenderer
                           key = {index}
@@ -42,7 +42,7 @@ export default function Map({r}) {
                             polylineOptions: {
                               strokeColor:r[index].color,
                               strokeOpacity: 1.0,
-                              strokeWeight: 10,
+                              strokeWeight: 4 ,
                             },
                           }}
                         />

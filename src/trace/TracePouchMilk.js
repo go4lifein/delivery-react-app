@@ -10,6 +10,8 @@ import { getReport } from "../api/misc"
 import Loading from "../components/Loading"
 import Datepicker from "./Datepicker.js"
 import "./trace.scss"
+import config from '../config'
+const {POUCH_MILK_EXPIRY_DAYS_DIFF} = config
 
 const daysDifference = {
   'dahi-lite': 7,
@@ -22,7 +24,6 @@ export default function Tracemilk({ location, ...props }) {
   const [load, setLoad] = useState(false);
   const [error, setError] = useState(null);
 
-  // let { search } = location;
   const {pouch: pack} = useParams();
 
   const onChange = (e) => {
@@ -35,8 +36,10 @@ export default function Tracemilk({ location, ...props }) {
     async function getData() {
       try {
         setLoading(true);
-        const diff = daysDifference[pack] || 3;
-        const response = await getReport(pack, moment(startDate).subtract(diff, 'days').format('YYYY-MM-DD'));
+        const response = await getReport(
+          pack, 
+          moment(startDate).subtract(POUCH_MILK_EXPIRY_DAYS_DIFF, 'days').format('YYYY-MM-DD')
+        );
         setData(response.data);
         setLoading(false);
         setError(null)
@@ -52,7 +55,7 @@ export default function Tracemilk({ location, ...props }) {
       }
     }
     getData();
-  }, [startDate]);
+  }, [startDate, pack]);
 
   return (
     <div className="trace">

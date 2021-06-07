@@ -28,17 +28,6 @@ const Container = styled.main`
  
 `;
 
-const Link = styled.p`
-    cursor:pointer;
-    font-size:18px;
-    font-weight:600;
-    @media (max-width:500px){
-        font-size:12px;
-    }
-    @media (max-width:330px){
-        font-size:10px;
-    }
-`;
 
 const Image = styled.img`
     @media (max-width:1080px)
