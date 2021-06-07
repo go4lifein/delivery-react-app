@@ -1,5 +1,8 @@
 import React, { useState  ,useEffect} from "react";
 import { GoogleMap, Marker, DirectionsRenderer } from "react-google-maps";
+import bmc from '../assets/bmc.png';
+import plant from '../assets/plant.png';
+import warehouse from '../assets/warehouse.png';
 /* global google */
 
 export default function Map({r}) {
@@ -27,20 +30,20 @@ export default function Map({r}) {
 
   return (
     <section className="googleMap">
-      <GoogleMap defaultZoom={9} defaultCenter={{ lat: 41.75, lng: 1.8 }}>
+      <GoogleMap defaultZoom={6} defaultCenter={{ lat: 41.75, lng: 1.8 }}>
         
 
         {directions.map((item,index) =>(
                       <>
                       {
                         r[index+1] && r[index].origin !== r[index+1].origin && 
-                        <Marker position={r[index].origin} icon = {{url:"https://maps.google.com/mapfiles/ms/icons/blue.png"}}  />
+                        <Marker position={r[index].origin} icon = {{url:bmc ,scaledSize:{width:70 , height:70}}}  />
                       }
                          
                          {
                            r[index+1] ?( r[index].destination !== r[index+1].origin  &&
-                            <Marker position={r[index].destination} icon = {{url:"https://img.icons8.com/pastel-glyph/64/000000/warehouse.png"}} />
-                           ): <Marker position={r[index].destination} icon = {{url:"https://maps.google.com/mapfiles/ms/icons/blue.png"}} /> }
+                            <Marker position={r[index].destination} icon = {{url:plant , scaledSize:{width:70 , height:70}}} />
+                           ): <Marker position={r[index].destination} icon = {{url:warehouse , scaledSize:{width:70, height:70}}} /> }
                           <DirectionsRenderer
                           key = {index}
                           directions={item}

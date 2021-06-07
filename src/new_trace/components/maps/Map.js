@@ -36,8 +36,8 @@ export default function Map({r}) {
               directions &&
 
               <>
-              <Marker position={origin} icon = {{url:startIcon  , scaledSize:{width:20 , height: 20}}}/>
-              <Marker position={destination} icon = {{url:endIcon, scaledSize:{width:20 , height: 20}}} />
+              <Marker position={origin} icon = {{url:startIcon  , scaledSize:{width:40 , height: 40}}}/>
+              <Marker position={destination} icon = {{url:endIcon, scaledSize:{width:40 , height: 40}}} />
               <DirectionsRenderer
               directions={directions}
               options={{

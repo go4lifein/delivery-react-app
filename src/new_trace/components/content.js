@@ -4,19 +4,24 @@ import { useState } from 'react';
 import {FiChevronDown} from 'react-icons/fi';
 import Fade from 'react-reveal';
 import MapContainer from './maps/MapContainer';
+import bmc from '../assets/bmc.png';
+import plant from '../assets/plant.png';
+import warehouse from '../assets/warehouse.png';
 
 const r1  = { 
     origin: { lat: 27.93415776638459, lng: 76.85305579301976 },
     destination: { lat: 28.99584804395379, lng: 77.00556672616105 },
     color: '#FCC888',
-    startIcon: "https://img.icons8.com/pastel-glyph/64/000000/warehouse.png",
-    endIcon: "https://img.icons8.com/android/64/000000/factory.png",
+    startIcon:bmc,
+    endIcon: plant,
 
 }
 const r2 = {
     origin: { lat: 28.99584804395379, lng: 77.00556672616105 },
   destination: { lat: 28.447943760858596, lng:77.08380978717815 },
     color: '#CCFCD4',
+    startIcon:plant,
+    endIcon:warehouse,
 }
 export default function Content({data }){
     const [active , setActive ] = useState(false);
@@ -87,7 +92,7 @@ export default function Content({data }){
                            active &&
                            <Fade clear>
                                 <Des>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                               The very first step to our supply chain,"Collection of fresh A2 Milk". Our progressive farmers collect fresh milk, preserving the quality of the milk. Milking conditon is kept as hygienic as possible.
                            </Des>
                            </Fade>
                           
@@ -118,8 +123,8 @@ export default function Content({data }){
                        {
                            active1 &&
                            <Fade clear>
-                                <Des>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                <Des>The raw milk arrives at the plant in insulated road tankers. The milk is kept well chilled, free from air and treated as gently as possible.
+                               Here , the milk is pasteurized at 85<span>&#8451;</span> and tested for quality for checks. Milk is then packed into a triple-layered Gabletop packaging.
                            </Des>
                            </Fade>
                           
@@ -152,7 +157,7 @@ export default function Content({data }){
                            active2 &&
                            <Fade clear>
                                 <Des>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                After the milk is packed, it is stored in chillers and sent for dispatch.As soon as the milk is recieved at the warehouse , it is stored in a cold storage for distribution.
                            </Des>
                            </Fade>
                           
