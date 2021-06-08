@@ -35,7 +35,7 @@ export default function Tracemilk({ location, ...props }) {
     async function getData() {
       try {
         setLoading(true);
-        const diff = daysDifference[pack] || 3;
+        const diff = daysDifference[pack] || 2;
         const response = await getReport(pack, moment(startDate).subtract(diff, 'days').format('YYYY-MM-DD'));
         setData(response.data);
         setLoading(false);
