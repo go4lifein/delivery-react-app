@@ -150,8 +150,8 @@ class ReportForm extends Component {
                 </MenuItem> 
                 <MenuItem value="dahi" >Dahi</MenuItem>
                 <MenuItem value="dahi-lite" >Lite Dahi</MenuItem>
-                <MenuItem value="Chach" >Chach</MenuItem>
-                <MenuItem value="Chach-masala" >Chach Masala</MenuItem>
+                <MenuItem value="chach" >Chach</MenuItem>
+                <MenuItem value="chach-masala" >Chach Masala</MenuItem>
                 {/* <MenuItem value="buffalo-full">Buffalo Full</MenuItem> */}
                 {/* <MenuItem value="double-toned">Double Toned</MenuItem> */}
                 {/* <MenuItem value="toned">Toned</MenuItem> */}
