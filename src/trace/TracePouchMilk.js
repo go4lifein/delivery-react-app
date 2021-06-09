@@ -15,6 +15,8 @@ const {POUCH_MILK_EXPIRY_DAYS_DIFF} = config
 
 const daysDifference = {
   'dahi-lite': 7,
+  'chach': 7,
+  'chach-masala': 7,
 }
 
 export default function Tracemilk({ location, ...props }) {
@@ -100,6 +102,3 @@ export default function Tracemilk({ location, ...props }) {
     </div>
   );
 }
-
-// BMC - Rohtak - For new variants
-// For all - Pasteurized at Sonipat
