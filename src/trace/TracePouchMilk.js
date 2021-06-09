@@ -25,7 +25,7 @@ export default function Tracemilk({ location, ...props }) {
   const [error, setError] = useState(null);
 
   const {pouch: pack} = useParams();
-
+  console.log("params", pack);
   const onChange = (e) => {
     console.log(e.target.value)
     setStartDate(moment(e.target.value).format('YYYY-MM-DD'));

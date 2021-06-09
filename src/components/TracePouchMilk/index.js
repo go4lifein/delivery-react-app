@@ -1,3 +1,3 @@
-import Trace from '../../trace/TracePouchMilk'
+import Pouches from '../../milkpouches/containers/pouches'
 
-export default Trace
+export default Pouches

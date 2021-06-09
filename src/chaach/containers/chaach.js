@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState , useEffect} from 'react';
 import getReport from '../api/main';
+import '../assets/fonts/fonts.css';
 import { Alert } from "@material-ui/lab";
 import { useParams } from 'react-router-dom';
 import Content from '../components/content';
