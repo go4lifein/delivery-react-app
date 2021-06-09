@@ -3,20 +3,33 @@ import moment from 'moment';
 import { useState } from 'react';
 import {FiChevronDown} from 'react-icons/fi';
 import Fade from 'react-reveal';
-import MapContainers from './MapContainer2';
+import MapContainer from './maps/MapContainer';
+import bmc from '../assets/bmc.png';
+import plant from '../assets/plant.png';
+import warehouse from '../assets/warehouse.png';
 
-const r1  = {
+const r1  = { 
+    origin: { lat:28.91536608519116, lng:76.63487196009729 },
+    destination: { lat: 28.99584804395379, lng: 77.00556672616105 },
+    color: '#000',
+    startIcon:bmc,
+    endIcon: plant,
+
+}
+const r2 = {
     origin: { lat: 28.99584804395379, lng: 77.00556672616105 },
-     destination: { lat: 28.447943760858596, lng:77.08380978717815 },
-    color: '#CCFCD4',
-};
+  destination: { lat: 28.447943760858596, lng:77.08380978717815 },
+    color: '#000',
+    startIcon:plant,
+    endIcon:warehouse,
+}
 export default function Content({data }){
     const [active , setActive ] = useState(false);
     const [active1, setActive1 ] = useState(false);
     const [active2, setActive2 ] = useState(false);
     const [active4 , setActive4 ] = useState(false);
-    const [active5, setActive5 ] = useState(false);
-    const [active6, setActive6 ] = useState(false);
+    const [active5 ,setActive5] = useState(false);
+    const location  = "BMC (Rohtak)";
 
     const setActives = () =>{ 
         setActive(!active);
@@ -27,7 +40,7 @@ export default function Content({data }){
     return(
         <Container> 
         
-               <Timeline>
+        <Timeline>
                    <Text>
                     Received at 
                    </Text>
@@ -85,20 +98,36 @@ export default function Content({data }){
                <Description>
                    <Card height = {active} area = "#F7DEBE" shadow = "#FCC888">
                        <Head onClick ={() => setActive(!active)}>
-                        BMC (Tijara)
+                        {location}
                         <Fi orientation = {active} size = {16} onClick ={() => setActives()} />
                        </Head>
                        {
                            active &&
                            <Fade clear>
                                 <Des>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                Milk is collected from our farmer network in {location}. Testing of FAT, SNF & CLR is done at the time of collection itself. The milk is then chilled in a Bulk Milk Chiller (BMC) at 4°C and sent to the plant. Utmost care is taken to ensure proper hygiene while collecting the milk from farmers and then transferring it from BMC to a tanker.
                            </Des>
                            </Fade>
                           
                        }
 
                    </Card>
+                   <Subcard height = {active} area = "#F7DEBE" shadow = "#FCC888">
+                       <Head onClick ={() => setActive(!active)}>
+                            Transportation from : BMC(Tijara) to Plant(Sonipat)
+                        <Fi orientation = {active} size = {16} onClick ={() => setActive(!active)} />
+                       </Head>
+                       {
+                           active &&
+                          
+                                <Des2>
+                               <MapContainer r = {r1} />
+                           </Des2>
+                          
+                          
+                       }
+
+                   </Subcard>
                    <Card height = {active1} area = "#e6ffea" shadow = "#CCFCD4">
                    <Head onClick ={() => setActive1(!active1)}>
                         Pasteurizing and Packaging (Sonipat)
@@ -107,59 +136,46 @@ export default function Content({data }){
                        {
                            active1 &&
                            <Fade clear>
-                                <Des>
-                             Lorem ipsum dolor sit amet, consectetur    adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                           </Des>
+                            <Des>
+                            The raw milk arrives at the packaging plant in insulated road tankers. The milk is kept well chilled, free from air and treated as gently as possible. Here , the milk is pasteurized at 85℃ and tested for quality on 35 parameters. Milk is then kept in chillers for incubation process.
+                            </Des>
                            </Fade>
                           
                        }
 
                    </Card>
-                    <Subcard height = {active4} area = "#e6ffea" shadow ="#CCFCD4">
+                   <Subcard2 height = {active4} area = "#e6ffea" shadow ="#CCFCD4">
                         <Head onClick = {() => setActive4(!active4)}>
-                            Dahi Fermentation
+                            Incubation
                             <Fi orientation = {active4} size = {16} onClick ={() =>setActive4(!active4)} />
                         </Head>
                         {
                             active4 &&
                             <Fade clear>
                                 <Des>
-                                Lorem ipsum dolor sit amet, consectetur    adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                After pasteurisation, culture is inoculated in the milk. It is then incubated at 37℃ for 10-12 hours and then stored at 5℃. Once done, pure unadulterated curd is ready. It is then churned to make butter milk and then packed in pouches carrying QR codes which have the data of the entire supply chain and lab test report.
                                 </Des>
                             </Fade>
                         }
-                    </Subcard>
-                    <Subcard height = {active5} area = "#e6ffea" shadow ="#CCFCD4">
-                        <Head onClick = {() => setActive5(!active5)}>
-                            Dahi Packaging
-                            <Fi orientation = {active5} size = {16} onClick ={() =>setActive5(!active5)} />
-                        </Head>
-                        {
-                            active5 &&
-                            <Fade clear>
-                                <Des>
-                                Lorem ipsum dolor sit amet, consectetur    adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                </Des>
-                            </Fade>
-                        }
-                    </Subcard>
-                   {/* <Card height = {active6} area = "#e6ffea" shadow = "#CCFCD5">
-                        <Head onClick= {() => setActive6(!active6)}>
-                            Transport
-                            
-                        <Fi orientation = {active6} size = {16} onClick ={() =>setActive6(!active6)} />
-                        </Head>
-                        
-                        {
-                            active6 &&
-                            <Fade clear>
-                                <MapContainers r = {r1}/>
-                            </Fade>
-                        }
+                    </Subcard2>
+                  
+                   <Subcard height = {active1} area = "#e6ffea" shadow = "#CCFCD4">
+                       <Head onClick ={() => setActive1(!active1)}>
+                            Transportation from : Plant(Sonipat) to Warehouse(Gurgaon)
+                        <Fi orientation = {active1} size = {16} onClick ={() => setActive1(!active1)} />
+                       </Head>
+                       {
+                           active1 &&
+                          
+                                <Des2>
+                               <MapContainer r = {r2} />
 
-                    </Card>
-                    */}
+                           </Des2>
+                           
+                          
+                       }
 
+                   </Subcard>
                    <Card height = {active2} area = "#fab9b9" shadow = "#FC9C9C">
                    <Head onClick ={() => setActive2(!active2)}>
                         Warehouse (Gurgaon)
@@ -169,7 +185,7 @@ export default function Content({data }){
                            active2 &&
                            <Fade clear>
                                 <Des>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                Once the milk is packed, it is transported to dispatch hubs in refrigerated vehicles at 4℃. From here the milk gets dispatched to your home or the nearest retail store.
                            </Des>
                            </Fade>
                           
@@ -261,17 +277,16 @@ const Circle = styled.div`
 
 const Line = styled.div`
     width: 2px ;
-    height : ${props =>props.height ? '45vh' : '35vh'};
+    height : ${props =>props.height ? '65vh' : '50vh'};
     background: gainsboro;
     transition:all 0.5s;
     @media (max-width:500px){
-        height: ${props => props.height ? '35vh': '20vh'};
+        height: ${props => props.height ? '35vh': '30vh'};
     }
 `;
-
 const Subline = styled.div`
     width:2px;
-    height: ${props =>props.height? '20vh' : '10vh'};
+    height: ${props =>props.height? '35vh' : '25vh'};
     background:gainsboro;
     transition:all 0.5s;
 
@@ -289,20 +304,19 @@ const Card = styled.div`
     transition:all 0.5s;
     box-shadow: 3px 3px 6px ${props =>props.shadow};
     @media (width:768px){
-        height:${props =>props.height ? '28vh': '10vh'};
+        height:${props =>props.height ? '20vh': '10vh'};
     }
     @media (max-width:500px){
-        height: ${props =>props.height ? '27vh' : '6vh'};
+        height: ${props =>props.height ? '22vh' : '6vh'};
     }
     @media (max-width:330px){
 
     }
 
 `;
-
 const Subcard =styled.div`
     width:80%;
-    height: ${props => props.height ? '18vh' : '5vh' };
+    height: ${props => props.height ? '35vh' : '5vh' };
     background:${props => props.area};
     border-radius:10px;
     justify-content:flex-start;
@@ -315,10 +329,32 @@ const Subcard =styled.div`
     
     @media (max-width:500px)
     {
-        height: ${props => props.height ? '20vh' : '4vh'};
+        height: ${props => props.height ? '24vh' : '8vh'};
     }
 
 `;
+const Subcard2 =styled.div`
+    width:80%;
+    height: ${props => props.height ? '20vh' : '6vh' };
+    background:${props => props.area};
+    border-radius:10px;
+    justify-content:flex-start;
+    align-items:center;
+    flex-direction:column;
+    display:flex;
+    padding:3% 5%;
+    transition:all 0.5s;
+    box-shadow: 3px 3px 6px ${props =>props.shadow};
+    @media (max-width:800px){
+        height: ${props => props.height ? '18vh' : '5vh'};
+    }
+    @media (max-width:500px)
+    {
+        height: ${props => props.height ? '18vh' : '4vh'};
+    }
+
+`;
+
 
 const Head = styled.div`
     display:flex;
@@ -343,9 +379,6 @@ const Des = styled.p`
     transition:all 0.8s ease-in;
     text-align:justify;
     font-size:14px;
-    @media (max-width:1100px){
-        font-size:11px;
-    }
     @media (max-width:800px){
         font-size:10px;
     }
@@ -357,6 +390,7 @@ const Des = styled.p`
     }
     
 `;
+const Des2 = styled.div``;
 const Fi = styled(FiChevronDown)`
     transform:${props =>props.orientation ? 'rotate(180deg)': ''};
 `;

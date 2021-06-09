@@ -10,7 +10,7 @@ const center = {
   lng: 76.85305579301976,
 };
 
-export default function MapContainers({r}) {
+export default function MapContainer({r}) {
   const WrappedMap = withScriptjs(withGoogleMap(Map));
 
   return (
@@ -25,24 +25,29 @@ export default function MapContainers({r}) {
 }
 
 const Area = styled.div`
-  width: 65vw;
-  height: 30vh;
+  width: 95vw;
+  height: 50vh;
   position:absolute;
-  margin-top:8%;
+  margin-top:15%;
   @media (max-width:1500px)
   {
     height:35vh;
+    margin-top:14%;
+  }
+  @media (max-width:1100px){
+    margin-top:25%;
   }
   @media (max-width:800px)
   {
-    margin-top:12%;
+    margin-top:32%;
   }
   @media (max-width:500px)
   {
-    margin-top:18%;
+    margin-top:48%;
   }
   @media (max-width:340px)
   {
     height:33vh;
+    margin-top:55%;
   }
 `;

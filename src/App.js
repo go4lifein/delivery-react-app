@@ -18,7 +18,8 @@ const Visual = lazy(() => import(/* webpackChunkName: "Visual" */ "./containers/
 const TraceMilkBatch = lazy(() => import(/* webpackChunkName: "Tracemilk" */ "./trace/TraceMilkBatch.js"))
 const TraceMilkPouch = lazy(() => import(/* webpackChunkName: "Tracemilk" */ "./components/TracePouchMilk"))
 const Customer = lazy(() => import(/* webpackChunkName: "Customer" */ "./containers/Customer"))
-const Dahi = lazy(() => import(/* webpackChunckName: "Dahi" */ "./dahi/App"));
+const Chaach = lazy(() => import(/* webpackChunckName: "Chaach" */ "./chaach/App"));
+const Dahi = lazy(() => import(/* webpackChunckName: "Dahi" */ "./dahi/App"))
 const Newtrace = lazy(() => import(/* webpackChunkName: "NewTrace" */ "./new_trace/App"));
 const Tracemilk = lazy(() => import(/* webpackChunkName: "Tracemilk" */ "./milkpouches/App"));
 // const Trace = lazy(() => import("./components/Traceability.js"));
@@ -58,6 +59,7 @@ function App() {
                   <Route path="/trace/:pouch" component={TraceMilkPouch} />
                   <Route path="/visual" component={Visual} />
                   <Route path ="/newtrace" exact component = {Newtrace} />
+                  <Route path = "/chaach/:pouch" exact component = {Chaach} />
                   <Route path = "/dahi" exact component = {Dahi} />
                   <Route path="/trace-milk" exact component={Tracemilk} />
                   <Route path="/trace-batch-milk" exact component={TraceMilkBatch} />

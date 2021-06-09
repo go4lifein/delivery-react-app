@@ -5,10 +5,10 @@ import logo from '../assets/g4l.svg';
 export default function Header({data}){
     return(
         <Container>
-            
+           
             <Image src = {logo} alt = "logo" />
             <Title>
-                Trace Your Dahi
+                Trace Your Milk
             </Title>
         </Container>
     );
@@ -27,6 +27,7 @@ const Container = styled.main`
     }
  
 `;
+
 
 const Image = styled.img`
     @media (max-width:1080px)

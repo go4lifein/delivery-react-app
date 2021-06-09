@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { withScriptjs, withGoogleMap } from "react-google-maps";
-import Map from "./map";
+import Map from "./Map";
 import styled from 'styled-components';
 
 
@@ -25,24 +25,28 @@ export default function MapContainer({r}) {
 }
 
 const Area = styled.div`
-  width: 95vw;
-  height: 50vh;
+  width: 50vw;
+  height: 22vh;
   position:absolute;
-  margin-top:8%;
+  margin-top:1%;
+  margin-left:-25%;
   @media (max-width:1500px)
   {
-    height:35vh;
+    height:26vh;
   }
   @media (max-width:800px)
   {
-    margin-top:12%;
+    margin-top:1%;
+    height: 28vh;
   }
   @media (max-width:500px)
   {
-    margin-top:18%;
+    margin-top:1%;
+    height:15vh;
+  
   }
   @media (max-width:340px)
   {
-    height:33vh;
+    height:15vh;
   }
 `;

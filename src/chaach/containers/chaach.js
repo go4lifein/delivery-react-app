@@ -24,7 +24,7 @@ const r = [{
     color: '#CCFCD4',
   }];
 
-export default function Pouches({location , ...props}){
+export default function Chaach({location ,...props}){
     let { search } = location;
     search = new URLSearchParams(search);
    
@@ -38,10 +38,9 @@ export default function Pouches({location , ...props}){
 
     
      const onChange = (e) => {
-     console.log(e.target.value)
      setStartDate(moment(e.target.value).format('YYYY-MM-DD'));
      }
-     console.log(startDate);
+     console.log("Heelo",startDate);
     
      useEffect(() => {
         async function getData() {
@@ -73,16 +72,19 @@ export default function Pouches({location , ...props}){
             <Date>
                 <p>Enter Expiry date of Milk</p>
                 <Datepicker 
-                    stateDate={startDate}
+                    startDate={startDate}
                     onChange = {onChange}
                 />
             </Date>  
-            {startDate && 
+            {startDate &&
                 <>
-                <MapContainer r = {r}/>
+                {
+                     data && startDate ?
+                     <>
+                        <MapContainer r = {r}/>
                 <Slider setChange = {setChange} change = {change} />
                 {
-                  data && change == 0 &&
+                  data && change == 0 && 
                   <Content data = {data} />
                 }
                  {
@@ -93,8 +95,12 @@ export default function Pouches({location , ...props}){
             data && change == 2 &&
             <Pdf data = {data} />
         }
+                     </>:<p> Record not found</p>
+                }
+              
                 
                 </>
+               
             }  
             
 

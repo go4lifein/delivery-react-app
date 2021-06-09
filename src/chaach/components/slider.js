@@ -31,9 +31,16 @@ const Container = styled.main`
    @media (max-height:850px){
        padding-top:13%;
    }
+   @media (max-width:1500px){
+       padding-top:6%;
+   }
+   @media (max-width:1100px){
+       padding-top:20%;
+   }
    @media (height:1024px){
        padding-top:18%;
    }
+  
     @media (max-width:800px)
     {
         margin-top:30%;
@@ -41,19 +48,21 @@ const Container = styled.main`
     }
     @media (max-width:500px)
     {
-        margin-top:55%;
-        
+       margin-top:65% !important;
     }
     @media (max-width:400px)
     {
-        margin-top:60%;
-        padding-top:20% !important;
-       
-
+        
+        margin-top:70% !important;
     }
-    
+    @media (max-width:340px)
+    {
+        
+        margin-top:67% !important;
+        padding-top:24% !important;
+    }
+    `;
 
-`;
 const Option = styled.p`
     border-bottom:${props =>props.active ? '2px solid': '0px solid'};
     border-bottom-color:darkgrey;
