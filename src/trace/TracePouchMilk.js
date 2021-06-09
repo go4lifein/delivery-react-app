@@ -36,10 +36,8 @@ export default function Tracemilk({ location, ...props }) {
     async function getData() {
       try {
         setLoading(true);
-        const response = await getReport(
-          pack, 
-          moment(startDate).subtract(POUCH_MILK_EXPIRY_DAYS_DIFF, 'days').format('YYYY-MM-DD')
-        );
+        const diff = daysDifference[pack] || POUCH_MILK_EXPIRY_DAYS_DIFF;
+        const response = await getReport(pack, moment(startDate).subtract(diff, 'days').format('YYYY-MM-DD'));
         setData(response.data);
         setLoading(false);
         setError(null)
