@@ -9,7 +9,7 @@ import plant from '../assets/plant.png';
 import warehouse from '../assets/warehouse.png';
 
 const r1  = { 
-    origin: { lat: 27.93415776638459, lng: 76.85305579301976 },
+    origin: { lat:28.91536608519116, lng:76.63487196009729 },
     destination: { lat: 28.99584804395379, lng: 77.00556672616105 },
     color: '#000',
     startIcon:bmc,
@@ -27,7 +27,7 @@ export default function Content({data }){
     const [active , setActive ] = useState(false);
     const [active1, setActive1 ] = useState(false);
     const [active2, setActive2 ] = useState(false);
-    const location  = "BMC (Tijara)";
+    const location  = "BMC (Rohtak)";
 
     const setActives = () =>{ 
         setActive(!active);
@@ -272,7 +272,7 @@ const Card = styled.div`
         height:${props =>props.height ? '28vh': '10vh'};
     }
     @media (max-width:500px){
-        height: ${props =>props.height ? '27vh' : '6vh'};
+        height: ${props =>props.height ? '22vh' : '6vh'};
     }
     @media (max-width:330px){
 
@@ -294,7 +294,7 @@ const Subcard =styled.div`
     
     @media (max-width:500px)
     {
-        height: ${props => props.height ? '20vh' : '4vh'};
+        height: ${props => props.height ? '24vh' : '8vh'};
     }
 
 `;

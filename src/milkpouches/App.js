@@ -1,6 +1,5 @@
 import {BrowserRouter as Router , Switch , Route } from 'react-router-dom';
-import './App.css';
-import Index from './containers/index';
+import './App.css'; 
 import './assets/fonts/fonts.css';
 import Pouches from './containers/pouches';
 
@@ -9,10 +8,10 @@ function App() {
     <div className="App">
       <Router>
       <Switch>
-     
-   
-     <Route exact path = "/" component = {Index}>
+      <Route exact path = "/" component = {Pouches}>
+
      </Route>
+   
     
  </Switch>
       </Router>

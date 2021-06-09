@@ -9,7 +9,7 @@ import plant from '../assets/plant.png';
 import warehouse from '../assets/warehouse.png';
 
 const r1  = { 
-    origin: { lat: 27.93415776638459, lng: 76.85305579301976 },
+    origin: { lat:28.91536608519116, lng:76.63487196009729 },
     destination: { lat: 28.99584804395379, lng: 77.00556672616105 },
     color: '#000',
     startIcon:bmc,
@@ -27,7 +27,9 @@ export default function Content({data }){
     const [active , setActive ] = useState(false);
     const [active1, setActive1 ] = useState(false);
     const [active2, setActive2 ] = useState(false);
-    const location  = "BMC (Tijara)";
+    const [active4 , setActive4 ] = useState(false);
+    const [active5 ,setActive5] = useState(false);
+    const location  = "BMC (Rohtak)";
 
     const setActives = () =>{ 
         setActive(!active);
@@ -38,7 +40,7 @@ export default function Content({data }){
     return(
         <Container> 
         
-               <Timeline>
+        <Timeline>
                    <Text>
                     Received at 
                    </Text>
@@ -61,11 +63,23 @@ export default function Content({data }){
                 </Dispatched>
                 <Circle back = "#CCFCD4" />
                 <Text>
-                        Dispatched at
-                    </Text>
+                    Procress started at
+                </Text>
                 <Arrived>
-                {moment.utc(data.plant_dispatch).format("hh:mm A")}
+                    {moment.utc(data.plant_receive).add(4 ,"hours").format("hh:mm A")}
                 </Arrived>
+               <Subline height = {active4}/>
+               <Text>Process Finished at</Text>
+               <Arrived>
+                   {moment.utc(data.plant_receive).add(5, "hours").format("hh:mm A")}
+               </Arrived>
+               <Circle back = "#CCFCD4" />
+                    <Text>
+                        Packaging started at
+                    </Text>
+                    <Arrived>
+                        {moment.utc(data.plant_receive).add(330 ,"minutes").format("hh:mm A")}
+                    </Arrived>
                 <Line height = {active1} />
                 <Text>
                     Received at 
@@ -123,13 +137,41 @@ export default function Content({data }){
                            active1 &&
                            <Fade clear>
                             <Des>
-                            The raw milk arrives at the packaging plant in insulated road tankers. The milk is kept well chilled, free from air and treated as gently as possible. Here , the milk is pasteurized at 85℃ and tested for quality on 35 parameters. Milk is then packed in three layered tamper proof gable top cartons. A QR code is then printed on the pack which carries the data of the entire supply chain and the testing report.
+                            The raw milk arrives at the packaging plant in insulated road tankers. The milk is kept well chilled, free from air and treated as gently as possible. Here , the milk is pasteurized at 85℃ and tested for quality on 35 parameters. Milk is then kept in chillers for incubation process.
                             </Des>
                            </Fade>
                           
                        }
 
                    </Card>
+                   <Subcard2 height = {active4} area = "#e6ffea" shadow ="#CCFCD4">
+                        <Head onClick = {() => setActive4(!active4)}>
+                            Incubation
+                            <Fi orientation = {active4} size = {16} onClick ={() =>setActive4(!active4)} />
+                        </Head>
+                        {
+                            active4 &&
+                            <Fade clear>
+                                <Des>
+                                After pasteurisation, culture is inoculated in the milk. It is then incubated at 37℃ for 10-12 hours and then stored at 5℃. Once done, pure unadulterated curd is ready.
+                                </Des>
+                            </Fade>
+                        }
+                    </Subcard2>
+                    <Subcard2 height = {active5} area = "#e6ffea" shadow ="#CCFCD4">
+                        <Head onClick = {() => setActive5(!active5)}>
+                            Dahi Packaging
+                            <Fi orientation = {active5} size = {16} onClick ={() =>setActive5(!active5)} />
+                        </Head>
+                        {
+                            active5 &&
+                            <Fade clear>
+                                <Des>
+                               As soon as the Incubation process is completed , the curd is then packed into various pack sizes according to preferences and the sent for dispatch.
+                                </Des>
+                            </Fade>
+                        }
+                    </Subcard2>
                    <Subcard height = {active1} area = "#e6ffea" shadow = "#CCFCD4">
                        <Head onClick ={() => setActive1(!active1)}>
                             Transportation from : Plant(Sonipat) to Warehouse(Gurgaon)
@@ -255,7 +297,13 @@ const Line = styled.div`
         height: ${props => props.height ? '35vh': '30vh'};
     }
 `;
+const Subline = styled.div`
+    width:2px;
+    height: ${props =>props.height? '35vh' : '25vh'};
+    background:gainsboro;
+    transition:all 0.5s;
 
+`;
 const Card = styled.div`
     width:80%;
     height: ${props =>props.height ? '27vh' : '20px'};
@@ -269,10 +317,10 @@ const Card = styled.div`
     transition:all 0.5s;
     box-shadow: 3px 3px 6px ${props =>props.shadow};
     @media (width:768px){
-        height:${props =>props.height ? '28vh': '10vh'};
+        height:${props =>props.height ? '20vh': '10vh'};
     }
     @media (max-width:500px){
-        height: ${props =>props.height ? '27vh' : '6vh'};
+        height: ${props =>props.height ? '22vh' : '6vh'};
     }
     @media (max-width:330px){
 
@@ -294,10 +342,32 @@ const Subcard =styled.div`
     
     @media (max-width:500px)
     {
-        height: ${props => props.height ? '20vh' : '4vh'};
+        height: ${props => props.height ? '24vh' : '8vh'};
     }
 
 `;
+const Subcard2 =styled.div`
+    width:80%;
+    height: ${props => props.height ? '20vh' : '5vh' };
+    background:${props => props.area};
+    border-radius:10px;
+    justify-content:flex-start;
+    align-items:center;
+    flex-direction:column;
+    display:flex;
+    padding:3% 5%;
+    transition:all 0.5s;
+    box-shadow: 3px 3px 6px ${props =>props.shadow};
+    @media (max-width:800px){
+        height: ${props => props.height ? '10vh' : '5vh'};
+    }
+    @media (max-width:500px)
+    {
+        height: ${props => props.height ? '12vh' : '4vh'};
+    }
+
+`;
+
 
 const Head = styled.div`
     display:flex;
