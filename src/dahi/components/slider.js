@@ -23,7 +23,7 @@ export default function Slider({setChange , change}){
 
 const Container = styled.main`
    width:100%;
-   margin-top:17%;
+   margin-top:27%;
    display:flex;
    justify-content:flex-start;
    text-align:left;
