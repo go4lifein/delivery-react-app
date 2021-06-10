@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState , useEffect} from 'react';
-import getReport from '../api/main';
+import {getReport} from '../../api/misc';
+import '../assets/fonts/fonts.css';
 import { Alert } from "@material-ui/lab";
 import { useParams } from 'react-router-dom';
 import Content from '../components/content';
@@ -34,8 +35,9 @@ export default function Pouches({location , ...props}){
     const [change , setChange] = useState(0);
     const [error , setError] = useState(null);
    
-    const {pouch: pack} = useParams();
-
+    const {pouch:pack} = useParams();
+    console.log("sdada",pack);
+    console.log("sex",useParams());
     
      const onChange = (e) => {
      console.log(e.target.value)
@@ -52,6 +54,7 @@ export default function Pouches({location , ...props}){
               moment(startDate).subtract(POUCH_MILK_EXPIRY_DAYS_DIFF, 'days').format('YYYY-MM-DD')
             );
             setData(response.data);
+            console.log("params",pack);
             setLoading(false);
             setError(null)
           } catch (err) {
@@ -73,7 +76,7 @@ export default function Pouches({location , ...props}){
             <Date>
                 <p>Enter Expiry date of Milk</p>
                 <Datepicker 
-                    stateDate={startDate}
+                    startDate={startDate}
                     onChange = {onChange}
                 />
             </Date>  
