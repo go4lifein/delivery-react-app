@@ -36,12 +36,12 @@ export default function Dahi({location}){
     const [error , setError] = useState(null);
    
     const {pouch: pack} = useParams();
-
+     
     
      const onChange = (e) => {
      setStartDate(moment(e.target.value).format('YYYY-MM-DD'));
      }
-     console.log("Heelo",startDate);
+   
     
      useEffect(() => {
         async function getData() {
@@ -86,7 +86,7 @@ export default function Dahi({location}){
                 <Slider setChange = {setChange} change = {change} />
                 {
                   data && change == 0 && 
-                  <Content data = {data} />
+                  <Content data = {data} pack = {pack} />
                 }
                  {
                   data && change == 1 &&

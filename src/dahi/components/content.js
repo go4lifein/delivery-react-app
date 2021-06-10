@@ -23,7 +23,7 @@ const r2 = {
     startIcon:plant,
     endIcon:warehouse,
 }
-export default function Content({data }){
+export default function Content({data  ,pack}){
     const [active , setActive ] = useState(false);
     const [active1, setActive1 ] = useState(false);
     const [active2, setActive2 ] = useState(false);
@@ -36,7 +36,7 @@ export default function Content({data }){
         
     }
 
-    console.log(data);
+    console.log("params",pack);
     return(
         <Container> 
         
@@ -143,35 +143,53 @@ export default function Content({data }){
                           
                        }
 
-                   </Card>
-                   <Subcard2 height = {active4} area = "#e6ffea" shadow ="#CCFCD4">
-                        <Head onClick = {() => setActive4(!active4)}>
-                            Incubation
-                            <Fi orientation = {active4} size = {16} onClick ={() =>setActive4(!active4)} />
-                        </Head>
-                        {
-                            active4 &&
-                            <Fade clear>
-                                <Des>
-                                After pasteurisation, culture is inoculated in the milk. It is then incubated at 37℃ for 10-12 hours and then stored at 5℃. Once done, pure unadulterated curd is ready.
-                                </Des>
-                            </Fade>
-                        }
-                    </Subcard2>
-                    <Subcard2 height = {active5} area = "#e6ffea" shadow ="#CCFCD4">
-                        <Head onClick = {() => setActive5(!active5)}>
-                            Dahi Packaging
-                            <Fi orientation = {active5} size = {16} onClick ={() =>setActive5(!active5)} />
-                        </Head>
-                        {
-                            active5 &&
-                            <Fade clear>
-                                <Des>
-                               As soon as the Incubation process is completed , the curd is then packed into various pack sizes according to preferences and the sent for dispatch.
-                                </Des>
-                            </Fade>
-                        }
-                    </Subcard2>
+                   </Card>{pack == "dahi" || pack == "dahi-lite"  ?
+                    <>  <Subcard2 height = {active4} area = "#e6ffea" shadow ="#CCFCD4">
+                      <Head onClick = {() => setActive4(!active4)}>
+                          Incubation
+                          <Fi orientation = {active4} size = {16} onClick ={() =>setActive4(!active4)} />
+                      </Head>
+                      {
+                          active4 &&
+                          <Fade clear>
+                              <Des>
+                              After pasteurisation, culture is inoculated in the milk. It is then incubated at 37℃ for 10-12 hours and then stored at 5℃. Once done, pure unadulterated curd is ready.
+                              </Des>
+                          </Fade>
+                      }
+                  </Subcard2>
+                  <Subcard2 height = {active5} area = "#e6ffea" shadow ="#CCFCD4">
+                      <Head onClick = {() => setActive5(!active5)}>
+                          Dahi Packaging
+                          <Fi orientation = {active5} size = {16} onClick ={() =>setActive5(!active5)} />
+                      </Head>
+                      {
+                          active5 &&
+                          <Fade clear>
+                              <Des>
+                             As soon as the Incubation process is completed , the curd is then packed into various pack sizes according to preferences and the sent for dispatch.
+                              </Des>
+                          </Fade>
+                      }
+                  </Subcard2>
+                   </>
+                   
+                   
+                   : <Subcard2 height = {active4} area = "#e6ffea" shadow ="#CCFCD4">
+                   <Head onClick = {() => setActive4(!active4)}>
+                       Incubation
+                       <Fi orientation = {active4} size = {16} onClick ={() =>setActive4(!active4)} />
+                   </Head>
+                   {
+                       active4 &&
+                       <Fade clear>
+                           <Des>
+                           After pasteurisation, culture is inoculated in the milk. It is then incubated at 37℃ for 10-12 hours and then stored at 5℃. Once done, pure unadulterated curd is ready. It is then churned to make butter milk and then packed in pouches carrying QR codes which have the data of the entire supply chain and lab test report.
+                           </Des>
+                       </Fade>
+                   }
+               </Subcard2> }
+                 
                    <Subcard height = {active1} area = "#e6ffea" shadow = "#CCFCD4">
                        <Head onClick ={() => setActive1(!active1)}>
                             Transportation from : Plant(Sonipat) to Warehouse(Gurgaon)

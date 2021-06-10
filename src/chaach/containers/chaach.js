@@ -41,7 +41,7 @@ export default function Chaach({location ,...props}){
      const onChange = (e) => {
      setStartDate(moment(e.target.value).format('YYYY-MM-DD'));
      }
-     console.log("Heelo",startDate);
+     console.log("Heelo",pack);
     
      useEffect(() => {
         async function getData() {
