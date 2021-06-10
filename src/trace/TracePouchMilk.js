@@ -14,6 +14,7 @@ import config from '../config'
 const {POUCH_MILK_EXPIRY_DAYS_DIFF} = config
 
 const daysDifference = {
+  'dahi': 7,
   'dahi-lite': 7,
   'chach': 7,
   'chach-masala': 7,
