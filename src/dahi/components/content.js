@@ -62,6 +62,7 @@ export default function Content({data  ,pack}){
                 {moment.utc(data.plant_receive).format("hh:mm A")}
                 </Dispatched>
                 <Circle back = "#CCFCD4" />
+                {pack == "dahi" || pack == "dahi-lite" || pack == "chach" || pack == "chach-masala" ? <>
                 <Text>
                     Procress started at
                 </Text>
@@ -74,6 +75,10 @@ export default function Content({data  ,pack}){
                    {moment.utc(data.plant_receive).add(5, "hours").format("hh:mm A")}
                </Arrived>
                <Circle back = "#CCFCD4" />
+                
+                </> :<></>}
+               
+             
                     <Text>
                         Packaging started at
                     </Text>
@@ -143,7 +148,7 @@ export default function Content({data  ,pack}){
                           
                        }
 
-                   </Card>{pack == "dahi" || pack == "dahi-lite"  ?
+                   </Card>{pack == "dahi" || pack == "dahi-lite" || pack == "chach" || pack == "chach-masala"  ?
                     <>  <Subcard2 height = {active4} area = "#e6ffea" shadow ="#CCFCD4">
                       <Head onClick = {() => setActive4(!active4)}>
                           Incubation
@@ -152,13 +157,25 @@ export default function Content({data  ,pack}){
                       {
                           active4 &&
                           <Fade clear>
-                              <Des>
+                              {
+                                  pack == "dahi" || pack == "dahi-lite" ?<>
+                                  <Des>
                               After pasteurisation, culture is inoculated in the milk. It is then incubated at 37℃ for 10-12 hours and then stored at 5℃. Once done, pure unadulterated curd is ready.
                               </Des>
+                                  </>:<>
+                                    <Des>
+                                    After pasteurisation, culture is inoculated in the milk. It is then incubated at 37℃ for 10-12 hours and then stored at 5℃. Once done, pure unadulterated curd is ready. It is then churned to make butter milk and then packed in pouches carrying QR codes which have the data of the entire supply chain and lab test report.
+                                    </Des>
+
+                                  </>
+                              }
+                              
                           </Fade>
                       }
                   </Subcard2>
-                  <Subcard2 height = {active5} area = "#e6ffea" shadow ="#CCFCD4">
+                  {
+                      pack == "dahi" || pack == "dahi-lite" ?<>
+                       <Subcard2 height = {active5} area = "#e6ffea" shadow ="#CCFCD4">
                       <Head onClick = {() => setActive5(!active5)}>
                           Dahi Packaging
                           <Fi orientation = {active5} size = {16} onClick ={() =>setActive5(!active5)} />
@@ -172,23 +189,18 @@ export default function Content({data  ,pack}){
                           </Fade>
                       }
                   </Subcard2>
+
+
+                      </>:<></>
+                  }
+                 
                    </>
                    
                    
-                   : <Subcard2 height = {active4} area = "#e6ffea" shadow ="#CCFCD4">
-                   <Head onClick = {() => setActive4(!active4)}>
-                       Incubation
-                       <Fi orientation = {active4} size = {16} onClick ={() =>setActive4(!active4)} />
-                   </Head>
-                   {
-                       active4 &&
-                       <Fade clear>
-                           <Des>
-                           After pasteurisation, culture is inoculated in the milk. It is then incubated at 37℃ for 10-12 hours and then stored at 5℃. Once done, pure unadulterated curd is ready. It is then churned to make butter milk and then packed in pouches carrying QR codes which have the data of the entire supply chain and lab test report.
-                           </Des>
-                       </Fade>
-                   }
-               </Subcard2> }
+                   : <>
+                    
+                      
+                   </> }
                  
                    <Subcard height = {active1} area = "#e6ffea" shadow = "#CCFCD4">
                        <Head onClick ={() => setActive1(!active1)}>
@@ -207,6 +219,7 @@ export default function Content({data  ,pack}){
                        }
 
                    </Subcard>
+                  
                    <Card height = {active2} area = "#fab9b9" shadow = "#FC9C9C">
                    <Head onClick ={() => setActive2(!active2)}>
                         Warehouse (Gurgaon)

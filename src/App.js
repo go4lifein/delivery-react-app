@@ -12,15 +12,15 @@ import NotFound from './components/404';
 import Loading from "./components/Loading";
 const Admin = lazy(() => import(/* webpackChunkName: "Admin" */ "./containers/Admin.jsx"));
 const Driver = lazy(() => import(/* webpackChunkName: "Driver" */ "./containers/Driver.jsx"));
-const Trace = lazy(() => import(/* webpackChunkName: "Trace" */ "./trace/Trace.js"));
+
 // const TraceProduce = lazy(() => import(/* webpackChunkName: "TraceProduce" */ "./containers/TraceOrder"));
 const Visual = lazy(() => import(/* webpackChunkName: "Visual" */ "./containers/Visual"));
 const TraceMilkBatch = lazy(() => import(/* webpackChunkName: "Tracemilk" */ "./trace/TraceMilkBatch.js"))
 const TraceMilkPouch = lazy(() => import(/* webpackChunkName: "Tracemilk" */ "./components/TracePouchMilk"))
 const Customer = lazy(() => import(/* webpackChunkName: "Customer" */ "./containers/Customer"))
-const Chaach = lazy(() => import(/* webpackChunckName: "Chaach" */ "./chaach/containers/chaach"));
+
 const Dahi = lazy(() => import(/* webpackChunckName: "Dahi" */ "./dahi/containers/dahi"))
-const Newtrace = lazy(() => import(/* webpackChunkName: "NewTrace" */ "./new_trace/App"));
+const Trace = lazy(() => import(/* webpackChunkName: "NewTrace" */ "./new_trace/App"));
 const Tracemilk = lazy(() => import(/* webpackChunkName: "Tracemilk" */ "./milkpouches/containers/pouches"));
 // const Trace = lazy(() => import("./components/Traceability.js"));
 
@@ -56,11 +56,9 @@ function App() {
                 <Switch>
                   {/* <Route path="/trace/produce" exact component={TraceProduce} /> */}
                   <Route path="/trace" exact component={Trace} />
-                  <Route path="/trace/:pouch" component={TraceMilkPouch} />
+                  <Route path="/trace/:pouch" component={Dahi} />
                   <Route path="/visual" component={Visual} />
-                  <Route path ="/newtrace" exact component = {Newtrace} />
-                  <Route path = "/chaach/:pouch" exact component = {Chaach} />
-                  <Route path = "/dahi/:pouch" exact component = {Dahi} />
+                 
                   <Route path = "/traces/:pouch" exact component={TraceMilkPouch} />  
                   <Route path="/trace-milk/:pouch" exact component={Tracemilk} />
                   <Route path="/trace-batch-milk" exact component={TraceMilkBatch} />
