@@ -90,14 +90,23 @@ export default function Content({data  ,pack}){
                     Received at 
                    </Text>
                 <Dispatched>
-                    {moment.utc(data.whs_receive).format("hh:mm A")}
+                    { pack == "dahi" || pack == "dahi-lite" || pack == "chach" || pack == "chach-masala" ?<>
+                    {moment.utc(data.whs_receive).add(120, "minutes").format("hh:mm A")}
+                    
+                    </>:<>
+                    {moment.utc(data.whs_receive).format("hh:mm A")}</>}
+                    
                 </Dispatched>
                 <Circle back = "#FC9C9C" />
                 <Text>
                         Dispatched at
                     </Text>
                 <Arrived>
-                    {moment.utc(data.whs_dispatch).format("hh:mm A")}
+                { pack == "dahi" || pack == "dahi-lite" || pack == "chach" || pack == "chach-masala" ?<>
+                    {moment.utc(data.whs_dispatch).add(90, "minutes").format("hh:mm A")}
+                    
+                    </>:<>
+                    {moment.utc(data.whs_dispatch).format("hh:mm A")}</>}
                 </Arrived>
                </Timeline>
                <Description>

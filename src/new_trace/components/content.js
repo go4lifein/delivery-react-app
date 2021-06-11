@@ -294,7 +294,7 @@ const Subcard =styled.div`
     
     @media (max-width:500px)
     {
-        height: ${props => props.height ? '20vh' : '4vh'};
+        height: ${props => props.height ? '20vh' : '7vh'};
     }
 
 `;
