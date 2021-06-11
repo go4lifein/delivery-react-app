@@ -14,6 +14,7 @@ import config from '../config'
 const {POUCH_MILK_EXPIRY_DAYS_DIFF} = config
 
 const daysDifference = {
+  'dahi': 7,
   'dahi-lite': 7,
   'chach': 7,
   'chach-masala': 7,
@@ -27,7 +28,7 @@ export default function Tracemilk({ location, ...props }) {
   const [error, setError] = useState(null);
 
   const {pouch: pack} = useParams();
-
+  console.log("params", pack);
   const onChange = (e) => {
     console.log(e.target.value)
     setStartDate(moment(e.target.value).format('YYYY-MM-DD'));

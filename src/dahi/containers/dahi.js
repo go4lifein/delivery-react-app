@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState , useEffect} from 'react';
 import getReport from '../api/main';
+import '../assets/fonts/fonts.css';
 import { Alert } from "@material-ui/lab";
 import { useParams } from 'react-router-dom';
 import Content from '../components/content';
@@ -35,22 +36,30 @@ export default function Dahi({location}){
     const [error , setError] = useState(null);
    
     const {pouch: pack} = useParams();
-
     
+    
+    const daysDifference = {
+      'dahi': 7,
+      'dahi-lite': 7,
+      'chach': 7,
+      'chach-masala': 7,
+        } 
      const onChange = (e) => {
      setStartDate(moment(e.target.value).format('YYYY-MM-DD'));
      }
-     console.log("Heelo",startDate);
+   
     
      useEffect(() => {
         async function getData() {
           try {
             setLoading(true);
+            const diff = daysDifference[pack] || POUCH_MILK_EXPIRY_DAYS_DIFF;
             const response = await getReport(
               pack, 
-              moment(startDate).subtract(POUCH_MILK_EXPIRY_DAYS_DIFF, 'days').format('YYYY-MM-DD')
+              moment(startDate).subtract(diff, 'days').format('YYYY-MM-DD')
             );
             setData(response.data);
+            console.log("diff",diff);
             setLoading(false);
             setError(null)
           } catch (err) {
@@ -85,7 +94,7 @@ export default function Dahi({location}){
                 <Slider setChange = {setChange} change = {change} />
                 {
                   data && change == 0 && 
-                  <Content data = {data} />
+                  <Content data = {data} pack = {pack} />
                 }
                  {
                   data && change == 1 &&

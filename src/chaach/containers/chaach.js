@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState , useEffect} from 'react';
 import getReport from '../api/main';
+import '../assets/fonts/fonts.css';
 import { Alert } from "@material-ui/lab";
 import { useParams } from 'react-router-dom';
 import Content from '../components/content';
@@ -40,7 +41,7 @@ export default function Chaach({location ,...props}){
      const onChange = (e) => {
      setStartDate(moment(e.target.value).format('YYYY-MM-DD'));
      }
-     console.log("Heelo",startDate);
+     console.log("Heelo",pack);
     
      useEffect(() => {
         async function getData() {
