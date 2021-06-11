@@ -36,8 +36,14 @@ export default function Dahi({location}){
     const [error , setError] = useState(null);
    
     const {pouch: pack} = useParams();
-     
     
+    
+    const daysDifference = {
+      'dahi': 7,
+      'dahi-lite': 7,
+      'chach': 7,
+      'chach-masala': 7,
+        } 
      const onChange = (e) => {
      setStartDate(moment(e.target.value).format('YYYY-MM-DD'));
      }
@@ -47,11 +53,13 @@ export default function Dahi({location}){
         async function getData() {
           try {
             setLoading(true);
+            const diff = daysDifference[pack] || POUCH_MILK_EXPIRY_DAYS_DIFF;
             const response = await getReport(
               pack, 
-              moment(startDate).subtract(POUCH_MILK_EXPIRY_DAYS_DIFF, 'days').format('YYYY-MM-DD')
+              moment(startDate).subtract(diff, 'days').format('YYYY-MM-DD')
             );
             setData(response.data);
+            console.log("diff",diff);
             setLoading(false);
             setError(null)
           } catch (err) {
